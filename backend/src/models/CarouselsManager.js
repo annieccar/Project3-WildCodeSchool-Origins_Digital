@@ -1,22 +1,22 @@
 const AbstractManager = require("./AbstractManager");
 
-class ItemManager extends AbstractManager {
+class CarouselsManager extends AbstractManager {
   constructor() {
-    super({ table: "item" });
+    super({ table: "carousel" });
   }
 
-  insert(item) {
+  insert(carousel) {
     return this.database.query(`insert into ${this.table} (title) values (?)`, [
-      item.title,
+      carousel.title,
     ]);
   }
 
-  update(item) {
+  update(carousel) {
     return this.database.query(
       `update ${this.table} set title = ? where id = ?`,
-      [item.title, item.id]
+      [carousel.title, carousel.id]
     );
   }
 }
 
-module.exports = ItemManager;
+module.exports = CarouselsManager;
