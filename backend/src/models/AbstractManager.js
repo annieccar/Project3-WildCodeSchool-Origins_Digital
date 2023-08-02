@@ -1,6 +1,9 @@
+const pool = require("../config/db");
+
 class AbstractManager {
   constructor({ table }) {
     this.table = table;
+    this.database = pool;
   }
 
   find(id) {
@@ -15,10 +18,6 @@ class AbstractManager {
 
   delete(id) {
     return this.database.query(`delete from ${this.table} where id = ?`, [id]);
-  }
-
-  setDatabase(database) {
-    this.database = database;
   }
 }
 

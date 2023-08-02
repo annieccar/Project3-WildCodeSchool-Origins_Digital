@@ -2,12 +2,20 @@ const express = require("express");
 
 const router = express.Router();
 
-const itemControllers = require("./controllers/itemControllers");
+const itemsRoutes = require("./routes/items.routes");
+const usersRoutes = require("./routes/users.routes");
+const videosRoutes = require("./routes/videos.routes");
+const playlistsRoutes = require("./routes/playlists.routes");
+const categoriesRoutes = require("./routes/categories.routes");
+const carouselsRoutes = require("./routes/carousels.routes");
 
-router.get("/items", itemControllers.browse);
-router.get("/items/:id", itemControllers.read);
-router.put("/items/:id", itemControllers.edit);
-router.post("/items", itemControllers.add);
-router.delete("/items/:id", itemControllers.destroy);
+// example
+router.use("/items", itemsRoutes);
+// project routes
+router.use("/users", usersRoutes);
+router.use("/videos", videosRoutes);
+router.use("/playlists", playlistsRoutes);
+router.use("/categories", categoriesRoutes);
+router.use("/carousels", carouselsRoutes);
 
 module.exports = router;
