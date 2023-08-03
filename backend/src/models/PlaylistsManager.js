@@ -6,14 +6,14 @@ class PlaylistsManager extends AbstractManager {
   }
 
   insert(playlist) {
-    return this.database.query(`insert into ${this.table} (title) values (?)`, [
+    return this.database.query(`INSERT INTO ${this.table} (title) VALUES (?)`, [
       playlist.title,
     ]);
   }
 
   update(playlist) {
     return this.database.query(
-      `update ${this.table} set title = ? where id = ?`,
+      `UPDATE ${this.table} SET title = ? WHERE id = ?`,
       [playlist.title, playlist.id]
     );
   }
