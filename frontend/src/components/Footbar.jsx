@@ -1,7 +1,7 @@
 export default function Footbar() {
   return (
     <div className="fixed bottom-0 w-full">
-      <div className="bg-black w-full h-12 flex justify-around">
+      <div className="bg-dark w-full h-12 flex justify-around">
         <div className="h-full  p-1">
           <img
             className="w-full h-full"
