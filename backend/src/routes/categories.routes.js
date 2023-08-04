@@ -4,10 +4,10 @@ const router = express.Router();
 
 const categoriesControllers = require("../controllers/categories.controllers");
 
-router.get("/categories", categoriesControllers.browse);
-router.get("/categories/:id", categoriesControllers.read);
-router.put("/categories/:id", categoriesControllers.edit);
-router.post("/categories", categoriesControllers.add);
-router.delete("/categories/:id", categoriesControllers.destroy);
+router.get("/", categoriesControllers.browse);
+router.get("/:id", categoriesControllers.read);
+router.put("/:id", categoriesControllers.edit);
+router.post("/", categoriesControllers.add);
+router.delete("/:id", categoriesControllers.destroy);
 
 module.exports = router;
