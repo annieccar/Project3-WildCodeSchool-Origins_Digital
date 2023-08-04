@@ -5,16 +5,17 @@ class VideosManager extends AbstractManager {
     super({ table: "video" });
   }
 
-  insert(video) {
-    return this.database.query(`insert into ${this.table} (title) values (?)`, [
-      video.title,
-    ]);
+  insert({ name, duration, details, categoryId }) {
+    return this.database.query(
+      `INSERT INTO ${this.table} (name, duration, details, category_id) VALUES (?, ?, ?, ?)`,
+      [name, duration, details, categoryId]
+    );
   }
 
-  update(video) {
+  update({ id, name, duration, details, categoryId }) {
     return this.database.query(
-      `update ${this.table} set title = ? where id = ?`,
-      [video.title, video.id]
+      `UPDATE ${this.table} SET name = ?, duration = ?, details = ?, category_Id = ? WHERE id = ?`,
+      [name, duration, details, categoryId, id]
     );
   }
 }

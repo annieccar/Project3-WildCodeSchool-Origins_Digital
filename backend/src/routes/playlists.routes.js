@@ -4,10 +4,10 @@ const router = express.Router();
 
 const playlistsControllers = require("../controllers/playlists.controllers");
 
-router.get("/playlists", playlistsControllers.browse);
-router.get("/playlists/:id", playlistsControllers.read);
-router.put("/playlists/:id", playlistsControllers.edit);
-router.post("/playlists", playlistsControllers.add);
-router.delete("/playlists/:id", playlistsControllers.destroy);
+router.get("/", playlistsControllers.browse);
+router.get("/:id", playlistsControllers.read);
+router.put("/:id", playlistsControllers.edit);
+router.post("/", playlistsControllers.add);
+router.delete("/:id", playlistsControllers.destroy);
 
 module.exports = router;

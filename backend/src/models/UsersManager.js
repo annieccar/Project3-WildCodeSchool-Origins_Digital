@@ -6,14 +6,14 @@ class UsersManager extends AbstractManager {
   }
 
   insert(user) {
-    return this.database.query(`insert into ${this.table} (title) values (?)`, [
+    return this.database.query(`INSERT INTO ${this.table} (title) VALUES (?)`, [
       user.title,
     ]);
   }
 
   update(user) {
     return this.database.query(
-      `update ${this.table} set title = ? where id = ?`,
+      `UPDATE ${this.table} SET title = ? WHERE id = ?`,
       [user.title, user.id]
     );
   }
