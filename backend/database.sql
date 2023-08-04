@@ -70,9 +70,10 @@ CREATE TABLE
 
 CREATE TABLE
     IF NOT EXISTS `video_has_playlist` (
+        `id` INT NOT NULL AUTO_INCREMENT,
         `video_id` INT NOT NULL,
         `playlist_id` INT NOT NULL,
-        PRIMARY KEY (`video_id`, `playlist_id`),
+        PRIMARY KEY (`id`),
         CONSTRAINT `fk_video_has_playlist_video` FOREIGN KEY (`video_id`) REFERENCES `video` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
         CONSTRAINT `fk_video_has_playlist_playlist` FOREIGN KEY (`playlist_id`) REFERENCES `playlist` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
     ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
@@ -87,9 +88,10 @@ CREATE TABLE
 
 CREATE TABLE
     IF NOT EXISTS `video_has_carousel` (
+        `id` INT NOT NULL AUTO_INCREMENT,
         `video_id` INT NOT NULL,
         `carousel_id` INT NOT NULL,
-        PRIMARY KEY (`video_id`, `carousel_id`),
+        PRIMARY KEY (`id`),
         CONSTRAINT `fk_video_has_carousel_video` FOREIGN KEY (`video_id`) REFERENCES `video` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
         CONSTRAINT `fk_video_has_carousel_carousel` FOREIGN KEY (`carousel_id`) REFERENCES `carousel` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
     ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
