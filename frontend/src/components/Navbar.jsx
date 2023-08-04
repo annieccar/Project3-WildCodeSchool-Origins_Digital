@@ -5,8 +5,8 @@ export default function Navbar() {
     <nav className="bg-dark flex justify-between items-center h-16">
       <Link to="/">
         <img
-          src="../../src/assets/images/Origins Digital Logo.png"
-          className="h-4/5 mb-2"
+          className="h-4/5 mb-1 w-3/5"
+          src="../../src/assets/images/origins-digital.svg"
           alt="Origin Digital Logo"
         />
       </Link>
