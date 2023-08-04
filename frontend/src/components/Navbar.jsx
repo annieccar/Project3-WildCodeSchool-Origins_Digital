@@ -1,12 +1,14 @@
 import { Link } from "react-router-dom";
 
+import logo from "../assets/images/origins-digital.svg";
+
 export default function Navbar() {
   return (
     <nav className="bg-dark flex justify-between items-center h-16">
       <Link to="/">
         <img
           className="h-4/5 mb-1 w-3/5"
-          src="../../src/assets/images/origins-digital.svg"
+          src={logo}
           alt="Origin Digital Logo"
         />
       </Link>
