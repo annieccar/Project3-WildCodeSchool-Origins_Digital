@@ -1,4 +1,5 @@
 -- SQLBook: Code
+
 -- Active: 1689174540931@@127.0.0.1@3306@origins_digital
 
 -- SQLBook: Code
@@ -47,6 +48,7 @@ CREATE TABLE
 CREATE TABLE
     IF NOT EXISTS `user` (
         `id` INT NOT NULL AUTO_INCREMENT,
+        `username` VARCHAR(64) NOT NULL,
         `firstname` VARCHAR(64) NOT NULL,
         `lastname` VARCHAR(64) NOT NULL,
         `birthdate` DATE NOT NULL,
@@ -98,13 +100,74 @@ CREATE TABLE
 
 INSERT INTO `category` (`name`) VALUES ('nature'), ('landscapes');
 
-INSERT INTO `video` (`name`, `duration`, `category_id`) VALUES ('sea', 10, 2), ('sunset', 11, 2), ('snail', 40, 1), ('sunflowers', 40, 1), ('roundabout', 17, 2), ('lotus_flowers', 28, 1), ('hydrangea', 50, 1), ('fog', 41, 2); 
+INSERT INTO
+    `video` (
+        `name`,
+        `duration`,
+        `category_id`
+    )
+VALUES ('sea', 10, 2), ('sunset', 11, 2), ('snail', 40, 1), ('sunflowers', 40, 1), ('roundabout', 17, 2), ('lotus_flowers', 28, 1), ('hydrangea', 50, 1), ('fog', 41, 2);
 
-INSERT INTO `usertype` (`type_name`) VALUES ('Free'), ('Premium'), ('Administrator');
+INSERT INTO
+    `usertype` (`type_name`)
+VALUES ('Free'), ('Premium'), ('Administrator');
 
-INSERT INTO `user` (`firstname`, `lastname`, `birthdate`, `gender`, `email`, `password`, `usertype_id` ) VALUES ('Annie', 'C.', '2000-01-01', 'female', 'annie@toto.com', 'password', 3), ('Killian', 'C.', '2000-03-03', 'male', 'killian@toto.com', 'password', 2), ('Damien', 'M.', '2000-02-02', 'male', 'damien@toto.com', 'password', 2), ('Thibaut', 'P.', '2000-04-04', 'male', 'thibaut@toto.com', 'password', 1);
+INSERT INTO
+    `user` (
+        `username`,
+        `firstname`,
+        `lastname`,
+        `birthdate`,
+        `gender`,
+        `email`,
+        `password`,
+        `usertype_id`
+    )
+VALUES (
+        'AnnieC',
+        'Annie',
+        'C.',
+        '2000-01-01',
+        'female',
+        'annie@toto.com',
+        'password',
+        3
+    ), (
+        'KillianC',
+        'Killian',
+        'C.',
+        '2000-03-03',
+        'male',
+        'killian@toto.com',
+        'password',
+        2
+    ), (
+        'DamienM',
+        'Damien',
+        'M.',
+        '2000-02-02',
+        'male',
+        'damien@toto.com',
+        'password',
+        2
+    ), (
+        'ThibautP',
+        'Thibaut',
+        'P.',
+        '2000-04-04',
+        'male',
+        'thibaut@toto.com',
+        'password',
+        1
+    );
 
-INSERT INTO `carousel` (`carousel_name`, `carousel_length`) VALUES ('Hero Slider', 5);
+INSERT INTO
+    `carousel` (
+        `carousel_name`,
+        `carousel_length`
+    )
+VALUES ('Hero Slider', 5);
 
-INSERT INTO `video_has_carousel` (`video_id`, `carousel_id`) VALUES (1, 1), (2, 1), (3, 1), (4, 1), (5, 1);
-
+INSERT INTO
+    `video_has_carousel` (`video_id`, `carousel_id`)
+VALUES (1, 1), (2, 1), (3, 1), (4, 1), (5, 1);
