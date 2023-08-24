@@ -5,7 +5,7 @@ import Footbar from "./components/Footbar";
 
 function App() {
   return (
-    <div className="App">
+    <div className="App h-screen w-screen bg-dark text-white">
       <Navbar />
       <Router />
       <Footbar />
