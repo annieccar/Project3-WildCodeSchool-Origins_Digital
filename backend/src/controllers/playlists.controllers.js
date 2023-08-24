@@ -12,6 +12,18 @@ const browse = (req, res) => {
     });
 };
 
+const browseByUser = (req, res) => {
+  models.playlists
+    .findPlaylistsByUser(req.params.id)
+    .then(([rows]) => {
+      res.send(rows);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+};
+
 const read = (req, res) => {
   models.playlists
     .find(req.params.id)
@@ -66,6 +78,18 @@ const add = (req, res) => {
     });
 };
 
+const addVideoHasPlaylist = (req, res) => {
+  models.playlists
+    .insertVideoHasPlaylist(req.body)
+    .then(() => {
+      res.sendStatus(201);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+};
+
 const destroy = (req, res) => {
   models.playlists
     .delete(req.params.id)
@@ -84,8 +108,10 @@ const destroy = (req, res) => {
 
 module.exports = {
   browse,
+  browseByUser,
   read,
   edit,
   add,
+  addVideoHasPlaylist,
   destroy,
 };

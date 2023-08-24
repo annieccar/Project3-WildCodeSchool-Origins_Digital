@@ -17,6 +17,16 @@ class CarouselsManager extends AbstractManager {
       [carousel.title, carousel.id]
     );
   }
+
+  findVideos(id) {
+    return this.database.query(
+      `SELECT video.name FROM video 
+    JOIN video_has_carousel ON video_has_carousel.video_id= video.id 
+    JOIN carousel ON carousel.id=video_has_carousel.carousel_id
+    WHERE carousel.id = ?`,
+      [id]
+    );
+  }
 }
 
 module.exports = CarouselsManager;
