@@ -4,7 +4,6 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import PropTypes from "prop-types";
 
-// Composant des flèches du carrousel
 function SampleArrow(props) {
   const { style, onClick, label } = props;
 
