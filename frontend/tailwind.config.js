@@ -6,7 +6,7 @@ module.exports = {
       dark: "#010D18",
       orange: "#FF680A",
       white: "#FFFFFF",
-      gradientOrange: "[linear-gradient(90deg, #FF8200 0%, #FF2415 100%))]",
+      gray: "rgb(148 163 184)",
     },
     extend: {
       fontFamily: {

@@ -10,4 +10,7 @@ router.put("/:id", carouselsControllers.edit);
 router.post("/", carouselsControllers.add);
 router.delete("/:id", carouselsControllers.destroy);
 
+// Get videos associatedd with a caroussel
+router.get("/:id/videos", carouselsControllers.readVideos);
+
 module.exports = router;
