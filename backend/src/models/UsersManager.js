@@ -32,14 +32,23 @@ class UsersManager extends AbstractManager {
 
   update(user) {
     return this.database.query(
-      `UPDATE ${this.table} SET title = ? WHERE id = ?`,
-      [user.title, user.id]
+      `UPDATE ${this.table} SET username = ?, firstname=?, lastname=?, email=?, password=?, profileimage=?, usertype_id=? WHERE id = ?`,
+      [
+        user.username,
+        user.firstname,
+        user.lastname,
+        user.email,
+        user.password,
+        user.profileimage,
+        user.usertype_id,
+        user.id,
+      ]
     );
   }
 
   findOneByEmail(email) {
     return this.database.query(
-      "select id, firstname, lastname, birthdate, gender, email, password, profileimage, usertype_id from user where email = ?",
+      "select id, username, firstname, lastname, birthdate, gender, email, password, profileimage, usertype_id from user where email = ?",
       [email]
     );
   }

@@ -62,7 +62,7 @@ export default function HeroCarousel() {
       {videoNames.length > 0 && (
         <div className="w-80 lg:w-2/5 overflow-hidden relative">
           <div
-            className="flex w-full transition ease-out duration-40"
+            className="flex w-full transition ease-out duration-1000"
             style={{
               transform: `translateX(-${currentImageIndex * 100}%)`,
             }}
