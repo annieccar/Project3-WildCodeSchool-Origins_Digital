@@ -39,8 +39,6 @@ const edit = (req, res) => {
     .update(user)
     .then(([result]) => {
       if (result.affectedRows) {
-        // delete req.body.password;
-        // delete req.body.confirmpassword;
         res.status(201).json({ id: result.insertId, ...req.body });
       } else {
         res.sendStatus(500);

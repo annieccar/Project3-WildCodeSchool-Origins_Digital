@@ -1,5 +1,10 @@
 import { useState } from "react";
 
+import visa from "../assets/images/Visa.png";
+import amex from "../assets/images/American_Express.png";
+import master from "../assets/images/MasterCard.png";
+import crypto from "../assets/images/Card_Verification_Value.png";
+
 // import { useCurrentUserContext } from "../contexts/CurrentUserContext";
 
 export default function AddPaymentInfo() {
@@ -55,21 +60,9 @@ export default function AddPaymentInfo() {
         />
       </div>
       <div className="flex items-center">
-        <img
-          className="h-[61px]"
-          src="../../src/assets/images/Visa.png"
-          alt="Visa"
-        />
-        <img
-          className="h-[55px]"
-          src="../../src/assets/images/American_Express.png"
-          alt="Amex"
-        />
-        <img
-          className="h-[53px]"
-          src="../../src/assets/images/MasterCard.png"
-          alt="MasterCard"
-        />
+        <img className="h-[61px]" src={visa} alt="Visa" />
+        <img className="h-[55px]" src={amex} alt="Amex" />
+        <img className="h-[53px]" src={master} alt="MasterCard" />
       </div>
       <div className="flex flex-col">
         <label
@@ -139,10 +132,7 @@ export default function AddPaymentInfo() {
             id="cryptogram"
             value={cryptogram}
           />
-          <img
-            src="../../src/assets/images/Card_Verification_Value.png"
-            alt="cryptogram"
-          />
+          <img src={crypto} alt="cryptogram" />
         </div>
       </div>
       <div className="flex justify-center my-5">
