@@ -18,7 +18,7 @@ export default function UserProfile() {
 
   return (
     <div className="bg-dark">
-      <div className="flex flex-col items-center">
+      <div className="flex flex-col items-center lg:flex-row lg:justify-around h-5/6 lg:mt-10">
         <UpdateUserDetails />
         <div className="w-80">
           <h1 className="text-orange font-primary font-bold text-xl py-3">
@@ -27,8 +27,8 @@ export default function UserProfile() {
           <h2 className="text-white font-primary font-bold text-l mb-2 ">
             {status}
           </h2>
+          <AddPaymentInfo />
         </div>
-        <AddPaymentInfo />
       </div>
     </div>
   );
