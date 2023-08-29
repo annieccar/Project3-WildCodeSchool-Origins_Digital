@@ -1,32 +1,30 @@
 import { useState } from "react";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import axios from "axios";
 
 import { useCurrentUserContext } from "../contexts/CurrentUserContext";
 import pencil from "../assets/images/Pencil.svg";
 
 export default function UpdateUserDetails() {
-  const { user, setUser } = useCurrentUserContext();
+  const { user } = useCurrentUserContext();
+
   const [updateSuccess, setUpdateSuccess] = useState(false);
 
   const {
-    control,
+    register,
     handleSubmit,
     formState: { errors },
-    getValues,
     watch,
   } = useForm();
 
-  const profileImage = user.profileimage;
-  const userTypeId = user.usertype_id;
-
-  const onSubmit = () => {
-    const newData = getValues();
+  const onSubmit = (data) => {
+    const newData = { ...data };
+    delete newData.confirmpassword;
 
     const userDetails = {
       ...newData,
-      profileimage: profileImage,
-      usertype_id: userTypeId,
+      profileimage: user.profileimage,
+      usertype_id: user.usertype_id,
     };
 
     axios
@@ -35,7 +33,6 @@ export default function UpdateUserDetails() {
         userDetails
       )
       .then((res) => {
-        setUser(res.data);
         localStorage.setItem("user", JSON.stringify(res.data));
         if (res.status === 201) {
           setUpdateSuccess(true);
@@ -59,8 +56,8 @@ export default function UpdateUserDetails() {
         <div className="flex justify-between items-center my-2 pr-3">
           <img
             src={
-              profileImage
-                ? `${profileImage}`
+              user.profileimage
+                ? `${user.profileimage}`
                 : "../../src/assets/images/User.png"
             }
             alt="profile"
@@ -72,34 +69,25 @@ export default function UpdateUserDetails() {
             htmlFor="username"
             className="text-white font-primary font-bold text-l mb-2 "
           >
-            Username
+            User Name
           </label>
-          <Controller
+          {/* eslint-disable react/jsx-props-no-spreading */}
+          <input
+            className="mb-2 px-2 rounded-lg border-2 border-solid border-orange bg-dark text-gray font-primary "
+            type="text"
+            {...register("username", {
+              required: true,
+              minLength: 3,
+            })}
+            aria-invalid={errors.username ? "true" : "false"}
             name="username"
-            control={control}
             defaultValue={user.username}
-            rules={{
-              required: "A userName is required",
-              minLength: {
-                value: 3,
-                message:
-                  "A username with a minimum of 3 characters is required",
-              },
-            }}
-            render={({ field }) => (
-              <>
-                <input
-                  value={field.value}
-                  onChange={field.onChange}
-                  type="text"
-                  className="mb-2 px-2 rounded-lg border-2 border-solid border-orange bg-dark text-gray font-primary "
-                />
-                {errors.username && (
-                  <span className="text-red">{errors.username.message}</span>
-                )}
-              </>
-            )}
           />
+          {errors.username && (
+            <span className="text-red">
+              Your user name must have a minimum of 3 characters
+            </span>
+          )}
         </div>
         <div className="flex flex-col">
           <label
@@ -108,32 +96,22 @@ export default function UpdateUserDetails() {
           >
             First Name
           </label>
-          <Controller
+          <input
+            className="mb-2 px-2 rounded-lg border-2 border-solid border-orange bg-dark text-gray font-primary "
+            type="text"
+            {...register("firstname", {
+              required: true,
+              minLength: 3,
+            })}
+            aria-invalid={errors.firstname ? "true" : "false"}
             name="firstname"
-            control={control}
             defaultValue={user.firstname}
-            rules={{
-              required: "A first name is required",
-              minLength: {
-                value: 2,
-                message:
-                  "A first name with a minimum of 2 characters is required",
-              },
-            }}
-            render={({ field }) => (
-              <>
-                <input
-                  value={field.value}
-                  onChange={field.onChange}
-                  type="text"
-                  className="mb-2 px-2 rounded-lg border-2 border-solid border-orange bg-dark text-gray font-primary "
-                />
-                {errors.firstname && (
-                  <span className="text-red">{errors.firstname.message}</span>
-                )}
-              </>
-            )}
           />
+          {errors.firstname && (
+            <span className="text-red">
+              Your first name must have a minimum of 3 characters
+            </span>
+          )}
         </div>
         <div className="flex flex-col">
           <label
@@ -142,32 +120,22 @@ export default function UpdateUserDetails() {
           >
             Last Name
           </label>
-          <Controller
+          <input
+            className="mb-2 px-2 rounded-lg border-2 border-solid border-orange bg-dark text-gray font-primary "
+            type="text"
+            {...register("lastname", {
+              required: true,
+              minLength: 3,
+            })}
+            aria-invalid={errors.lastname ? "true" : "false"}
             name="lastname"
-            control={control}
             defaultValue={user.lastname}
-            rules={{
-              required: "A last name is required",
-              minLength: {
-                value: 2,
-                message:
-                  "A last name with a minimum of 2 characters is required",
-              },
-            }}
-            render={({ field }) => (
-              <>
-                <input
-                  value={field.value}
-                  onChange={field.onChange}
-                  type="text"
-                  className="mb-2 px-2 rounded-lg border-2 border-solid border-orange bg-dark text-gray font-primary "
-                />
-                {errors.lastname && (
-                  <span className="text-red">{errors.lastname.message}</span>
-                )}
-              </>
-            )}
           />
+          {errors.lastname && (
+            <span className="text-red">
+              Your last name must have a minimum of 3 characters
+            </span>
+          )}
         </div>
         <div className="flex flex-col">
           <label
@@ -176,31 +144,22 @@ export default function UpdateUserDetails() {
           >
             Email Address
           </label>
-          <Controller
+          <input
+            className="mb-2 px-2 rounded-lg border-2 border-solid border-orange bg-dark text-gray font-primary "
+            type="text"
+            {...register("email", {
+              required: true,
+              pattern: { value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i },
+            })}
+            aria-invalid={errors.email ? "true" : "false"}
             name="email"
-            control={control}
             defaultValue={user.email}
-            rules={{
-              required: "An email adress is required",
-              pattern: {
-                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                message: "Please enter a valid email address",
-              },
-            }}
-            render={({ field }) => (
-              <>
-                <input
-                  value={field.value}
-                  onChange={field.onChange}
-                  type="text"
-                  className="mb-2 px-2 rounded-lg border-2 border-solid border-orange bg-dark text-gray font-primary "
-                />
-                {errors.email && (
-                  <span className="text-red">{errors.email.message}</span>
-                )}
-              </>
-            )}
           />
+          {errors.email && (
+            <span className="text-red">
+              You must enter a valid email adress
+            </span>
+          )}
         </div>
         <div className="flex flex-col">
           <label
@@ -209,30 +168,21 @@ export default function UpdateUserDetails() {
           >
             Password
           </label>
-          <Controller
+          <input
+            className="mb-2 px-2 rounded-lg border-2 border-solid border-orange bg-dark text-gray font-primary "
+            type="password"
+            {...register("password", {
+              required: true,
+              minLength: 8,
+            })}
+            aria-invalid={errors.password ? "true" : "false"}
             name="password"
-            control={control}
-            rules={{
-              required: "An password is required",
-              minLength: {
-                value: 8,
-                message: "Password must be at least 8 characters",
-              },
-            }}
-            render={({ field }) => (
-              <>
-                <input
-                  value={field.value}
-                  onChange={field.onChange}
-                  type="password"
-                  className="mb-2 px-2 rounded-lg border-2 border-solid border-orange bg-dark text-gray font-primary "
-                />
-                {errors.password && (
-                  <span className="text-red">{errors.password.message}</span>
-                )}
-              </>
-            )}
           />
+          {errors.password && (
+            <span className="text-red">
+              Your password must have a minimum of 8 characters
+            </span>
+          )}
         </div>
         <div className="flex flex-col">
           <label
@@ -241,30 +191,19 @@ export default function UpdateUserDetails() {
           >
             Confirm password
           </label>
-          <Controller
+          <input
+            className="mb-2 px-2 rounded-lg border-2 border-solid border-orange bg-dark text-gray font-primary "
+            type="password"
+            {...register("confirmpassword", {
+              required: true,
+              validate: (value) => value === watch("password"),
+            })}
+            aria-invalid={errors.confirmpassword ? "true" : "false"}
             name="confirmpassword"
-            control={control}
-            rules={{
-              required: "Please confirm your password",
-              validate: (value) =>
-                value === watch("password") || "Your password does not match",
-            }}
-            render={({ field }) => (
-              <>
-                <input
-                  value={field.value}
-                  onChange={field.onChange}
-                  type="password"
-                  className="mb-2 px-2 rounded-lg border-2 border-solid border-orange bg-dark text-gray font-primary "
-                />
-                {errors.confirmpassword && (
-                  <span className="text-red">
-                    {errors.confirmpassword.message}
-                  </span>
-                )}
-              </>
-            )}
           />
+          {errors.confirmpassword && (
+            <span className="text-red">Your password does not match</span>
+          )}
         </div>
         <div className="flex justify-center my-5">
           <input
