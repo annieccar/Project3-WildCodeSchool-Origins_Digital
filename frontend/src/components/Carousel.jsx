@@ -35,14 +35,9 @@ SampleArrow.propTypes = {
     display: PropTypes.string,
     background: PropTypes.string,
     cursor: PropTypes.string,
-  }),
-  onClick: PropTypes.func,
+  }).isRequired,
+  onClick: PropTypes.func.isRequired,
   label: PropTypes.string.isRequired,
-};
-
-SampleArrow.defaultProps = {
-  style: {},
-  onClick: () => {},
 };
 
 function MultipleItems() {
