@@ -38,10 +38,10 @@ const edit = (req, res) => {
   models.users
     .update(user)
     .then(([result]) => {
-      if (result.affectedRows === 0) {
-        res.sendStatus(404);
+      if (result.affectedRows) {
+        res.status(201).json({ id: result.insertId, ...req.body });
       } else {
-        res.sendStatus(204);
+        res.sendStatus(500);
       }
     })
     .catch((err) => {

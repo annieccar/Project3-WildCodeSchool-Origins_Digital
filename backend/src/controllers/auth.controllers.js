@@ -4,17 +4,14 @@ const signIn = async (req, res) => {
   await models.users
     .findOneByEmail(req.body.loginEmail)
     .then(([result]) => {
-      if (req.body.loginPassword === result[0].password) {
-        delete req.body.loginPassword;
-        const informations = result[0];
-        delete informations.password;
+      // JWT Authentication to implement
+      delete req.body.loginPassword;
+      const informations = result[0];
+      delete informations.hashedpassword;
 
-        res.status(201).json({
-          ...informations,
-        });
-      } else {
-        res.sendStatus(500);
-      }
+      res.status(201).json({
+        ...informations,
+      });
     })
     .catch((err) => {
       console.error(err);
@@ -27,7 +24,6 @@ const signUp = async (req, res) => {
     .insert(req.body)
     .then(([result]) => {
       if (result.affectedRows) {
-        delete req.body.password;
         delete req.body.password_confirmation;
         res.status(201).json({ id: result.insertId, ...req.body });
       } else {

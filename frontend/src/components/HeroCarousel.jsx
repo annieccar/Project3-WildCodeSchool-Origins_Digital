@@ -12,7 +12,7 @@ export default function HeroCarousel() {
   // Retrieve thumbnails names from database
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/api/carousels/1/videos`)
+      .get(`${import.meta.env.VITE_BACKEND_URL}/api/carousels/1/videos`)
       .then((response) => {
         const names = [];
         response.data.map((elem) => names.push(elem.name));
@@ -62,14 +62,16 @@ export default function HeroCarousel() {
       {videoNames.length > 0 && (
         <div className="w-80 lg:w-2/5 overflow-hidden relative">
           <div
-            className="flex w-full transition ease-out duration-40"
+            className="flex w-full transition ease-out duration-1000"
             style={{
               transform: `translateX(-${currentImageIndex * 100}%)`,
             }}
           >
             {videoNames.map((elem) => (
               <img
-                src={`../../Public/thumbnails/${elem}.png`}
+                src={`${
+                  import.meta.env.VITE_BACKEND_URL
+                }/Public/thumbnails/${elem}.png`}
                 key={elem}
                 alt={elem}
                 className="mx-auto"
