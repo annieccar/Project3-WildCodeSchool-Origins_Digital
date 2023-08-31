@@ -48,7 +48,7 @@ export default function SignUpLogin() {
             <Login /> <Signup />
           </div>
         )}
-        {!isDesktop && loginSelected ? <Login /> : null}{" "}
+        {!isDesktop && loginSelected ? <Login /> : null}
         {!isDesktop && !loginSelected ? <Signup /> : null}
       </div>
     </div>
