@@ -74,14 +74,14 @@ export default function Login() {
         isDesktop && "border-r-4 border-blue"
       }  `}
     >
-      <p className="w-[230px] font-bold text-orange ">
+      <p className=" font-bold text-xl text-orange ">
         You already have an account
       </p>
       <form
-        className="flex flex-col items-center "
+        className="flex flex-col items-center min-w-[350px]"
         onSubmit={handleSubmit(handleLoginRegistration)}
       >
-        <div className="flex flex-col p-2 md:mt-8">
+        <div className="flex flex-col w-[100%]  p-2 md:mt-8">
           <label className="py-2 pl-1 font-semibold" htmlFor="email">
             Email:
           </label>
@@ -95,7 +95,7 @@ export default function Login() {
             aria-invalid={errors.email ? "true" : "false"}
           />
         </div>
-        <div className="flex flex-col p-2 ">
+        <div className="flex flex-col w-[100%]  p-2 ">
           <label className="py-2 pl-1  font-semibold" htmlFor="password">
             Password:
           </label>

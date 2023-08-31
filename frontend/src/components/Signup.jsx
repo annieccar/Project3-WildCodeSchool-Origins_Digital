@@ -135,17 +135,17 @@ export default function Signup() {
 
   return (
     <div className="min-h-[60vh] min-w-[50%] mx-12 flex flex-col justify-items-center items-center">
-      <p className="w-[150px] font-bold text-orange ">Create an account</p>
+      <p className="font-bold text-xl text-orange ">Create an account</p>
       <form
-        className="flex flex-col items-center]"
+        className="flex flex-col items-center min-w-[350px]"
         onSubmit={handleSubmit(handleLoginRegistration)}
       >
-        <div className="flex flex-col p-2 md:mt-8">
+        <div className="flex flex-col w-[100%] p-2 md:mt-8">
           <label className="py-2 pl-1 font-semibold" htmlFor="username">
             Username:
           </label>
           <input
-            className=" rounded-md border-[3px] p-0.5  border-orange bg-dark"
+            className=" rounded-md border-[3px] p-1  border-orange bg-dark"
             type="text"
             placeholder="Enter your username"
             onChange={usernameRegister.onChange}
@@ -155,12 +155,12 @@ export default function Signup() {
           />
         </div>
 
-        <div className="flex flex-col p-2 ">
+        <div className="flex flex-col w-[100%] p-2 ">
           <label className="py-2 pl-1 font-semibold" htmlFor="firstname">
             Firstname :
           </label>
           <input
-            className=" rounded-md border-[3px] p-0.5  border-orange bg-dark"
+            className=" rounded-md border-[3px] p-1  border-orange bg-dark"
             type="text"
             placeholder="Enter your firstname"
             onChange={firstnameRegister.onChange}
@@ -170,12 +170,12 @@ export default function Signup() {
           />
         </div>
 
-        <div className="flex flex-col p-2 ">
+        <div className="flex flex-col w-[100%] p-2 ">
           <label className="py-2 pl-1 font-semibold" htmlFor="lastname">
             Lastname:
           </label>
           <input
-            className=" rounded-md border-[3px] p-0.5  border-orange bg-dark "
+            className=" rounded-md border-[3px] p-1  border-orange bg-dark "
             type="text"
             placeholder="Enter your lastname"
             onChange={lastnameRegister.onChange}
@@ -185,7 +185,7 @@ export default function Signup() {
           />
         </div>
 
-        <div className="flex flex-col p-2 ">
+        <div className="flex flex-col w-[100%] p-2 ">
           <label className="py-2 pl-1 font-semibold" htmlFor="birthdate">
             Birthdate :
           </label>
@@ -193,7 +193,6 @@ export default function Signup() {
             className="min-w-[190px] rounded-md border-[3px] p-0.5  border-orange bg-dark "
             type="date"
             placeholder="Enter your birthdate"
-            // min="1900-01-01"
             onChange={birthdateRegister.onChange}
             name={birthdateRegister.name}
             ref={birthdateRegister.ref}
@@ -201,7 +200,7 @@ export default function Signup() {
           />
         </div>
 
-        <fieldset className="flex flex-col p-2 min-w-[200px] ">
+        <fieldset className="flex flex-col w-[100%] p-2 min-w-[200px] ">
           <legend className="pt-2 pl-1 font-semibold">
             Select your gender:
           </legend>
@@ -249,12 +248,12 @@ export default function Signup() {
           </div>
         </fieldset>
 
-        <div className="flex flex-col p-2 ">
+        <div className="flex flex-col p-2 w-[100%] ">
           <label className="py-2 pl-1 font-semibold" htmlFor="email">
             Email:
           </label>
           <input
-            className="rounded-md border-[3px] p-0.5  border-orange bg-dark"
+            className="rounded-md border-[3px] p-1  border-orange bg-dark"
             type="text"
             placeholder="Enter your email address"
             onChange={emailRegister.onChange}
@@ -264,12 +263,12 @@ export default function Signup() {
           />
         </div>
 
-        <div className="flex flex-col p-2 ">
+        <div className="flex flex-col p-2 w-[100%] ">
           <label className="py-2 pl-1 font-semibold" htmlFor="password">
             Password:
           </label>
           <input
-            className="rounded-md border-[3px] p-0.5  border-orange bg-dark"
+            className="rounded-md border-[3px] p-1  border-orange bg-dark"
             type="password"
             placeholder="Choose your password"
             onChange={passwordRegister.onChange}
@@ -279,7 +278,7 @@ export default function Signup() {
           />
         </div>
 
-        <div className="flex flex-col p-2 ">
+        <div className="flex flex-col p-2 w-[100%] ">
           <label
             className="py-2 pl-1 font-semibold"
             htmlFor="passwordconfirmation"
@@ -305,9 +304,7 @@ export default function Signup() {
       </form>
       <div
         role="alert"
-        className={`max-w-sm font-medium rounded p-5 ${
-          errors && "border-2"
-        } text-[#FF2415]`}
+        className="max-w-sm font-medium rounded p-5  text-[#FF2415]"
       >
         {errors.username && <p> {errors.username.message}</p>}
         {errors.firstname && <p> {errors.firstname.message}</p>}
