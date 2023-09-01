@@ -3,14 +3,11 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useCurrentUserContext } from "../contexts/CurrentUserContext";
-import useMediaQuery from "../hooks/useMediaQuery";
 
 export default function Login() {
   const { setUser } = useCurrentUserContext();
 
   const navigate = useNavigate();
-
-  const isDesktop = useMediaQuery("(min-width: 760px)");
 
   const {
     register,
@@ -69,11 +66,7 @@ export default function Login() {
   };
 
   return (
-    <div
-      className={`min-h-[60vh] min-w-[50%] mx-12 flex flex-col justify-items-center items-center ${
-        isDesktop && "border-r-4 border-blue"
-      }  `}
-    >
+    <div className="min-h-[60vh] min-w-[45%] mx-10 flex flex-col justify-items-center items-center">
       <p className=" font-bold text-xl text-orange ">
         You already have an account
       </p>
@@ -86,7 +79,7 @@ export default function Login() {
             Email:
           </label>
           <input
-            className="rounded-md border-[3px] p-0.5  border-orange bg-dark"
+            className="rounded-md border-[3px] p-1  border-orange bg-dark"
             type="text"
             placeholder="Enter your email address"
             onChange={emailRegister.onChange}
@@ -100,7 +93,7 @@ export default function Login() {
             Password:
           </label>
           <input
-            className="rounded-md border-[3px] p-0.5  border-orange bg-dark"
+            className="rounded-md border-[3px] p-1  border-orange bg-dark"
             type="password"
             placeholder="Enter your password"
             onChange={passwordRegister.onChange}
@@ -110,7 +103,7 @@ export default function Login() {
           />
         </div>
         <input
-          className="w-36 h-9 m-5 mt-8  rounded-3xl font-primary font-semibold border-2 border-orange bg-orange"
+          className="w-36 h-9 m-5 mt-8  rounded-3xl font-primary font-semibold  bg-[linear-gradient(90deg,#FF8200_0%,_#FF2415_100%)]"
           type="submit"
           value="Log In"
         />

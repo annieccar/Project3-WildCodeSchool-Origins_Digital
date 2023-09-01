@@ -21,7 +21,7 @@ function Router() {
       <Route path="/category/:id" element={<Category />} />
       <Route path="/playlists" element={<Favorites />} />
       <Route path="/playlists/:id" element={<Playlist />} />
-      <Route path="/search" element={<SearchResults />} />
+      <Route path="/search/:query" element={<SearchResults />} />
       <Route path="/videos/:id" element={<Video />} />
       <Route path="/profile" element={<UserProfile />} />
       <Route path="/admin/category" element={<CategoryManagement />} />

@@ -297,7 +297,7 @@ export default function Signup() {
         </div>
 
         <input
-          className="w-36 h-9 m-5 my-8  rounded-3xl font-primary font-semibold border-2 border-orange bg-orange"
+          className="w-36 h-9 m-5 my-8  rounded-3xl font-primary font-semibold bg-[linear-gradient(90deg,#FF8200_0%,_#FF2415_100%)]"
           type="submit"
           value="Sign up"
         />

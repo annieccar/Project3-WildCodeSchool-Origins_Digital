@@ -82,10 +82,27 @@ const destroy = (req, res) => {
     });
 };
 
+const search = (req, res) => {
+  models.videos
+    .findByQuery(req.query)
+    .then(([videos]) => {
+      if (videos.length !== 0) {
+        res.status(202).send(videos);
+      } else {
+        res.status(500);
+      }
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send("Your search didn't correspond to a video.");
+    });
+};
+
 module.exports = {
   browse,
   read,
   edit,
   add,
   destroy,
+  search,
 };

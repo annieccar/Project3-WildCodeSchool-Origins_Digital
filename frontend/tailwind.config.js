@@ -8,11 +8,14 @@ module.exports = {
       orange: "#FF680A",
       white: "#FFFFFF",
       blue: "#031E37",
-      gray: "rgb(148 163 184)",
+      gray: "rgb(138 153 255)",
     },
     extend: {
       fontFamily: {
         primary: "lato",
+      },
+      backgroundImage: {
+        "orange-gradient": "linear-gradient(90deg,#FF8200_0%,_#FF2415_100%)",
       },
     },
   },
