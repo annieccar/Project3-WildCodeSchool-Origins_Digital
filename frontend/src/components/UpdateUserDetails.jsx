@@ -207,10 +207,7 @@ export default function UpdateUserDetails() {
         </div>
         <div className="flex justify-center my-5">
           <input
-            className="text-white font-primary font-semibold rounded-full w-auto px-4 py-0.5"
-            style={{
-              background: "linear-gradient(90deg, #FF8200 0%, #FF2415 100%)",
-            }}
+            className="text-white font-primary font-semibold rounded-full w-auto px-4 py-0.5 bg-orange-gradient"
             type="submit"
             value="Save Changes"
           />
