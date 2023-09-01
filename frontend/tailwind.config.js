@@ -14,6 +14,9 @@ module.exports = {
       fontFamily: {
         primary: "lato",
       },
+      backgroundImage: {
+        "orange-gradient": "linear-gradient(90deg, #FF8200 0%, #FF2415 100%)",
+      },
     },
   },
   plugins: [],

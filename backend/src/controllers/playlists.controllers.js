@@ -15,13 +15,46 @@ const browse = (req, res) => {
 const browseByUser = (req, res) => {
   models.playlists
     .findPlaylistsByUser(req.params.id)
-    .then(([rows]) => {
-      res.send(rows);
-    })
+    .then(([rows]) => res.send(rows))
     .catch((err) => {
       console.error(err);
       res.sendStatus(500);
     });
+};
+
+const browseVideos = async (req, res) => {
+  models.playlists
+    .findPlaylistVideos(req.params.id)
+    .then(([rows]) => res.send(rows))
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+};
+
+const browseAllVideos = async (req, res) => {
+  try {
+    const [playlists] = await models.playlists.findPlaylistsByUser(
+      req.params.id
+    );
+
+    const result = await Promise.all(
+      playlists.map(async (playlist) => {
+        const [videoDetails] = await models.playlists.findPlaylistVideos(
+          playlist.id
+        );
+        return {
+          ...playlist,
+          videos: videoDetails,
+        };
+      })
+    );
+
+    res.status(200).send(result);
+  } catch (err) {
+    console.error(err);
+    res.sendStatus(500);
+  }
 };
 
 const read = (req, res) => {
@@ -109,6 +142,8 @@ const destroy = (req, res) => {
 module.exports = {
   browse,
   browseByUser,
+  browseVideos,
+  browseAllVideos,
   read,
   edit,
   add,

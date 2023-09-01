@@ -104,7 +104,7 @@ export default function Login() {
         </div>
 
         <button
-          className="w-36 h-9 m-5 mt-8  rounded-3xl font-primary font-semibold border-2 border-orange bg-orange"
+          className="w-36 h-9 m-5 mt-8  rounded-3xl font-primary font-semibold bg-orange-gradient"
           type="submit"
         >
           Log In
