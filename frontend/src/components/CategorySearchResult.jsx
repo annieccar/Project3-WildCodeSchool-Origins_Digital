@@ -32,9 +32,9 @@ export default function CategorySearchResults({ categoryName, searchResults }) {
                     >
                       <img
                         className="rounded-md relative "
-                        src={`${import.meta.env.VITE_TUMBNAILS_PATH}/${
-                          video.name
-                        }.png`}
+                        src={`${import.meta.env.VITE_BACKEND_URL}${
+                          import.meta.env.VITE_TUMBNAILS_PATH
+                        }/${video.name}.png`}
                         alt={`${video.name}`}
                       />
                       <p className="ml-1 mt-1">

@@ -4,7 +4,7 @@ const signIn = async (req, res) => {
   await models.users
     .findOneByEmail(req.body.email)
     .then(([result]) => {
-      if (req.body.password === result[0].password) {
+      if (req.body.password === result[0].hashedpassword) {
         delete req.body.password;
         const informations = result[0];
         delete informations.hashedpassword;
