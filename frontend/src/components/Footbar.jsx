@@ -1,6 +1,5 @@
 import { useState } from "react";
 import CategoryMenu from "./CategoryMenu";
-// import axios from "axios";
 
 export default function Footbar() {
   const [categorySelection, setCategorySelection] = useState(false);
