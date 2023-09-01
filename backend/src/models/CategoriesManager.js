@@ -17,6 +17,12 @@ class CategoriesManager extends AbstractManager {
       [category.title, category.id]
     );
   }
+
+  findVideos(id) {
+    return this.database.query(`SELECT * FROM video WHERE category_id = ?`, [
+      id,
+    ]);
+  }
 }
 
 module.exports = CategoriesManager;

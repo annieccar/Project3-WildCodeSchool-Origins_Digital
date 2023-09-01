@@ -14,7 +14,7 @@ class VideosManager extends AbstractManager {
 
   update({ id, name, duration, details, categoryId }) {
     return this.database.query(
-      `UPDATE ${this.table} SET name = ?, duration = ?, details = ?, category_Id = ? WHERE id = ?`,
+      `UPDATE ${this.table} SET name = ?, duration = ?, details = ?, category_id = ? WHERE id = ?`,
       [name, duration, details, categoryId, id]
     );
   }
