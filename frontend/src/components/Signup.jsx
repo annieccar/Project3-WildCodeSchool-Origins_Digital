@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -8,6 +7,19 @@ export default function Signup() {
   const { setUser } = useCurrentUserContext();
 
   const navigate = useNavigate();
+
+  function giveTodayDate() {
+    const date = new Date();
+    let month = date.getMonth().toString();
+    if (month.length === 1) {
+      month = "0".concat(month);
+    }
+    let day = date.getDate().toString();
+    if (day.length === 1) {
+      day = "0".concat(day);
+    }
+    return `${date.getFullYear()}-${month}-${day}`;
+  }
 
   const handleLoginRegistration = async (signupFormData) => {
     await axios
@@ -81,7 +93,7 @@ export default function Signup() {
     birthdate: {
       required: "A birthdate must be registered.",
       validate: (value) =>
-        value > "1900-01-01" ||
+        (value > "1900-01-01" && value < giveTodayDate()) ||
         "Your birthdate must be posterior to January 1st, 1900.",
     },
     gender: {
@@ -124,14 +136,6 @@ export default function Signup() {
     "passwordconfirmation",
     registerOptions.passwordconfirmation
   );
-
-  const [noMatch, setNoMatch] = useState("");
-
-  useEffect(() => {
-    if (noMatch) {
-      setNoMatch(() => "");
-    }
-  }, [errors.email, errors.password]);
 
   return (
     <div className="min-h-[60vh] min-w-[50%] mx-12 flex flex-col justify-items-center items-center">
@@ -192,6 +196,7 @@ export default function Signup() {
           <input
             className="min-w-[190px] rounded-md border-[3px] p-0.5  border-orange bg-dark "
             type="date"
+            max={giveTodayDate()}
             placeholder="Enter your birthdate"
             onChange={birthdateRegister.onChange}
             name={birthdateRegister.name}
