@@ -21,7 +21,7 @@ class PlaylistsManager extends AbstractManager {
 
   findPlaylistsByUser(id) {
     return this.database.query(
-      `SELECT p.id, p.name name, COUNT(vp.playlist_id) count FROM ${this.table} p INNER JOIN video_has_playlist vp ON p.id = vp.playlist_id WHERE p.user_id = ? GROUP BY 
+      `SELECT p.id, p.name name, COUNT(vp.playlist_id) count FROM ${this.table} p LEFT JOIN video_has_playlist vp ON p.id = vp.playlist_id WHERE p.user_id = ? GROUP BY 
 p.name, p.id`,
       [id]
     );
