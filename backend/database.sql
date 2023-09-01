@@ -57,7 +57,7 @@ CREATE TABLE
         `birthdate` DATE NOT NULL,
         `gender` VARCHAR(45) NOT NULL,
         `email` VARCHAR(128) NOT NULL,
-        `password` VARCHAR(64) NOT NULL,
+        `hashedpassword` VARCHAR(255) NOT NULL,
         `profileimage` VARCHAR(255) NULL,
         `usertype_id` INT NOT NULL,
         PRIMARY KEY (`id`),
@@ -173,7 +173,7 @@ INSERT INTO
         `birthdate`,
         `gender`,
         `email`,
-        `password`,
+        `hashedpassword`,
         `usertype_id`
     )
 VALUES (
