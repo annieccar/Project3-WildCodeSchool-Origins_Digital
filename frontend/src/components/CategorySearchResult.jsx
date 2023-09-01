@@ -1,10 +1,8 @@
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import useMediaQuery from "../hooks/useMediaQuery";
 import formatStringFromDb from "../services/formatStringFromDb";
 
 export default function CategorySearchResults({ categoryName, searchResults }) {
-  const isDesktop = useMediaQuery("(min-width: 760px)");
   return (
     <div>
       {searchResults?.length !== 0 && (
@@ -14,11 +12,7 @@ export default function CategorySearchResults({ categoryName, searchResults }) {
               {formatStringFromDb(categoryName)}
             </h2>
           </div>
-          <div
-            className={`grid  gap-2 ${
-              !isDesktop ? "grid-cols-2" : "grid-cols-6"
-            }`}
-          >
+          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6">
             {searchResults.map(
               (video) =>
                 video.category === categoryName && (
