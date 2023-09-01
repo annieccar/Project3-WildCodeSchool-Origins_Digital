@@ -18,7 +18,7 @@ module.exports = {
         primary: "lato",
       },
       backgroundImage: {
-        "orange-gradient": "linear-gradient(90deg,_#FF8200_0%,_#FF2415_100%)",
+        "orange-gradient": "linear-gradient(90deg, #FF8200 0%, #FF2415 100%)",
       },
     },
   },
