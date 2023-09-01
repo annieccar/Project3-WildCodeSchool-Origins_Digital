@@ -37,7 +37,6 @@ export default function VideoManagement() {
       </h3>
       <div className="flex flex-col md:flex-row">
         <div className="w-full max-w-screen-md mb-5 md:w-1/2 md:pr-5">
-          {/* Video List */}
           <h3 className="ml-5">Video List:</h3>
           <div className="border-solid rounded-2xl border-4 border-orange mb-3 p-3">
             {videoNames.map((videoName) => (
@@ -75,7 +74,6 @@ export default function VideoManagement() {
           </button>
         </div>
         <div className="w-full max-w-screen-md md:w-1/2 ">
-          {/* Selected Video Details */}
           <h3 className="text-orange font-bold ">Selected video details</h3>
           {selectedVideo && (
             <div>
