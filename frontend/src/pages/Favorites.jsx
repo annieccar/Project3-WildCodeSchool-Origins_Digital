@@ -43,23 +43,6 @@ export default function Favorites() {
             <div>
               <DynamicCarousel playlist={playlist} />
             </div>
-            {/* <div className="grid grid-cols-5 gap-2 ml-5">
-              {playlist.videos.map((video) => (
-                <button
-                  type="button"
-                  key={video.id}
-                  onClick={() => navigate(`/videos/${video.id}`)}
-                >
-                  <img
-                    className="rounded-lg"
-                    src={`${
-                      import.meta.env.VITE_BACKEND_URL
-                    }/public/thumbnails/${video.name}.png`}
-                    alt={video.name}
-                  />
-                </button>
-              ))}
-            </div> */}
           </div>
         ))}
     </div>

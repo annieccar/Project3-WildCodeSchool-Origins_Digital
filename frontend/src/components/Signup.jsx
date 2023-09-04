@@ -91,7 +91,7 @@ export default function Signup() {
             placeholder="Enter your username"
             value={signupFormData.username || ""}
             onChange={handleChange}
-          />{" "}
+          />
         </div>
 
         <div className="flex flex-col p-2 ">
