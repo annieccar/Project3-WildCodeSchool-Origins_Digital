@@ -2,16 +2,18 @@ const models = require("../models");
 
 const signIn = async (req, res) => {
   await models.users
-    .findOneByEmail(req.body.loginEmail)
+    .findOneByEmail(req.body.email)
     .then(([result]) => {
-      // JWT Authentication to implement
-      delete req.body.loginPassword;
-      const informations = result[0];
-      delete informations.hashedpassword;
+      if (req.body.password === result[0].hashedpassword) {
+        delete req.body.password;
+        const informations = result[0];
+        delete informations.hashedpassword;
 
-      res.status(201).json({
-        ...informations,
-      });
+        // JWT Authentication to implement
+        res.status(201).json({
+          ...informations,
+        });
+      }
     })
     .catch((err) => {
       console.error(err);

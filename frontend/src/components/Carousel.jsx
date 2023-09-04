@@ -87,27 +87,57 @@ function MultipleItems() {
         responsive={settings.responsive}
       >
         <div className="p-2">
-          <img src="/Public/thumbnails/fog.png" alt="" />
+          <img
+            src={`${import.meta.env.VITE_BACKEND_URL}${
+              import.meta.env.VITE_TUMBNAILS_PATH
+            }/fog.png`}
+            alt="fog"
+          />
           <h3 className="flex justify-center">Fog</h3>
         </div>
         <div className="p-2">
-          <img src="/Public/thumbnails/lotus_flowers.png" alt="" />
+          <img
+            src={`${import.meta.env.VITE_BACKEND_URL}${
+              import.meta.env.VITE_TUMBNAILS_PATH
+            }/lotus_flowers.png`}
+            alt="lotus_flower"
+          />
           <h3 className="flex justify-center">Lotus Flowers</h3>
         </div>
         <div className="p-2">
-          <img src="/Public/thumbnails/sea.png" alt="" />
+          <img
+            src={`${import.meta.env.VITE_BACKEND_URL}${
+              import.meta.env.VITE_TUMBNAILS_PATH
+            }/sea.png`}
+            alt="sea"
+          />
           <h3 className="flex justify-center">Sea</h3>
         </div>
         <div className="p-2">
-          <img src="/Public/thumbnails/roundabout.png" alt="" />
+          <img
+            src={`${import.meta.env.VITE_BACKEND_URL}${
+              import.meta.env.VITE_TUMBNAILS_PATH
+            }/roundabout.png`}
+            alt="roundabout"
+          />
           <h3 className="flex justify-center">Roundabout</h3>
         </div>
         <div className="p-2">
-          <img src="/Public/thumbnails/sunset.png" alt="" />
+          <img
+            src={`${import.meta.env.VITE_BACKEND_URL}${
+              import.meta.env.VITE_TUMBNAILS_PATH
+            }/sunset.png`}
+            alt="sunset"
+          />
           <h3 className="flex justify-center">Sunset</h3>
         </div>
         <div className="p-2">
-          <img src="/Public/thumbnails/sunflowers.png" alt="" />
+          <img
+            src={`${import.meta.env.VITE_BACKEND_URL}${
+              import.meta.env.VITE_TUMBNAILS_PATH
+            }/sunflowers.png`}
+            alt="sunflowers"
+          />
           <h3 className="flex justify-center">Sunflowers</h3>
         </div>
       </Slider>
