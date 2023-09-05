@@ -1,6 +1,7 @@
 import Router from "./routes/Router";
 import Navbar from "./components/Navbar";
 import Footbar from "./components/Footbar";
+
 import { CurrentUserContextProvider } from "./contexts/CurrentUserContext";
 
 function App() {

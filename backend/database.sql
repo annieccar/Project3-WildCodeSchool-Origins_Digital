@@ -1,3 +1,5 @@
+-- Active: 1689174540931@@127.0.0.1@3306@origins_digital
+
 -- SQLBook: Code
 
 -- Active: 1689174540931@@127.0.0.1@3306@origins_digital
@@ -31,7 +33,8 @@ CREATE TABLE
     IF NOT EXISTS `video` (
         `id` INT NOT NULL AUTO_INCREMENT,
         `name` VARCHAR(64) NOT NULL,
-        `duration` INT NOT NULL,
+        `file_name` VARCHAR(64) NOT NULL,
+        `duration` TIME NOT NULL,
         `details` VARCHAR(45) NULL,
         `category_id` INT NULL,
         PRIMARY KEY (`id`),
@@ -54,7 +57,7 @@ CREATE TABLE
         `birthdate` DATE NOT NULL,
         `gender` VARCHAR(45) NOT NULL,
         `email` VARCHAR(128) NOT NULL,
-        `password` VARCHAR(64) NOT NULL,
+        `hashedpassword` VARCHAR(255) NOT NULL,
         `profileimage` VARCHAR(255) NULL,
         `usertype_id` INT NOT NULL,
         PRIMARY KEY (`id`),
@@ -103,10 +106,60 @@ INSERT INTO `category` (`name`) VALUES ('nature'), ('landscapes');
 INSERT INTO
     `video` (
         `name`,
+        `file_name`,
         `duration`,
+        `details`,
         `category_id`
     )
-VALUES ('sea', 10, 2), ('sunset', 11, 2), ('snail', 40, 1), ('sunflowers', 40, 1), ('roundabout', 17, 2), ('lotus_flowers', 28, 1), ('hydrangea', 50, 1), ('fog', 41, 2);
+VALUES (
+        'sea',
+        'sea',
+        10,
+        'sea details',
+        2
+    ), (
+        'sunset',
+        'sunset',
+        11,
+        'sunset details',
+        2
+    ), (
+        'snail',
+        'snail',
+        40,
+        'snail details',
+        1
+    ), (
+        'sunflowers',
+        'sunflowers',
+        40,
+        'sunflowers details',
+        1
+    ), (
+        'roundabout',
+        'roundabout',
+        17,
+        'roundabout details',
+        2
+    ), (
+        'lotus_flowers',
+        'lotus_flowers',
+        28,
+        'lotus flowers details',
+        1
+    ), (
+        'hydrangea',
+        'hydrangea',
+        50,
+        'hydrangea details',
+        1
+    ), (
+        'fog',
+        'fog',
+        41,
+        'fog details',
+        2
+    );
 
 INSERT INTO
     `usertype` (`type_name`)
@@ -120,7 +173,7 @@ INSERT INTO
         `birthdate`,
         `gender`,
         `email`,
-        `password`,
+        `hashedpassword`,
         `usertype_id`
     )
 VALUES (

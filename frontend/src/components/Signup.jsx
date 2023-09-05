@@ -1,146 +1,211 @@
-import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
 import { useCurrentUserContext } from "../contexts/CurrentUserContext";
 
 export default function Signup() {
-  const [signupFormData, setSignupFormData] = useState({
-    username: "",
-    firstname: "",
-    lastname: "",
-    birthdate: "",
-    gender: "",
-    email: "",
-    password: "",
-    password_confirmation: "",
-  });
-
-  const [missingValues, setMissingValues] = useState("");
-
   const { setUser } = useCurrentUserContext();
 
   const navigate = useNavigate();
 
-  let errorMessage = "";
+  function giveTodayDate() {
+    const date = new Date();
+    let month = date.getMonth().toString();
+    if (month.length === 1) {
+      month = "0".concat(month);
+    }
+    let day = date.getDate().toString();
+    if (day.length === 1) {
+      day = "0".concat(day);
+    }
+    return `${date.getFullYear()}-${month}-${day}`;
+  }
 
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-
-    setSignupFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
+  const handleLoginRegistration = async (signupFormData) => {
+    await axios
+      .post(
+        `${import.meta.env.VITE_BACKEND_URL}/api/auth/signup`,
+        signupFormData
+      )
+      .then((res) => {
+        setUser(res.data);
+        localStorage.setItem("user", JSON.stringify(res.data));
+        navigate("/");
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   };
 
-  const checkSignupForm = (obj) => {
-    const values = [];
-    let message = "";
+  const {
+    watch,
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
-    for (const [key, value] of Object.entries(obj)) {
-      if (!value.length) {
-        values.push(` ${key}`);
-      }
-    }
-
-    if (values.length) {
-      if (values.length === 1) {
-        message = `Please complete the field${values[0]}.`;
-      } else {
-        message = `Please complete the fields${[...values]}.`;
-      }
-    }
-    if (obj.password !== obj.password_confirmation) {
-      message += "Please enter matching passwords.";
-    }
-    return message.replace("_", " ");
+  const registerOptions = {
+    username: {
+      required: "An username must be registered.",
+      pattern: {
+        value: /[a-z0-9éèàëñçù^*+'\\"=²&§$¤€£<>()|%°.-_@]/gi,
+        message: "Registered username contains forbidden characters.",
+      },
+      minLength: {
+        value: 5,
+        message: "An username must have at least 5 characters.",
+      },
+      maxLength: {
+        value: 25,
+        message: "An username must have less than 25 characters.",
+      },
+    },
+    firstname: {
+      required: "A firstname must be registered.",
+      pattern: {
+        value: /[a-z0-9éèàëñçù]/gi,
+        message: "Registered firstname contains forbidden characters.",
+      },
+      minLength: {
+        value: 2,
+        message: "A firstname must have at least 2 characters.",
+      },
+      maxLength: {
+        value: 25,
+        message: "A firstname must have less than 25 characters.",
+      },
+    },
+    lastname: {
+      required: "A lastname must be registered.",
+      pattern: {
+        value: /[a-z0-9éèàëñçù]/gi,
+        message: "Registered lastname contains forbidden characters.",
+      },
+      minLength: {
+        value: 2,
+        message: "A lastname must have at least 2 characters.",
+      },
+      maxLength: {
+        value: 25,
+        message: "A lastname must have less than 25 characters.",
+      },
+    },
+    birthdate: {
+      required: "A birthdate must be registered.",
+      validate: (value) =>
+        (value > "1900-01-01" && value < giveTodayDate()) ||
+        "Your birthdate must be posterior to January 1st, 1900.",
+    },
+    gender: {
+      required: "A gender must be registered.",
+    },
+    email: {
+      required: "An email must be registered.",
+      pattern: {
+        value: /^[a-z0-9.-_]+@[a-z]+\.[a-z]{2,4}$/gi,
+        message:
+          'Registered email has the wrong format. It must resemble "johndoe@example.com."',
+      },
+    },
+    password: {
+      required: "A password must be registered.",
+      minLength: {
+        value: 8,
+        message: "A valid password must have at least 8 characters.",
+      },
+      maxLength: {
+        value: 30,
+        message: "A valid password must have less than 30 characters.",
+      },
+    },
+    passwordconfirmation: {
+      required: "A password confirmation must be registered.",
+      validate: (value) =>
+        value === watch("password") || "Passwords do not match.",
+    },
   };
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    errorMessage = checkSignupForm(signupFormData);
-
-    if (!errorMessage.length) {
-      await axios
-        .post(
-          `${import.meta.env.VITE_BACKEND_URL}/api/auth/signup`,
-          signupFormData
-        )
-        .then((res) => {
-          setUser(res.data);
-          localStorage.setItem("user", JSON.stringify(res.data));
-          navigate("/");
-        })
-        .catch((err) => {
-          console.error(err);
-        });
-    } else {
-      setMissingValues(errorMessage);
-    }
-  };
+  const usernameRegister = register("username", registerOptions.username);
+  const firstnameRegister = register("firstname", registerOptions.firstname);
+  const lastnameRegister = register("lastname", registerOptions.lastname);
+  const birthdateRegister = register("birthdate", registerOptions.birthdate);
+  const genderRegister = register("gender", registerOptions.gender);
+  const emailRegister = register("email", registerOptions.email);
+  const passwordRegister = register("password", registerOptions.password);
+  const passwordConfirmationRegister = register(
+    "passwordconfirmation",
+    registerOptions.passwordconfirmation
+  );
 
   return (
     <div className="min-h-[60vh] min-w-[50%] mx-12 flex flex-col justify-items-center items-center">
-      <p className="w-[150px] font-bold text-orange ">Create an account</p>
-      <form className="flex flex-col items-center ]" onSubmit={handleSubmit}>
-        <div className="flex flex-col p-2 md:mt-8">
+      <p className="font-bold text-xl text-orange ">Create an account</p>
+      <form
+        className="flex flex-col items-center min-w-[350px]"
+        onSubmit={handleSubmit(handleLoginRegistration)}
+      >
+        <div className="flex flex-col w-[100%] p-2 md:mt-8">
           <label className="py-2 pl-1 font-semibold" htmlFor="username">
             Username:
           </label>
           <input
-            className="rounded-sm border-[1px] p-0.5 border-orange bg-blue"
+            className=" rounded-md border-[3px] p-1  border-orange bg-dark"
             type="text"
-            id="username"
-            name="username"
             placeholder="Enter your username"
-            value={signupFormData.username || ""}
-            onChange={handleChange}
+            onChange={usernameRegister.onChange}
+            name={usernameRegister.name}
+            ref={usernameRegister.ref}
+            aria-invalid={errors.usernameRegister ? "true" : "false"}
           />
         </div>
 
-        <div className="flex flex-col p-2 ">
+        <div className="flex flex-col w-[100%] p-2 ">
           <label className="py-2 pl-1 font-semibold" htmlFor="firstname">
             Firstname :
           </label>
           <input
-            className="rounded-sm border-[1px] p-0.5 border-orange bg-blue"
+            className=" rounded-md border-[3px] p-1  border-orange bg-dark"
             type="text"
-            id="firstname"
-            name="firstname"
             placeholder="Enter your firstname"
-            value={signupFormData.firstname || ""}
-            onChange={handleChange}
+            onChange={firstnameRegister.onChange}
+            name={firstnameRegister.name}
+            ref={firstnameRegister.ref}
+            aria-invalid={errors.firstname ? "true" : "false"}
           />
         </div>
 
-        <div className="flex flex-col p-2 ">
+        <div className="flex flex-col w-[100%] p-2 ">
           <label className="py-2 pl-1 font-semibold" htmlFor="lastname">
             Lastname:
           </label>
           <input
-            className="rounded-sm border-[1px] p-0.5 border-orange bg-blue"
+            className=" rounded-md border-[3px] p-1  border-orange bg-dark "
             type="text"
-            id="lastname"
-            name="lastname"
             placeholder="Enter your lastname"
-            value={signupFormData.lastname || ""}
-            onChange={handleChange}
+            onChange={lastnameRegister.onChange}
+            name={lastnameRegister.name}
+            ref={lastnameRegister.ref}
+            aria-invalid={errors.lastname ? "true" : "false"}
           />
         </div>
 
-        <div className="flex flex-col p-2 ">
+        <div className="flex flex-col w-[100%] p-2 ">
           <label className="py-2 pl-1 font-semibold" htmlFor="birthdate">
             Birthdate :
           </label>
           <input
-            className="min-w-[190px] rounded-sm border-[1px] p-0.5 border-orange bg-blue webkit-calendar-picker-indicator:kitcolor-white"
+            className="min-w-[190px] rounded-md border-[3px] p-0.5  border-orange bg-dark "
             type="date"
-            id="birthdate"
-            name="birthdate"
+            max={giveTodayDate()}
             placeholder="Enter your birthdate"
-            value={signupFormData.birthdate || ""}
-            min="1900-01-01"
-            onChange={handleChange}
-          />{" "}
+            onChange={birthdateRegister.onChange}
+            name={birthdateRegister.name}
+            ref={birthdateRegister.ref}
+            aria-invalid={errors.birthdate ? "true" : "false"}
+          />
         </div>
 
-        <fieldset className="flex flex-col p-2 min-w-[200px] ">
+        <fieldset className="flex flex-col w-[100%] p-2 min-w-[200px] ">
           <legend className="pt-2 pl-1 font-semibold">
             Select your gender:
           </legend>
@@ -149,9 +214,10 @@ export default function Signup() {
             <input
               type="radio"
               id="genderChoice1"
-              name="gender"
               value="female"
-              onChange={handleChange}
+              onChange={genderRegister.onChange}
+              name={genderRegister.name}
+              ref={genderRegister.ref}
             />
             <label className="pl-2" htmlFor="genderChoice1">
               Female
@@ -162,9 +228,10 @@ export default function Signup() {
             <input
               type="radio"
               id="genderChoice2"
-              name="gender"
               value="male"
-              onChange={handleChange}
+              onChange={genderRegister.onChange}
+              name={genderRegister.name}
+              ref={genderRegister.ref}
             />
             <label className="pl-2" htmlFor="genderChoice2">
               Male
@@ -175,9 +242,10 @@ export default function Signup() {
             <input
               type="radio"
               id="genderChoice3"
-              name="gender"
               value="not gendered"
-              onChange={handleChange}
+              onChange={genderRegister.onChange}
+              name={genderRegister.name}
+              ref={genderRegister.ref}
             />
             <label className="pl-2" htmlFor="genderChoice3">
               Not gendered
@@ -185,63 +253,75 @@ export default function Signup() {
           </div>
         </fieldset>
 
-        <div className="flex flex-col p-2 ">
+        <div className="flex flex-col p-2 w-[100%] ">
           <label className="py-2 pl-1 font-semibold" htmlFor="email">
             Email:
           </label>
           <input
-            className="rounded-sm border-[1px] p-0.5 border-orange bg-blue"
-            type="email"
-            id="email"
-            name="email"
+            className="rounded-md border-[3px] p-1  border-orange bg-dark"
+            type="text"
             placeholder="Enter your email address"
-            value={signupFormData.email || ""}
-            onChange={handleChange}
+            onChange={emailRegister.onChange}
+            name={emailRegister.name}
+            ref={emailRegister.ref}
+            aria-invalid={errors.email ? "true" : "false"}
           />
         </div>
 
-        <div className="flex flex-col p-2 ">
+        <div className="flex flex-col p-2 w-[100%] ">
           <label className="py-2 pl-1 font-semibold" htmlFor="password">
             Password:
           </label>
           <input
-            className="rounded-sm border-[1px] p-0.5 border-orange bg-blue"
+            className="rounded-md border-[3px] p-1  border-orange bg-dark"
             type="password"
-            id="password"
-            name="password"
             placeholder="Choose your password"
-            minLength="8"
-            value={signupFormData.password || ""}
-            onChange={handleChange}
+            onChange={passwordRegister.onChange}
+            name={passwordRegister.name}
+            ref={passwordRegister.ref}
+            aria-invalid={errors.password ? "true" : "false"}
           />
         </div>
 
-        <div className="flex flex-col p-2 ">
+        <div className="flex flex-col p-2 w-[100%] ">
           <label
             className="py-2 pl-1 font-semibold"
-            htmlFor="password_confirmation"
+            htmlFor="passwordconfirmation"
           >
             Confirm password:
           </label>
           <input
-            className="rounded-sm border-[1px] p-0.5 border-orange bg-blue"
+            className="rounded-md border-[3px] p-1   border-orange bg-dark"
             type="password"
-            id="password_confirmation"
-            name="password_confirmation"
             placeholder="Confirm your password"
-            minLength="8"
-            value={signupFormData.password_confirmation || ""}
-            onChange={handleChange}
+            onChange={passwordConfirmationRegister.onChange}
+            name={passwordConfirmationRegister.name}
+            ref={passwordConfirmationRegister.ref}
+            aria-invalid={errors.passwordconfirmation ? "true" : "false"}
           />
         </div>
 
         <input
-          className="w-36 h-9 m-5 mt-8  rounded-3xl font-primary font-semibold bg-orange-gradient"
+          className="w-36 h-9 m-5 my-8  rounded-3xl font-primary font-semibold bg-[linear-gradient(90deg,#FF8200_0%,_#FF2415_100%)]"
           type="submit"
           value="Sign up"
         />
       </form>
-      <p className="max-w-sm font-medium text-[#FF2415]">{missingValues}</p>
+      <div
+        role="alert"
+        className="max-w-sm font-medium rounded p-5  text-[#FF2415]"
+      >
+        {errors.username && <p> {errors.username.message}</p>}
+        {errors.firstname && <p> {errors.firstname.message}</p>}
+        {errors.lastname && <p> {errors.lastname.message}</p>}
+        {errors.birthdate && <p> {errors.birthdate.message}</p>}
+        {errors.gender && <p> {errors.gender.message}</p>}
+        {errors.email && <p> {errors.email.message}</p>}
+        {errors.password && <p>{errors.password.message}</p>}
+        {errors.passwordconfirmation && (
+          <p> {errors.passwordconfirmation.message}</p>
+        )}
+      </div>
     </div>
     // Todo : user profile image upload
   );

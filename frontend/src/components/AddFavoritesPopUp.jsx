@@ -156,7 +156,7 @@ AddFavoritesPopUp.propTypes = {
   videoInfos: PropTypes.shape({
     id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
-    duration: PropTypes.number.isRequired,
+    duration: PropTypes.string.isRequired,
     details: PropTypes.string,
     category_id: PropTypes.number,
   }).isRequired,

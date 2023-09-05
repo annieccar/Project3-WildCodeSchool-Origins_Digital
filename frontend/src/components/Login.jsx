@@ -1,118 +1,118 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
 import { useCurrentUserContext } from "../contexts/CurrentUserContext";
 
 export default function Login() {
-  const [loginFormData, setLoginFormData] = useState({
-    loginEmail: "",
-    loginPassword: "",
-  });
-
-  const [missingValues, setMissingValues] = useState("");
-
   const { setUser } = useCurrentUserContext();
 
   const navigate = useNavigate();
 
-  let errorMessage = "";
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
-  const handleChange = (event) => {
-    const { id, value } = event.target;
-    setLoginFormData((prevFormData) => ({ ...prevFormData, [id]: value }));
+  const registerOptions = {
+    email: {
+      required: "An email must be registered.",
+      pattern: {
+        value: /^[a-z0-9.-_]+@[a-z]+\.[a-z]{2,4}$/gi,
+        message:
+          'Registered email has the wrong format. It must resemble "johndoe@example.com."',
+      },
+    },
+    password: {
+      required: "A password must be registered",
+      minLength: {
+        value: 8,
+        message: "A valid password must have at least 8 characters",
+      },
+      maxLength: {
+        value: 30,
+        message: "A valid password must have less than 30 characters",
+      },
+    },
   };
 
-  const checkLoginForm = (obj) => {
-    const values = [];
-    let message = "";
-    for (const [key, value] of Object.entries(obj)) {
-      if (!value.length) {
-        values.push(` ${key}`);
-      }
-    }
+  const emailRegister = register("email", registerOptions.email);
+  const passwordRegister = register("password", registerOptions.password);
 
-    if (values.length) {
-      if (values.length === 1) {
-        message = `Please complete the field${values[0]}.`;
-      } else {
-        message = `Please complete the fields${[...values]}.`;
-      }
-    }
-    if (obj.loginPassword.length < 8) {
-      message += " A password must have at least 8 characters.";
-    }
+  const [noMatch, setNoMatch] = useState("");
 
-    return message.replaceAll("login", "");
-  };
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    errorMessage = checkLoginForm(loginFormData);
-    if (!errorMessage.length) {
-      await axios
-        .post(
-          `${import.meta.env.VITE_BACKEND_URL}/api/auth/signin`,
-          loginFormData
-        )
-        .then((res) => {
-          setUser(res.data);
-          localStorage.setItem("user", JSON.stringify(res.data));
-          navigate("/");
-        })
-        .catch((err) => {
-          console.error(err);
-        });
-    } else {
-      setMissingValues(errorMessage);
+  useEffect(() => {
+    if (noMatch) {
+      setNoMatch(() => "");
     }
+  }, [errors.email, errors.password]);
+
+  const handleLoginRegistration = async (loginFormData) => {
+    await axios
+      .post(
+        `${import.meta.env.VITE_BACKEND_URL}/api/auth/signin`,
+        loginFormData
+      )
+      .then((res) => {
+        setUser(res.data);
+        localStorage.setItem("user", JSON.stringify(res.data));
+        navigate("/");
+      })
+      .catch((err) => {
+        console.error(err);
+        setNoMatch(() => "No user matches this credentials.");
+      });
   };
 
   return (
-    <div className="min-h-[60vh] min-w-[50%] mx-12 flex flex-col justify-items-center items-center">
-      <p className="w-[230px] font-bold text-orange ">
+    <div className="min-h-[60vh] min-w-[45%] mx-10 flex flex-col justify-items-center items-center">
+      <p className=" font-bold text-xl text-orange ">
         You already have an account
       </p>
-      <form className="flex flex-col items-center " onSubmit={handleSubmit}>
-        <div className="flex flex-col p-2 md:mt-8">
+      <form
+        className="flex flex-col items-center min-w-[350px]"
+        onSubmit={handleSubmit(handleLoginRegistration)}
+      >
+        <div className="flex flex-col w-[100%]  p-2 md:mt-8">
           <label className="py-2 pl-1 font-semibold" htmlFor="email">
             Email:
           </label>
           <input
-            className="rounded-sm border-[1px] p-0.5 border-orange bg-blue"
-            type="email"
-            id="loginEmail"
-            name="email"
-            placeholder="Enter your email"
-            value={loginFormData.loginEmail || ""}
-            onChange={handleChange}
+            className="rounded-md border-[3px] p-1  border-orange bg-dark"
+            type="text"
+            placeholder="Enter your email address"
+            onChange={emailRegister.onChange}
+            name={emailRegister.name}
+            ref={emailRegister.ref}
+            aria-invalid={errors.email ? "true" : "false"}
           />
         </div>
-
-        <div className="flex flex-col p-2 ">
+        <div className="flex flex-col w-[100%]  p-2 ">
           <label className="py-2 pl-1  font-semibold" htmlFor="password">
             Password:
           </label>
           <input
-            className="rounded-sm border-[1px] p-0.5 border-orange bg-blue"
+            className="rounded-md border-[3px] p-1  border-orange bg-dark"
             type="password"
-            id="loginPassword"
-            name="password"
             placeholder="Enter your password"
-            value={loginFormData.loginPassword || ""}
-            onChange={handleChange}
+            onChange={passwordRegister.onChange}
+            name={passwordRegister.name}
+            ref={passwordRegister.ref}
+            aria-invalid={errors.password ? "true" : "false"}
           />
         </div>
-
-        <button
-          className="w-36 h-9 m-5 mt-8  rounded-3xl font-primary font-semibold bg-orange-gradient"
+        <input
+          className="w-36 h-9 m-5 mt-8  rounded-3xl font-primary font-semibold  bg-[linear-gradient(90deg,#FF8200_0%,_#FF2415_100%)]"
           type="submit"
-        >
-          Log In
-        </button>
+          value="Log In"
+        />
       </form>
-      <p className="max-w-[230px] font-medium text-[#FF2415]">
-        {missingValues}
-      </p>
+      <div role="alert" className="max-w-[230px] font-medium text-[#FF2415]">
+        {errors.email && <p> {errors.email.message}</p>}
+        {errors.password && <p>{errors.password.message}</p>}
+        {noMatch && <p>{noMatch}</p>}
+      </div>
     </div>
   );
 }

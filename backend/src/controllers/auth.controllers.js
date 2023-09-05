@@ -2,18 +2,17 @@ const models = require("../models");
 
 const signIn = async (req, res) => {
   await models.users
-    .findOneByEmail(req.body.loginEmail)
+    .findOneByEmail(req.body.email)
     .then(([result]) => {
-      if (req.body.loginPassword === result[0].password) {
-        delete req.body.loginPassword;
+      if (req.body.password === result[0].hashedpassword) {
+        delete req.body.password;
         const informations = result[0];
-        delete informations.password;
+        delete informations.hashedpassword;
 
+        // JWT Authentication to implement
         res.status(201).json({
           ...informations,
         });
-      } else {
-        res.sendStatus(500);
       }
     })
     .catch((err) => {
@@ -27,7 +26,6 @@ const signUp = async (req, res) => {
     .insert(req.body)
     .then(([result]) => {
       if (result.affectedRows) {
-        delete req.body.password;
         delete req.body.password_confirmation;
         res.status(201).json({ id: result.insertId, ...req.body });
       } else {

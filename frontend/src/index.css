@@ -6,3 +6,36 @@
   font-family: "lato";
   src: url("./assets/fonts/Lato/Lato-Regular.ttf");
 }
+
+/* Change Autocomplete styles in Chrome*/
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  border: 3px solid #ff680a;
+  border-radius: 8px;
+  -webkit-text-fill-color: rgb(248, 244, 244);
+  -webkit-box-shadow: 0 0 0px 1000px #253341 inset;
+  box-shadow: 0 0 0px 1000px #010d18 inset;
+  transition: background-color 5000s ease-in-out 0s #010d18;
+  color: #010d18;
+}
+input::-webkit-calendar-picker-indicator {
+  color: rgba(238, 238, 238, 0.952);
+  opacity: 1;
+  color-scheme: dark;
+}
+input:-webkit-any() {
+  color: rgba(238, 238, 238, 0.952);
+  opacity: 1;
+}
+
+input:-webkit-calendar-picker-indicator:hover {
+  background: transparent;
+  cursor: pointer;
+}

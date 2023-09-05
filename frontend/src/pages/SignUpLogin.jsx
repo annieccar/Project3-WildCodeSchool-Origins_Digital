@@ -1,11 +1,9 @@
 import { useState } from "react";
 import Login from "../components/Login";
 import Signup from "../components/Signup";
-import useMediaQuery from "../hooks/useMediaQuery";
 
 export default function SignUpLogin() {
   const [loginSelected, setLoginSelected] = useState(true);
-  const isDesktop = useMediaQuery("(min-width: 760px)");
 
   const changeSelected = () => {
     setLoginSelected(!loginSelected);
@@ -22,7 +20,6 @@ export default function SignUpLogin() {
           type="button"
           onClick={changeSelected}
           disabled={loginSelected}
-          hidden={isDesktop}
         >
           Log In
         </button>
@@ -36,20 +33,14 @@ export default function SignUpLogin() {
           type="button"
           onClick={changeSelected}
           disabled={!loginSelected}
-          hidden={isDesktop}
         >
           Sign up
         </button>
       </div>
 
-      <div className="">
-        {isDesktop && (
-          <div className="flex basis-1/2 justify-center">
-            <Login /> <Signup />
-          </div>
-        )}
-        {!isDesktop && loginSelected ? <Login /> : null}{" "}
-        {!isDesktop && !loginSelected ? <Signup /> : null}
+      <div>
+        {loginSelected ? <Login /> : null}
+        {!loginSelected ? <Signup /> : null}
       </div>
     </div>
   );

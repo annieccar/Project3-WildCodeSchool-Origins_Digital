@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+import formatTimeFromDb from "../services/formatTimeFromDb";
 
 export default function Playlist() {
   const [playlistVideos, setPlaylistVideos] = useState(null);
@@ -36,21 +37,6 @@ export default function Playlist() {
     fetchCategories();
     fetchPlaylistName();
   }, []);
-
-  const getTime = (duration) => {
-    let seconds = 0;
-    let minutes = 0;
-    for (let i = 0; i < duration; i += 1) {
-      if (i > 0 && i % 60 === 0) {
-        minutes += 1;
-      }
-      if (seconds === 60) {
-        seconds = 0;
-      }
-      seconds += 1;
-    }
-    return `${minutes} : ${seconds}`;
-  };
 
   const getCategory = (categoryId) => {
     const { name } = categories.find((elem) => elem.id === categoryId);
@@ -110,11 +96,11 @@ export default function Playlist() {
                       className="w-64 rounded-lg"
                       src={`${
                         import.meta.env.VITE_BACKEND_URL
-                      }/public/thumbnails/${video.name}.png`}
+                      }/public/thumbnails/${video.file_name}.png`}
                       alt=""
                     />
                     <div className="w-16 mr-1 mb-1 bg-white text-dark lg:text-md font-bold rounded-lg absolute z-10 right-0 bottom-0">
-                      {getTime(video.duration)}
+                      {formatTimeFromDb(video.duration)}
                     </div>
                   </button>
                   <div className="flex flex-col gap-1 w-full">
