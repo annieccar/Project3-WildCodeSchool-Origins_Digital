@@ -7,12 +7,12 @@ import { CurrentUserContextProvider } from "./contexts/CurrentUserContext";
 function App() {
   return (
     <div className="App h-screen w-screen bg-dark text-white">
-      <Navbar />
       <CurrentUserContextProvider>
+        <Navbar />
         <Router />
+        <Footbar />
+        <Footer />
       </CurrentUserContextProvider>
-      <Footbar />
-      <Footer />
     </div>
   );
 }

@@ -73,7 +73,7 @@ export default function UpdateUserDetails() {
           </label>
           {/* eslint-disable react/jsx-props-no-spreading */}
           <input
-            className="mb-2 px-2 rounded-lg border-2 border-solid border-orange bg-dark text-gray font-primary "
+            className=" focus:outline-none mb-2 px-2 rounded-lg border-2 border-solid border-orange bg-dark text-gray font-primary "
             type="text"
             {...register("username", {
               required: true,
@@ -97,7 +97,7 @@ export default function UpdateUserDetails() {
             First Name
           </label>
           <input
-            className="mb-2 px-2 rounded-lg border-2 border-solid border-orange bg-dark text-gray font-primary "
+            className=" focus:outline-none mb-2 px-2 rounded-lg border-2 border-solid border-orange bg-dark text-gray font-primary "
             type="text"
             {...register("firstname", {
               required: true,
@@ -121,7 +121,7 @@ export default function UpdateUserDetails() {
             Last Name
           </label>
           <input
-            className="mb-2 px-2 rounded-lg border-2 border-solid border-orange bg-dark text-gray font-primary "
+            className="focus:outline-none mb-2 px-2 rounded-lg border-2 border-solid border-orange bg-dark text-gray font-primary "
             type="text"
             {...register("lastname", {
               required: true,
@@ -145,7 +145,7 @@ export default function UpdateUserDetails() {
             Email Address
           </label>
           <input
-            className="mb-2 px-2 rounded-lg border-2 border-solid border-orange bg-dark text-gray font-primary "
+            className="focus:outline-none mb-2 px-2 rounded-lg border-2 border-solid border-orange bg-dark text-gray font-primary "
             type="text"
             {...register("email", {
               required: true,
@@ -169,7 +169,7 @@ export default function UpdateUserDetails() {
             Password
           </label>
           <input
-            className="mb-2 px-2 rounded-lg border-2 border-solid border-orange bg-dark text-gray font-primary "
+            className="focus:outline-none mb-2 px-2 rounded-lg border-2 border-solid border-orange bg-dark text-gray font-primary "
             type="password"
             {...register("password", {
               required: true,
@@ -192,7 +192,7 @@ export default function UpdateUserDetails() {
             Confirm password
           </label>
           <input
-            className="mb-2 px-2 rounded-lg border-2 border-solid border-orange bg-dark text-gray font-primary "
+            className="focus:outline-none mb-2 px-2 rounded-lg border-2 border-solid border-orange bg-dark text-gray font-primary "
             type="password"
             {...register("confirmpassword", {
               required: true,
@@ -207,7 +207,7 @@ export default function UpdateUserDetails() {
         </div>
         <div className="flex justify-center my-5">
           <input
-            className="text-white font-primary font-semibold rounded-full w-auto px-4 py-0.5 bg-orange-gradient"
+            className="text-white focus:outline-none font-primary font-semibold rounded-full w-auto px-4 py-0.5 bg-orange-gradient"
             type="submit"
             value="Save Changes"
           />
