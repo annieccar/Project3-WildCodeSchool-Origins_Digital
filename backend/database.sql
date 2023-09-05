@@ -76,7 +76,7 @@ CREATE TABLE
         `video_id` INT NOT NULL,
         `playlist_id` INT NOT NULL,
         PRIMARY KEY (`id`),
-        CONSTRAINT `fk_video_has_playlist_video` FOREIGN KEY (`video_id`) REFERENCES `video` (`id`) ON DELETE CASCADE UPDATE NO ACTION,
+        CONSTRAINT `fk_video_has_playlist_video` FOREIGN KEY (`video_id`) REFERENCES `video` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
         CONSTRAINT `fk_video_has_playlist_playlist` FOREIGN KEY (`playlist_id`) REFERENCES `playlist` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
     ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
 
