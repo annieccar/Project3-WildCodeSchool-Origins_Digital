@@ -1,3 +1,44 @@
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import CategorySearchResults from "../components/CategorySearchResult";
+
 export default function SearchResults() {
-  return <h1>Search Results Page</h1>;
+  const { query } = useParams();
+  const [currentSearch, setCurrentSearch] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get(`${import.meta.env.VITE_BACKEND_URL}/api/videos/search?${query}`)
+      .then((res) => {
+        setCurrentSearch(res.data);
+      })
+      .catch((err) => console.error(err));
+  }, [query]);
+
+  const categoryArray = [
+    ...new Set(currentSearch.map((video) => video.category)),
+  ];
+
+  return (
+    <div>
+      <p className="text-center text-orange text-2xl drop-shadow-md font-semibold font-primary m-8 ">
+        Your search results
+      </p>
+      {currentSearch.length ? (
+        categoryArray.map((category) => (
+          <CategorySearchResults
+            key={category.id}
+            categoryName={category}
+            searchResults={currentSearch}
+          />
+        ))
+      ) : (
+        <p className="text-center text-orange text-lg drop-shadow-md font-semibold font-primary m-10 ">
+          {" "}
+          Your search parameters returned no matching video.
+        </p>
+      )}
+    </div>
+  );
 }
