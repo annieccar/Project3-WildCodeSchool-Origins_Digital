@@ -15,8 +15,7 @@ export default function Navbar() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userMenuSelected, setUserMenuSelected] = useState(false);
   const [categorySelection, setCategorySelection] = useState(false);
-  const [search, setSearch] = useState(false);
-  // const [keyWord, setKeyWord] = useState("");
+  const [keyWord, setKeyWord] = useState("");
 
   const handleUserMenu = () => {
     setUserMenuSelected(true);
@@ -50,6 +49,10 @@ export default function Navbar() {
     }
   };
 
+  const handleSearch = () => {
+    navigate(`/search/name=${keyWord}`);
+  };
+
   useEffect(() => {
     if (user) {
       setIsLoggedIn(true);
@@ -60,7 +63,7 @@ export default function Navbar() {
   window.addEventListener("resize", handleResize);
 
   return (
-    <nav className="bg-dark flex justify-center items-center h-16 w-full">
+    <nav className="bg-dark flex justify-center items-center h-16 w-full  ">
       <Link to="/">
         <img
           className="h-16 mb-1 mt-0.5 fixed top-1 left-0"
@@ -70,18 +73,29 @@ export default function Navbar() {
       </Link>
       {!isMobile && (
         <div className="w-1/2 flex justify-between items-center">
-          <button type="button" onClick={() => setSearch(true)}>
-            <h1 className="font-primary font-bold text-lg hover:text-orange ">
-              Search
-            </h1>
-          </button>
+          <div>
+            <input
+              className="bg-dark w-52 h-10 font-primary text-base lg:text-xl p-2 border-2 lg:border-2 border-orange rounded-md text-gray "
+              placeholder="search"
+              onChange={(e) => {
+                setKeyWord(e.target.value);
+              }}
+            />
+            <button type="button" onClick={handleSearch}>
+              <img
+                src={magnifier}
+                alt="search"
+                className="translate-y-1 -translate-x-10"
+              />
+            </button>
+          </div>
           <button type="button" onClick={() => setCategorySelection(true)}>
-            <h1 className="font-primary font-bold text-lg hover:text-orange  ">
+            <h1 className="font-primary font-bold text-lg hover:text-orange -translate-x-10  ">
               Categories
             </h1>
           </button>
           <button type="button" onClick={handlePlaylists}>
-            <h1 className="font-primary font-bold text-lg hover:text-orange  ">
+            <h1 className="font-primary font-bold text-lg hover:text-orange -translate-x-10  ">
               Playlists
             </h1>
           </button>
@@ -138,34 +152,9 @@ export default function Navbar() {
       {categorySelection && (
         <>
           <button type="button" onClick={() => setCategorySelection(false)}>
-            <div className="fixed z-10 top-0 bottom-12 left-0 right-0" />
+            <div className="fixed top-0 bottom-12 left-0 right-0" />
           </button>
           <CategoryMenuDesktop setCategorySelection={setCategorySelection} />
-        </>
-      )}
-      {search && (
-        <>
-          <button type="button" onClick={() => setSearch(false)}>
-            <div className="fixed z-10 top-0 bottom-12 left-0 right-0" />
-          </button>
-          <div className="w-1/2 fixed top-16 flex justify-start z-20">
-            <div className="backdrop-blur-md w-[260px]  px-2  -translate-x-2 rounded-md flex gap-2 justify-between items-start">
-              <input
-                className="bg-dark w-52 h-10 font-primary text-lg lg:text-xl p-2 border-2 lg:border-2 border-orange rounded-md text-gray "
-                placeholder="search"
-                // onChange={(e) => {
-                //   setKeyWord(e.target.value);
-                // }}
-              />
-              <button type="button">
-                <img
-                  src={magnifier}
-                  alt="search"
-                  className="translate-y-2 -translate-x-12"
-                />
-              </button>
-            </div>
-          </div>
         </>
       )}
     </nav>
