@@ -1,17 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 export default function VideoManagement() {
-  const [videoNames] = useState([
-    "fog",
-    "hydrangea",
-    "lotus_flowers",
-    "roundabout",
-    "sea",
-    "snail",
-    "sunflowers",
-    "sunset",
-  ]);
-
+  const [videos, setVideos] = useState([]);
   const [selectedVideo, setSelectedVideo] = useState(null);
   const [selectedAccess, setSelectedAccess] = useState("Guest");
   const [videoLocation, setVideoLocation] = useState("");
@@ -30,6 +20,16 @@ export default function VideoManagement() {
     setSelectedAccess(event.target.value);
   };
 
+  useEffect(() => {
+    // Effectuez une requête pour récupérer les données des vidéos depuis votre API/serveur
+    fetch(`${import.meta.env.VITE_BACKEND_URL}/api/video`)
+      .then((response) => response.json())
+      .then((data) => setVideos(data))
+      .catch((error) =>
+        console.error("Erreur lors de la récupération des vidéos:", error)
+      );
+  }, []);
+
   return (
     <div className="w-screen h-screen flex flex-col items-center p-2 md:p-0">
       <h3 className="flex text-orange p-3 md:p-5 text-2xl md:text-3xl">
@@ -39,19 +39,19 @@ export default function VideoManagement() {
         <div className="w-full max-w-screen-md mb-5 md:w-1/2 md:pr-5">
           <h3 className="ml-5">Video List:</h3>
           <div className="border-solid rounded-2xl border-4 border-orange mb-3 p-3">
-            {videoNames.map((videoName) => (
+            {videos.map((video) => (
               <div
-                key={videoName}
+                key={video.id}
                 className="p-2 flex items-center justify-between"
               >
-                <span>{stripExtension(videoName)}</span>
+                <span>{stripExtension(video.name)}</span>
                 <div
                   className="h-4 w-4 cursor-pointer"
                   role="button"
-                  onClick={() => handleEditClick(videoName)}
+                  onClick={() => handleEditClick(video.name)}
                   onKeyDown={(e) => {
                     if (e.key === "Enter") {
-                      handleEditClick(videoName);
+                      handleEditClick(video.name);
                     }
                   }}
                   tabIndex="0"
