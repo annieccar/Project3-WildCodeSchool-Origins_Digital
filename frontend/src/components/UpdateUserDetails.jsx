@@ -49,7 +49,10 @@ export default function UpdateUserDetails() {
 
   return (
     <>
-      <form className="w-80" onSubmit={handleSubmit(onSubmit)}>
+      <form
+        className="w-80 flex flex-col justify-start"
+        onSubmit={handleSubmit(onSubmit)}
+      >
         <h1 className="text-orange font-primary font-bold text-xl py-3">
           Your Profile
         </h1>

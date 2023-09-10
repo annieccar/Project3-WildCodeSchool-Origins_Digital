@@ -5,12 +5,12 @@ import amex from "../assets/images/American_Express.png";
 import master from "../assets/images/MasterCard.png";
 import crypto from "../assets/images/Card_Verification_Value.png";
 
-// import { useCurrentUserContext } from "../contexts/CurrentUserContext";
+import { useCurrentUserContext } from "../contexts/CurrentUserContext";
 
 export default function AddPaymentInfo() {
-  // const { user } = useCurrentUserContext();
+  const { user } = useCurrentUserContext();
 
-  // const [userTypeId, setUserTypeId] = useState(user.usertype_id);
+  const [userTypeId, setUserTypeId] = useState(user.usertype_id);
 
   const [cardHolderName, setCardHolderName] = useState("");
   const [cardNumber, setCardNumber] = useState("");
@@ -19,11 +19,14 @@ export default function AddPaymentInfo() {
   const [cryptogram, setCryptogram] = useState("");
 
   const upgradePremium = () => {
-    // setUserTypeId(2);
+    setUserTypeId(2);
   };
 
   return (
     <form className="w-80 pb-10" onSubmit={upgradePremium}>
+      {/* a enlever */}
+      <h1>{userTypeId}</h1>
+      {/* a enlever */}
       <h1 className="text-orange font-primary font-bold text-xl py-3">
         Payment Info:
       </h1>
@@ -127,7 +130,7 @@ export default function AddPaymentInfo() {
           <input
             className="focus:outline-none h-8 w-32 mr-2 px-2 rounded-lg border-2 border-solid border-orange bg-dark text-gray font-primary "
             onChange={(e) => setCryptogram(e.target.value)}
-            type="number"
+            type="text"
             name="cryptogram"
             id="cryptogram"
             value={cryptogram}
