@@ -13,6 +13,8 @@ const signIn = async (req, res) => {
         res.status(201).json({
           ...informations,
         });
+      } else {
+        res.sendStatus(500);
       }
     })
     .catch((err) => {
