@@ -1,18 +1,9 @@
 ## Concept
 
-This template is meant to serve as a foundation for every P2/P3 following the React-Express-MySQL stack, as learned in Wild Code School.
-It's pre-configured with a set of tools which'll help students produce industry-quality and easier-to-maintain code, while staying as simple as possible to use.
+This is the third and final project of our WebDev bootcamp: the Origins Digital platform.
+Origins Digital is a website that hosts videos chosen by the administrator, and allows premium users to watch those videos.
 
 ## Setup & Use
-
-### Windows users
-
-Be sure to run these commands in a git terminal to avoid [issues with newline formats](https://en.wikipedia.org/wiki/Newline#Issues_with_different_newline_formats):
-
-```
-git config --global core.eol lf
-git config --global core.autocrlf false
-```
 
 ### Project Initialization
 
@@ -20,7 +11,16 @@ git config --global core.autocrlf false
 - Clone this repo, enter it
 - If you are using `yarn` or `pnpm`, adapt the `config/cli` in `package.json`
 - Run command `npm install`
-- _NB: To launch the backend server, you'll need an environment file with database credentials. You'll find a template one in `backend/.env.sample`_
+- \_NB: To launch the backend server, you'll need an environment file with database credentials. You'll find a template one in backend/.env.sample . Choose a database name, then create a database with matching name in your sql management tool.
+- To create database structure, run all SQL scripts in backend/database.sql.
+- To insert the dump into the database tables, run all SQL scripts in backend/sample.sql.
+
+### Video and image assets
+
+To run this project in its development phase, you'll need video and image files :
+
+- First, download and unzip thumbnails.zip folder and video.zip folder from https://www.mediafire.com/folder/njzr98k63e3js/Origins_Digital_backend_assets
+- Then paste both those folders in `backend/public` folder.
 
 ### Available Commands
 
