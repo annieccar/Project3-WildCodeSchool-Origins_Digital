@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 export default function VideoManagement() {
   const [videos, setVideos] = useState([]);
@@ -21,8 +22,7 @@ export default function VideoManagement() {
   };
 
   useEffect(() => {
-    // Effectuez une requête pour récupérer les données des vidéos depuis votre API/serveur
-    fetch(`${import.meta.env.VITE_BACKEND_URL}/api/video`)
+    axios(`${import.meta.env.VITE_BACKEND_URL}/api/video`)
       .then((response) => response.json())
       .then((data) => setVideos(data))
       .catch((error) =>
