@@ -1,101 +1,95 @@
 const models = require("../models");
 
-const browse = (req, res) => {
-  models.videos
-    .findAll()
-    .then(([rows]) => {
+const browse = async (req, res) => {
+  try {
+    const [rows] = await models.videos.findAll();
+    if (rows) {
       res.send(rows);
-    })
-    .catch((err) => {
-      console.error(err);
-      res.sendStatus(500);
-    });
+    } else {
+      res.sendStatus(400);
+    }
+  } catch (err) {
+    console.error(err);
+    res.sendStatus(500);
+  }
 };
 
-const read = (req, res) => {
-  models.videos
-    .find(req.params.id)
-    .then(([rows]) => {
-      if (rows[0] == null) {
-        res.sendStatus(404);
-      } else {
-        res.send(rows[0]);
-      }
-    })
-    .catch((err) => {
-      console.error(err);
-      res.sendStatus(500);
-    });
+const read = async (req, res) => {
+  try {
+    const [rows] = await models.videos.find(req.params.id);
+    if (rows[0] == null) {
+      res.sendStatus(404);
+    } else {
+      res.send(rows[0]);
+    }
+  } catch (err) {
+    console.error(err);
+    res.sendStatus(500);
+  }
 };
 
-const edit = (req, res) => {
-  const video = req.body;
+const edit = async (req, res) => {
+  try {
+    const video = req.body;
 
-  // TODO validations (length, format...)
+    // TODO validations (length, format...)
 
-  video.id = parseInt(req.params.id, 10);
+    video.id = parseInt(req.params.id, 10);
 
-  models.videos
-    .update(video)
-    .then(([result]) => {
-      if (result.affectedRows === 0) {
-        res.sendStatus(404);
-      } else {
-        res.sendStatus(204);
-      }
-    })
-    .catch((err) => {
-      console.error(err);
-      res.sendStatus(500);
-    });
+    const [result] = await models.videos.update(video);
+    if (result.affectedRows === 0) {
+      res.sendStatus(404);
+    } else {
+      res.sendStatus(204);
+    }
+  } catch (err) {
+    console.error(err);
+    res.sendStatus(500);
+  }
 };
 
-const add = (req, res) => {
-  const video = req.body;
+const add = async (req, res) => {
+  try {
+    const video = req.body;
 
-  // TODO validations (length, format...)
+    // TODO validations (length, format...)
 
-  models.videos
-    .insert(video)
-    .then(([result]) => {
+    const [result] = await models.videos.insert(video);
+    if (result) {
       res.location(`/videos/${result.insertId}`).sendStatus(201);
-    })
-    .catch((err) => {
-      console.error(err);
-      res.sendStatus(500);
-    });
+    }
+  } catch (err) {
+    console.error(err);
+    res.sendStatus(500);
+  }
 };
 
-const destroy = (req, res) => {
-  models.videos
-    .delete(req.params.id)
-    .then(([result]) => {
-      if (result.affectedRows === 0) {
-        res.sendStatus(404);
-      } else {
-        res.sendStatus(204);
-      }
-    })
-    .catch((err) => {
-      console.error(err);
-      res.sendStatus(500);
-    });
+const destroy = async (req, res) => {
+  try {
+    const [result] = await models.videos.delete(req.params.id);
+    if (result.affectedRows === 0) {
+      res.sendStatus(404);
+    } else {
+      res.sendStatus(204);
+    }
+  } catch (err) {
+    console.error(err);
+    res.sendStatus(500);
+  }
 };
 
-const search = (req, res) => {
-  models.videos
-    .findByQuery(req.query)
-    .then(([videos]) => {
-      if (videos.length !== 0) {
-        res.status(202).send(videos);
-      } else {
-        res.status(500);
-      }
-    })
-    .catch((err) => {
-      console.error(err);
-      res.status(500).send("Your search didn't correspond to a video.");
-    });
+const search = async (req, res) => {
+  try {
+    const [videos] = await models.videos.findByQuery(req.query);
+    if (videos.length !== 0) {
+      res.status(202).send(videos);
+    } else {
+      res.status(500);
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Your search didn't correspond to a video.");
+  }
 };
 
 module.exports = {

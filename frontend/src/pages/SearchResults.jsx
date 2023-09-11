@@ -5,6 +5,7 @@ import CategorySearchResults from "../components/CategorySearchResult";
 
 export default function SearchResults() {
   const { query } = useParams();
+
   const [currentSearch, setCurrentSearch] = useState([]);
 
   useEffect(() => {

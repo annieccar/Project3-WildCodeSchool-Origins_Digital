@@ -1,97 +1,97 @@
 const models = require("../models");
 
-const browse = (req, res) => {
-  models.carousels
-    .findAll()
-    .then(([rows]) => {
+const browse = async (req, res) => {
+  try {
+    const [rows] = await models.carousels.findAll();
+    if (rows) {
       res.send(rows);
-    })
-    .catch((err) => {
-      console.error(err);
-      res.sendStatus(500);
-    });
+    } else {
+      res.sendStatus(400);
+    }
+  } catch (err) {
+    console.error(err);
+    res.sendStatus(500);
+  }
 };
 
-const read = (req, res) => {
-  models.carousels
-    .find(req.params.id)
-    .then(([rows]) => {
-      if (rows[0] == null) {
-        res.sendStatus(404);
-      } else {
-        res.send(rows[0]);
-      }
-    })
-    .catch((err) => {
-      console.error(err);
-      res.sendStatus(500);
-    });
+const read = async (req, res) => {
+  try {
+    const [rows] = await models.carousels.find(req.params.id);
+    if (rows[0] == null) {
+      res.sendStatus(404);
+    } else {
+      res.send(rows[0]);
+    }
+  } catch (err) {
+    console.error(err);
+    res.sendStatus(500);
+  }
 };
 
-const edit = (req, res) => {
-  const carousel = req.body;
+const edit = async (req, res) => {
+  try {
+    const carousel = req.body;
 
-  // TODO validations (length, format...)
+    // TODO validations (length, format...)
 
-  carousel.id = parseInt(req.params.id, 10);
+    carousel.id = parseInt(req.params.id, 10);
 
-  models.carousels
-    .update(carousel)
-    .then(([result]) => {
-      if (result.affectedRows === 0) {
-        res.sendStatus(404);
-      } else {
-        res.sendStatus(204);
-      }
-    })
-    .catch((err) => {
-      console.error(err);
-      res.sendStatus(500);
-    });
+    const [result] = await models.carousels.update(carousel);
+
+    if (result.affectedRows === 0) {
+      res.sendStatus(404);
+    } else {
+      res.sendStatus(204);
+    }
+  } catch (err) {
+    console.error(err);
+    res.sendStatus(500);
+  }
 };
 
-const add = (req, res) => {
-  const carousel = req.body;
+const add = async (req, res) => {
+  try {
+    const carousel = req.body;
 
-  // TODO validations (length, format...)
+    // TODO validations (length, format...)
 
-  models.carousels
-    .insert(carousel)
-    .then(([result]) => {
+    const [result] = await models.carousels.insert(carousel);
+
+    if (result) {
       res.location(`/carousels/${result.insertId}`).sendStatus(201);
-    })
-    .catch((err) => {
-      console.error(err);
-      res.sendStatus(500);
-    });
+    }
+  } catch (err) {
+    console.error(err);
+    res.sendStatus(500);
+  }
 };
 
-const destroy = (req, res) => {
-  models.carousels
-    .delete(req.params.id)
-    .then(([result]) => {
-      if (result.affectedRows === 0) {
-        res.sendStatus(404);
-      } else {
-        res.sendStatus(204);
-      }
-    })
-    .catch((err) => {
-      console.error(err);
-      res.sendStatus(500);
-    });
+const destroy = async (req, res) => {
+  try {
+    const [result] = await models.carousels.delete(req.params.id);
+    if (result.affectedRows === 0) {
+      res.sendStatus(404);
+    } else {
+      res.sendStatus(204);
+    }
+  } catch (err) {
+    console.error(err);
+    res.sendStatus(500);
+  }
 };
 
-const readVideos = (req, res) => {
-  models.carousels
-    .findVideos(req.params.id)
-    .then(([rows]) => {
+const readVideos = async (req, res) => {
+  try {
+    const [rows] = await models.carousels.findVideos(req.params.id);
+    if (rows) {
       res.send(rows);
-    })
-    .catch((err) => {
-      console.error(err);
-      res.sendStatus(500);
-    });
+    } else {
+      res.sendStatus(400);
+    }
+  } catch (err) {
+    console.error(err);
+    res.sendStatus(500);
+  }
 };
 
 module.exports = {

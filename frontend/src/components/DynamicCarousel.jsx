@@ -35,16 +35,10 @@ export default function DynamicCarousel({ playlist }) {
     };
   }, []);
 
-  const nextImageMobile = () => {
-    if (currentImageIndex === videoNames.length - 2) {
+  const nextImage = () => {
+    if (isMobile && currentImageIndex === videoNames.length - 2) {
       setCurrentImageIndex(videoNames.length - 2);
-    } else {
-      setCurrentImageIndex(currentImageIndex + 1);
-    }
-  };
-
-  const nextImageDesktop = () => {
-    if (currentImageIndex === videoNames.length - 5) {
+    } else if (!isMobile && currentImageIndex === videoNames.length - 5) {
       setCurrentImageIndex(videoNames.length - 5);
     } else {
       setCurrentImageIndex(currentImageIndex + 1);
@@ -85,7 +79,7 @@ export default function DynamicCarousel({ playlist }) {
               <button type="button" onClick={previousImage}>
                 <BsFillArrowLeftCircleFill />
               </button>
-              <button type="button" onClick={nextImageMobile}>
+              <button type="button" onClick={nextImage}>
                 <BsFillArrowRightCircleFill />
               </button>
             </div>
@@ -95,7 +89,7 @@ export default function DynamicCarousel({ playlist }) {
               <button type="button" onClick={previousImage}>
                 <BsFillArrowLeftCircleFill />
               </button>
-              <button type="button" onClick={nextImageDesktop}>
+              <button type="button" onClick={nextImage}>
                 <BsFillArrowRightCircleFill />
               </button>
             </div>

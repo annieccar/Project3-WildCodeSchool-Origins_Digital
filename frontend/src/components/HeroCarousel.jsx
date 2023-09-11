@@ -52,11 +52,11 @@ export default function HeroCarousel() {
 
   return (
     <div className="flex flex-col items-center py-5">
-      <h1 className="text-orange font-primary font-bold text-xl my-2">
+      <h1 className="text-orange font-primary font-bold text-xl lg:text-2xl my-2 mb-4">
         Trending Now
       </h1>
       {videoNames.length > 0 && (
-        <div className="w-80 lg:w-2/5 overflow-hidden relative">
+        <div className="w-80 lg:w-3/5 overflow-hidden relative">
           <div
             className="flex w-full transition ease-out duration-1000"
             style={{
@@ -88,7 +88,7 @@ export default function HeroCarousel() {
               return (
                 <div
                   key={video}
-                  className={`rounded-full w-2 h-2 m-0.5 ${
+                  className={`rounded-full w-2 h-2 m-0.5 lg:mx-1 lg:w-3 lg:h-3  ${
                     index === currentImageIndex ? "bg-gray" : "bg-white"
                   }`}
                 />

@@ -19,7 +19,7 @@ export default function Category() {
         setCategoryDetails(response.data);
       })
       .catch((err) => console.error(err));
-  }, []);
+  }, [id]);
 
   useEffect(() => {
     axios
@@ -28,7 +28,7 @@ export default function Category() {
         setCategoryVideos(response.data);
       })
       .catch((err) => console.error(err));
-  }, []);
+  }, [id]);
 
   const [orderBy, setOrderBy] = useState("");
   const [keyword, setKeyword] = useState("");

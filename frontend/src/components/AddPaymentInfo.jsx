@@ -35,7 +35,7 @@ export default function AddPaymentInfo() {
           Cardholder Name
         </label>
         <input
-          className="mb-2 px-2 rounded-lg border-2 border-solid border-orange bg-dark text-gray font-primary "
+          className="focus:outline-none mb-2 px-2 rounded-lg border-2 border-solid border-orange bg-dark text-gray font-primary "
           onChange={(e) => setCardHolderName(e.target.value)}
           type="text"
           name="cardholdername"
@@ -51,7 +51,7 @@ export default function AddPaymentInfo() {
           Card Number
         </label>
         <input
-          className="mb-2 px-2 rounded-lg border-2 border-solid border-orange bg-dark text-gray font-primary "
+          className="focus:outline-none mb-2 px-2 rounded-lg border-2 border-solid border-orange bg-dark text-gray font-primary "
           onChange={(e) => setCardNumber(e.target.value)}
           type="number"
           name="cardnumber"
@@ -125,7 +125,7 @@ export default function AddPaymentInfo() {
         </label>
         <div className="flex items-center">
           <input
-            className="h-8 w-32 mr-2 px-2 rounded-lg border-2 border-solid border-orange bg-dark text-gray font-primary "
+            className="focus:outline-none h-8 w-32 mr-2 px-2 rounded-lg border-2 border-solid border-orange bg-dark text-gray font-primary "
             onChange={(e) => setCryptogram(e.target.value)}
             type="number"
             name="cryptogram"
