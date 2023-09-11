@@ -15,7 +15,6 @@ export default function UserProfile() {
   } else if (userTypeId === 3) {
     status = "Administrator";
   }
-
   return (
     <div className="bg-dark">
       <div className="flex flex-col items-center lg:flex-row lg:justify-around h-5/6 lg:mt-10">

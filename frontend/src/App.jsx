@@ -8,14 +8,14 @@ import { BlurredBackgroundContextProvider } from "./contexts/BlurredBackgroundCo
 function App() {
   return (
     <div className="h-screen bg-dark text-white">
-      <Navbar />
       <CurrentUserContextProvider>
+        <Navbar />
         <BlurredBackgroundContextProvider>
           <Router />
         </BlurredBackgroundContextProvider>
+        <Footbar />
+        <Footer />
       </CurrentUserContextProvider>
-      <Footbar />
-      <Footer />
     </div>
   );
 }
