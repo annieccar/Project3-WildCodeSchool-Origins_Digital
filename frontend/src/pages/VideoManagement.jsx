@@ -22,9 +22,9 @@ export default function VideoManagement() {
   };
 
   useEffect(() => {
-    axios(`${import.meta.env.VITE_BACKEND_URL}/api/video`)
-      .then((response) => response.json())
-      .then((data) => setVideos(data))
+    axios
+      .get(`${import.meta.env.VITE_BACKEND_URL}/api/video`)
+      .then((response) => setVideos(response.data))
       .catch((error) =>
         console.error("Erreur lors de la récupération des vidéos:", error)
       );
