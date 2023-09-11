@@ -46,6 +46,13 @@ class UsersManager extends AbstractManager {
     );
   }
 
+  updateUserType(user) {
+    return this.database.query(
+      `UPDATE ${this.table} SET usertype_id=? WHERE id = ?`,
+      [user.usertype_id, user.id]
+    );
+  }
+
   findOneByEmail(email) {
     return this.database.query(
       "select id, username, firstname, lastname, birthdate, gender, email, hashedpassword, profileimage, usertype_id from user where email = ?",

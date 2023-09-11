@@ -1,32 +1,47 @@
-import { useState } from "react";
+import { useForm } from "react-hook-form";
+import PropTypes from "prop-types";
 
 import visa from "../assets/images/Visa.png";
 import amex from "../assets/images/American_Express.png";
 import master from "../assets/images/MasterCard.png";
 import crypto from "../assets/images/Card_Verification_Value.png";
 
-import { useCurrentUserContext } from "../contexts/CurrentUserContext";
-
-export default function AddPaymentInfo() {
-  const { user } = useCurrentUserContext();
-
-  const [userTypeId, setUserTypeId] = useState(user.usertype_id);
-
-  const [cardHolderName, setCardHolderName] = useState("");
-  const [cardNumber, setCardNumber] = useState("");
-  const [expMonth, setExpMonth] = useState("");
-  const [expYear, setExpYear] = useState("");
-  const [cryptogram, setCryptogram] = useState("");
+export default function AddPaymentInfo({
+  setUserTypeId,
+  setPremium,
+  userTypeId,
+  setModUpdate,
+  setPaymentDetailsModal,
+  setText,
+}) {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
   const upgradePremium = () => {
     setUserTypeId(2);
+    setPremium(false);
+    setText("registered");
+    setPaymentDetailsModal(true);
+  };
+
+  const updateDetails = () => {
+    setModUpdate(false);
+    setText("updated");
+    setPaymentDetailsModal(true);
   };
 
   return (
-    <form className="w-80 pb-10" onSubmit={upgradePremium}>
-      {/* a enlever */}
-      <h1>{userTypeId}</h1>
-      {/* a enlever */}
+    <form
+      className="w-80 pb-10 z-50 "
+      onSubmit={
+        userTypeId === 1
+          ? handleSubmit(upgradePremium)
+          : handleSubmit(updateDetails)
+      }
+    >
       <h1 className="text-orange font-primary font-bold text-xl py-3">
         Payment Info:
       </h1>
@@ -37,14 +52,23 @@ export default function AddPaymentInfo() {
         >
           Cardholder Name
         </label>
+        {/* eslint-disable react/jsx-props-no-spreading */}
         <input
-          className="focus:outline-none mb-2 px-2 rounded-lg border-2 border-solid border-orange bg-dark text-gray font-primary "
-          onChange={(e) => setCardHolderName(e.target.value)}
+          className="h-9 focus:outline-none mb-2 px-2 rounded-lg border-2 border-solid border-orange bg-dark text-gray font-primary "
           type="text"
+          {...register("cardholdername", {
+            required: true,
+            minLength: 5,
+          })}
+          aria-invalid={errors.cardholdername ? "true" : "false"}
           name="cardholdername"
-          id="cardholdername"
-          value={cardHolderName}
+          defaultValue=""
         />
+        {errors.cardholdername && (
+          <span className="text-red">
+            The first and last name of your card holder is required
+          </span>
+        )}
       </div>
       <div className="flex flex-col">
         <label
@@ -54,13 +78,21 @@ export default function AddPaymentInfo() {
           Card Number
         </label>
         <input
-          className="focus:outline-none mb-2 px-2 rounded-lg border-2 border-solid border-orange bg-dark text-gray font-primary "
-          onChange={(e) => setCardNumber(e.target.value)}
-          type="number"
+          className="h-9 focus:outline-none mb-2 px-2 rounded-lg border-2 border-solid border-orange bg-dark text-gray font-primary "
+          type="password"
+          {...register("cardnumber", {
+            required: true,
+            minLength: 13,
+          })}
+          aria-invalid={errors.cardnumber ? "true" : "false"}
           name="cardnumber"
-          id="cardnumber"
-          value={cardNumber}
+          defaultValue=""
         />
+        {errors.cardnumber && (
+          <span className="text-red">
+            A valid credit card number is required
+          </span>
+        )}
       </div>
       <div className="flex items-center">
         <img className="h-[61px]" src={visa} alt="Visa" />
@@ -76,11 +108,9 @@ export default function AddPaymentInfo() {
         </label>
         <div className="flex w-full">
           <select
-            className="w-36 mb-2 mr-6 px-2 rounded-lg border-2 border-solid border-orange bg-dark text-gray font-primary "
-            onChange={(e) => setExpMonth(e.target.value)}
+            className="h-9 w-36 mb-2 mr-6 px-2 rounded-lg border-2 border-solid border-orange bg-dark text-gray font-primary "
             name="month"
             id="month"
-            value={expMonth}
           >
             <option value="">Month</option>
             <option value="jan">January</option>
@@ -97,11 +127,9 @@ export default function AddPaymentInfo() {
             <option value="dec">December</option>
           </select>
           <select
-            className="w-36 h-8 mb-2 px-2 rounded-lg border-2 border-solid border-orange bg-dark text-gray font-primary "
-            onChange={(e) => setExpYear(e.target.value)}
+            className="h-9 w-36 mb-2 px-2 rounded-lg border-2 border-solid border-orange bg-dark text-gray font-primary "
             name="year"
             id="year"
-            value={expYear}
           >
             <option value="">Year</option>
             <option value="23">2023</option>
@@ -128,23 +156,38 @@ export default function AddPaymentInfo() {
         </label>
         <div className="flex items-center">
           <input
-            className="focus:outline-none h-8 w-32 mr-2 px-2 rounded-lg border-2 border-solid border-orange bg-dark text-gray font-primary "
-            onChange={(e) => setCryptogram(e.target.value)}
+            className="h-9 focus:outline-none w-32 mr-2 px-2 rounded-lg border-2 border-solid border-orange bg-dark text-gray font-primary "
             type="text"
+            {...register("cryptogram", {
+              required: true,
+              minLength: 3,
+            })}
+            aria-invalid={errors.cryptogram ? "true" : "false"}
             name="cryptogram"
-            id="cryptogram"
-            value={cryptogram}
+            defaultValue=""
           />
           <img src={crypto} alt="cryptogram" />
         </div>
+        {errors.cryptogram && (
+          <span className="text-red">A 3 digits cryptogram is required</span>
+        )}
       </div>
       <div className="flex justify-center my-5">
         <input
           className="text-white bg-orange-gradient font-primary font-semibold rounded-full w-auto h-8 px-4 py-0.5"
           type="submit"
-          value="Upgrade to premium"
+          value="Save payment details"
         />
       </div>
     </form>
   );
 }
+
+AddPaymentInfo.propTypes = {
+  setUserTypeId: PropTypes.func.isRequired,
+  setPremium: PropTypes.func.isRequired,
+  userTypeId: PropTypes.number.isRequired,
+  setModUpdate: PropTypes.func.isRequired,
+  setPaymentDetailsModal: PropTypes.func.isRequired,
+  setText: PropTypes.func.isRequired,
+};

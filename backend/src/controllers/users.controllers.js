@@ -31,12 +31,30 @@ const read = (req, res) => {
 const edit = (req, res) => {
   const user = req.body;
 
-  // TODO validations (length, format...)
-
   user.id = parseInt(req.params.id, 10);
 
   models.users
     .update(user)
+    .then(([result]) => {
+      if (result.affectedRows) {
+        res.status(201).json({ id: result.insertId, ...req.body });
+      } else {
+        res.sendStatus(500);
+      }
+    })
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+};
+
+const editUserTypeID = (req, res) => {
+  const user = req.body;
+
+  user.id = parseInt(req.params.id, 10);
+
+  models.users
+    .updateUserType(user)
     .then(([result]) => {
       if (result.affectedRows) {
         res.status(201).json({ id: result.insertId, ...req.body });
@@ -88,4 +106,5 @@ module.exports = {
   edit,
   add,
   destroy,
+  editUserTypeID,
 };

@@ -16,6 +16,7 @@ router.put(
   hashPassword,
   usersControllers.edit
 );
+router.patch("/:id", usersControllers.editUserTypeID);
 router.post("/", usersControllers.add);
 router.delete("/:id", usersControllers.destroy);
 
