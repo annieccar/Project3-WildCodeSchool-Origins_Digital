@@ -1,15 +1,21 @@
 import { useState } from "react";
 import Login from "../components/Login";
 import Signup from "../components/Signup";
+import { useBlurredBackgroundContext } from "../contexts/BlurredBackgroundContext";
 
 export default function SignUpLogin() {
   const [loginSelected, setLoginSelected] = useState(true);
+  const { isBackgroundBlurred } = useBlurredBackgroundContext();
 
   const changeSelected = () => {
     setLoginSelected(!loginSelected);
   };
   return (
-    <div className=" flex flex-col items-center my-5 bg-dark text-white ">
+    <div
+      className={` flex flex-col items-center my-5 bg-dark text-white ${
+        isBackgroundBlurred && "blur-sm"
+      }`}
+    >
       <div className="flex m-5">
         <button
           className={
@@ -38,10 +44,7 @@ export default function SignUpLogin() {
         </button>
       </div>
 
-      <div>
-        {loginSelected ? <Login /> : null}
-        {!loginSelected ? <Signup /> : null}
-      </div>
+      <div>{loginSelected ? <Login /> : <Signup />}</div>
     </div>
   );
 }

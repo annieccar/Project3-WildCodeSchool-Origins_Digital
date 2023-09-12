@@ -89,7 +89,7 @@ function MultipleItems() {
         <div className="p-2">
           <img
             src={`${import.meta.env.VITE_BACKEND_URL}${
-              import.meta.env.VITE_TUMBNAILS_PATH
+              import.meta.env.VITE_THUMBNAILS_PATH
             }/fog.png`}
             alt="fog"
           />
@@ -98,7 +98,7 @@ function MultipleItems() {
         <div className="p-2">
           <img
             src={`${import.meta.env.VITE_BACKEND_URL}${
-              import.meta.env.VITE_TUMBNAILS_PATH
+              import.meta.env.VITE_THUMBNAILS_PATH
             }/lotus_flowers.png`}
             alt="lotus_flower"
           />
@@ -107,7 +107,7 @@ function MultipleItems() {
         <div className="p-2">
           <img
             src={`${import.meta.env.VITE_BACKEND_URL}${
-              import.meta.env.VITE_TUMBNAILS_PATH
+              import.meta.env.VITE_THUMBNAILS_PATH
             }/sea.png`}
             alt="sea"
           />
@@ -116,7 +116,7 @@ function MultipleItems() {
         <div className="p-2">
           <img
             src={`${import.meta.env.VITE_BACKEND_URL}${
-              import.meta.env.VITE_TUMBNAILS_PATH
+              import.meta.env.VITE_THUMBNAILS_PATH
             }/roundabout.png`}
             alt="roundabout"
           />
@@ -125,7 +125,7 @@ function MultipleItems() {
         <div className="p-2">
           <img
             src={`${import.meta.env.VITE_BACKEND_URL}${
-              import.meta.env.VITE_TUMBNAILS_PATH
+              import.meta.env.VITE_THUMBNAILS_PATH
             }/sunset.png`}
             alt="sunset"
           />
@@ -134,7 +134,7 @@ function MultipleItems() {
         <div className="p-2">
           <img
             src={`${import.meta.env.VITE_BACKEND_URL}${
-              import.meta.env.VITE_TUMBNAILS_PATH
+              import.meta.env.VITE_THUMBNAILS_PATH
             }/sunflowers.png`}
             alt="sunflowers"
           />
