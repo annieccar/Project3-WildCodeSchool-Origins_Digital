@@ -46,9 +46,9 @@ export default function UserProfile() {
   return (
     <>
       <div className="bg-dark flex justify-center">
-        <div className="flex flex-col items-center lg:flex-row lg:justify-around lg:items-start lg:w-4/6 h-5/6 lg:mt-10">
+        <div className="flex flex-col items-center lg:flex-row lg:justify-center  lg:items-start lg:w-4/6 h-5/6 lg:mt-10">
           <UpdateUserDetails />
-          <div className="w-80 flex flex-col justify-start">
+          <div className="w-80 flex flex-col justify-start lg:ml-28">
             <h1 className="text-orange font-primary font-bold text-xl py-3">
               Your account status
             </h1>
