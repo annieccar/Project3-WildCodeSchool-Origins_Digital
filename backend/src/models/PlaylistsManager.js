@@ -21,7 +21,8 @@ class PlaylistsManager extends AbstractManager {
 
   findPlaylistsByUser(id) {
     return this.database.query(
-      `SELECT * FROM ${this.table} WHERE user_id = ?`,
+      `SELECT p.id, p.name name, COUNT(vp.playlist_id) count FROM ${this.table} p LEFT JOIN video_has_playlist vp ON p.id = vp.playlist_id WHERE p.user_id = ? GROUP BY 
+p.name, p.id`,
       [id]
     );
   }
@@ -30,6 +31,13 @@ class PlaylistsManager extends AbstractManager {
     return this.database.query(
       `INSERT INTO video_has_playlist (video_id, playlist_id) VALUES (?, ?)`,
       [body.video_id, body.playlist_id]
+    );
+  }
+
+  findPlaylistVideos(id) {
+    return this.database.query(
+      `SELECT v.* FROM video v JOIN video_has_playlist vp ON v.id = vp.video_id WHERE vp.playlist_id = ? LIMIT 10`,
+      [id]
     );
   }
 }

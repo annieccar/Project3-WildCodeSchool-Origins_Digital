@@ -1,85 +1,81 @@
 const models = require("../models");
 
-const browse = (req, res) => {
-  models.users
-    .findAll()
-    .then(([rows]) => {
+const browse = async (req, res) => {
+  try {
+    const [rows] = await models.users.findAll();
+    if (rows) {
       res.send(rows);
-    })
-    .catch((err) => {
-      console.error(err);
-      res.sendStatus(500);
-    });
+    } else {
+      res.sendStatus(400);
+    }
+  } catch (err) {
+    console.error(err);
+    res.sendStatus(500);
+  }
 };
 
-const read = (req, res) => {
-  models.users
-    .find(req.params.id)
-    .then(([rows]) => {
-      if (rows[0] == null) {
-        res.sendStatus(404);
-      } else {
-        res.send(rows[0]);
-      }
-    })
-    .catch((err) => {
-      console.error(err);
-      res.sendStatus(500);
-    });
+const read = async (req, res) => {
+  try {
+    const [rows] = await models.users.find(req.params.id);
+    if (rows[0] == null) {
+      res.sendStatus(404);
+    } else {
+      res.send(rows[0]);
+    }
+  } catch (err) {
+    console.error(err);
+    res.sendStatus(500);
+  }
 };
 
-const edit = (req, res) => {
-  const user = req.body;
+const edit = async (req, res) => {
+  try {
+    const user = req.body;
 
-  // TODO validations (length, format...)
+    // TODO validations (length, format...)
 
-  user.id = parseInt(req.params.id, 10);
+    user.id = parseInt(req.params.id, 10);
 
-  models.users
-    .update(user)
-    .then(([result]) => {
-      if (result.affectedRows) {
-        res.status(201).json({ id: result.insertId, ...req.body });
-      } else {
-        res.sendStatus(500);
-      }
-    })
-    .catch((err) => {
-      console.error(err);
+    const [result] = await models.users.update(user);
+    if (result.affectedRows) {
+      res.status(201).json({ id: result.insertId, ...req.body });
+    } else {
       res.sendStatus(500);
-    });
+    }
+  } catch (err) {
+    console.error(err);
+    res.sendStatus(500);
+  }
 };
 
-const add = (req, res) => {
-  const user = req.body;
+const add = async (req, res) => {
+  try {
+    const user = req.body;
 
-  // TODO validations (length, format...)
+    // TODO validations (length, format...)
 
-  models.users
-    .insert(user)
-    .then(([result]) => {
+    const [result] = await models.users.insert(user);
+    if (result) {
       res.location(`/users/${result.insertId}`).sendStatus(201);
-    })
-    .catch((err) => {
-      console.error(err);
-      res.sendStatus(500);
-    });
+    }
+  } catch (err) {
+    console.error(err);
+    res.sendStatus(500);
+  }
 };
 
-const destroy = (req, res) => {
-  models.users
-    .delete(req.params.id)
-    .then(([result]) => {
-      if (result.affectedRows === 0) {
-        res.sendStatus(404);
-      } else {
-        res.sendStatus(204);
-      }
-    })
-    .catch((err) => {
-      console.error(err);
-      res.sendStatus(500);
-    });
+const destroy = async (req, res) => {
+  try {
+    const [result] = await models.users.delete(req.params.id);
+    if (result.affectedRows === 0) {
+      res.sendStatus(404);
+    } else {
+      res.sendStatus(204);
+    }
+  } catch (err) {
+    console.error(err);
+    res.sendStatus(500);
+  }
 };
 
 module.exports = {
