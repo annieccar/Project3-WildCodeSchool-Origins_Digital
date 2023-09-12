@@ -6,6 +6,7 @@ import { useCurrentUserContext } from "../contexts/CurrentUserContext";
 import logo from "../assets/images/origins-digital.svg";
 import CategoryMenuDesktop from "./CategoryMenuDesktop";
 import magnifier from "../assets/images/Vector.png";
+import ToolboxPopUp from "./ToolboxPopUp";
 
 export default function Navbar() {
   const { user } = useCurrentUserContext();
@@ -16,6 +17,7 @@ export default function Navbar() {
   const [userMenuSelected, setUserMenuSelected] = useState(false);
   const [categorySelection, setCategorySelection] = useState(false);
   const [keyWord, setKeyWord] = useState("");
+  const [toolboxOpen, setToolboxOpen] = useState(false);
 
   const handleUserMenu = () => {
     setUserMenuSelected(true);
@@ -51,6 +53,14 @@ export default function Navbar() {
 
   const handleSearch = () => {
     navigate(`/search/name=${keyWord}`);
+  };
+
+  const handleToolboxClick = () => {
+    if (isLoggedIn) {
+      setToolboxOpen(!toolboxOpen);
+    } else {
+      navigate("/login");
+    }
   };
 
   useEffect(() => {
@@ -97,6 +107,11 @@ export default function Navbar() {
           <button type="button" onClick={handlePlaylists}>
             <h1 className="font-primary font-bold text-lg hover:text-orange -translate-x-10  ">
               Playlists
+            </h1>
+          </button>
+          <button type="button" onClick={handleToolboxClick}>
+            <h1 className="font-primary font-bold text-lg hover:text-orange -translate-x-10  ">
+              Management tools
             </h1>
           </button>
         </div>
@@ -156,6 +171,9 @@ export default function Navbar() {
           </button>
           <CategoryMenuDesktop setCategorySelection={setCategorySelection} />
         </>
+      )}
+      {toolboxOpen && (
+        <ToolboxPopUp isOpen={toolboxOpen} onClose={handleToolboxClick} />
       )}
     </nav>
   );

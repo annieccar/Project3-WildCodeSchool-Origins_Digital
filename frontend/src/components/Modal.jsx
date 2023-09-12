@@ -46,6 +46,24 @@ export default function Modal({
     }
   }, [modalOpen]);
 
+  useEffect(() => {
+    const modalElement = modalRef.current;
+    // console.log(modalElement);
+    const checkClickOutside = (e) => {
+      console.log(e.target);
+      console.log(modalElement.contains(e.target));
+      if (modalElement && !modalElement.contains(e.target)) {
+        handleCloseModal();
+      }
+    };
+
+    document.addEventListener("click", checkClickOutside, true);
+
+    return () => {
+      document.removeEventListener("click", checkClickOutside);
+    };
+  }, [modalOpen]);
+
   return (
     <dialog
       className="bg-dark space-x-2 h-[50%] w-[95%] sm:w-[500px]  p-6 sm:p-10  md:p-16  border-4 border-orange rounded-3xl  text-xl text-white font-primary"
