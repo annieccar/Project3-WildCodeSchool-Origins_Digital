@@ -6,7 +6,7 @@ import { useCurrentUserContext } from "../contexts/CurrentUserContext";
 import logo from "../assets/images/origins-digital.svg";
 import CategoryMenuDesktop from "./CategoryMenuDesktop";
 import magnifier from "../assets/images/Vector.png";
-import ToolboxPopUp from "./ToolboxPopUp";
+// import ToolboxPopUp from "./ToolboxPopUp";
 
 export default function Navbar() {
   const { user } = useCurrentUserContext();
@@ -172,9 +172,9 @@ export default function Navbar() {
           <CategoryMenuDesktop setCategorySelection={setCategorySelection} />
         </>
       )}
-      {toolboxOpen && (
+      {/* {toolboxOpen && (
         <ToolboxPopUp isOpen={toolboxOpen} onClose={handleToolboxClick} />
-      )}
+      )} */}
     </nav>
   );
 }

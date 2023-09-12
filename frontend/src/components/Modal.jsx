@@ -50,8 +50,8 @@ export default function Modal({
     const modalElement = modalRef.current;
     // console.log(modalElement);
     const checkClickOutside = (e) => {
-      console.log(e.target);
-      console.log(modalElement.contains(e.target));
+      // console.log(e.target);
+      // console.log(modalElement.contains(e.target));
       if (modalElement && !modalElement.contains(e.target)) {
         handleCloseModal();
       }
