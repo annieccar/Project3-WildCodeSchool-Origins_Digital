@@ -1,10 +1,26 @@
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { useState } from "react";
 import { useCurrentUserContext } from "../contexts/CurrentUserContext";
+import { useBlurredBackgroundContext } from "../contexts/BlurredBackgroundContext";
+import SignupErrorPopUp from "./SignupErrorPopUp";
 
 export default function Signup() {
   const { setUser } = useCurrentUserContext();
+  const { setIsBackgroundBlurred } = useBlurredBackgroundContext();
+
+  const [signupErrorPopUpOpen, setSignupErrorPopUpOpen] = useState(false);
+
+  const handleSignupError = () => {
+    setSignupErrorPopUpOpen(true);
+    setIsBackgroundBlurred(true);
+  };
+
+  const handleCloseModal = () => {
+    setSignupErrorPopUpOpen(false);
+    setIsBackgroundBlurred(false);
+  };
 
   const navigate = useNavigate();
 
@@ -34,6 +50,7 @@ export default function Signup() {
       })
       .catch((err) => {
         console.error(err);
+        handleSignupError();
       });
   };
 
@@ -52,12 +69,12 @@ export default function Signup() {
         message: "Registered username contains forbidden characters.",
       },
       minLength: {
-        value: 5,
-        message: "An username must have at least 5 characters.",
+        value: 3,
+        message: "An username must have at least 3 characters.",
       },
       maxLength: {
-        value: 25,
-        message: "An username must have less than 25 characters.",
+        value: 64,
+        message: "An username must have less than 64 characters.",
       },
     },
     firstname: {
@@ -71,8 +88,8 @@ export default function Signup() {
         message: "A firstname must have at least 2 characters.",
       },
       maxLength: {
-        value: 25,
-        message: "A firstname must have less than 25 characters.",
+        value: 64,
+        message: "A firstname must have less than 64 characters.",
       },
     },
     lastname: {
@@ -86,8 +103,8 @@ export default function Signup() {
         message: "A lastname must have at least 2 characters.",
       },
       maxLength: {
-        value: 25,
-        message: "A lastname must have less than 25 characters.",
+        value: 64,
+        message: "A lastname must have less than 64 characters.",
       },
     },
     birthdate: {
@@ -114,8 +131,8 @@ export default function Signup() {
         message: "A valid password must have at least 8 characters.",
       },
       maxLength: {
-        value: 30,
-        message: "A valid password must have less than 30 characters.",
+        value: 64,
+        message: "A valid password must have less than 64 characters.",
       },
     },
     passwordconfirmation: {
@@ -138,7 +155,7 @@ export default function Signup() {
   );
 
   return (
-    <div className="min-h-[60vh] min-w-[50%] mx-12 flex flex-col justify-items-center items-center">
+    <div className="min-h-[60vh] min-w-[50%] mx-12 flex flex-col justify-items-center items-center ">
       <p className="font-bold text-xl text-orange ">Create an account</p>
       <form
         className="flex flex-col items-center min-w-[350px]"
@@ -322,6 +339,10 @@ export default function Signup() {
           <p> {errors.passwordconfirmation.message}</p>
         )}
       </div>
+      <SignupErrorPopUp
+        isOpen={signupErrorPopUpOpen}
+        onClose={handleCloseModal}
+      />
     </div>
     // Todo : user profile image upload
   );

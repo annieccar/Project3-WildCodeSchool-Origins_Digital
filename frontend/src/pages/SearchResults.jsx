@@ -36,7 +36,6 @@ export default function SearchResults() {
         ))
       ) : (
         <p className="text-center text-orange text-lg drop-shadow-md font-semibold font-primary m-10 ">
-          {" "}
           Your search parameters returned no matching video.
         </p>
       )}

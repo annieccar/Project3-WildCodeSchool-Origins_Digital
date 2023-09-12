@@ -9,7 +9,6 @@ export default function HeroCarousel() {
   const [videoNames, setVideoNames] = useState([]);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-  // Retrieve thumbnails names from database
   useEffect(() => {
     axios
       .get(`${import.meta.env.VITE_BACKEND_URL}/api/carousels/1/videos`)
@@ -21,7 +20,6 @@ export default function HeroCarousel() {
       .catch((err) => console.error(err));
   }, []);
 
-  // Set the image index dynamically
   useEffect(() => {
     const interval = setInterval(() => {
       if (currentImageIndex === videoNames.length - 1) {
@@ -36,7 +34,6 @@ export default function HeroCarousel() {
     };
   }, [videoNames, currentImageIndex]);
 
-  // Function to change manually to the next image
   const nextImage = () => {
     if (currentImageIndex === videoNames.length - 1) {
       setCurrentImageIndex(0);
@@ -45,7 +42,6 @@ export default function HeroCarousel() {
     }
   };
 
-  // Function to change manually to the previous image
   const previousImage = () => {
     if (currentImageIndex === 0) {
       setCurrentImageIndex(videoNames.length - 1);

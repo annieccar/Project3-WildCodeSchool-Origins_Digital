@@ -1,85 +1,79 @@
 const models = require("../models");
 
-const browse = (req, res) => {
-  models.items
-    .findAll()
-    .then(([rows]) => {
+const browse = async (req, res) => {
+  try {
+    const [rows] = await models.items.findAll();
+    if (rows) {
       res.send(rows);
-    })
-    .catch((err) => {
-      console.error(err);
-      res.sendStatus(500);
-    });
+    }
+  } catch (err) {
+    console.error(err);
+    res.sendStatus(500);
+  }
 };
 
-const read = (req, res) => {
-  models.items
-    .find(req.params.id)
-    .then(([rows]) => {
-      if (rows[0] == null) {
-        res.sendStatus(404);
-      } else {
-        res.send(rows[0]);
-      }
-    })
-    .catch((err) => {
-      console.error(err);
-      res.sendStatus(500);
-    });
+const read = async (req, res) => {
+  try {
+    const [rows] = await models.items.find(req.params.id);
+    if (rows[0] == null) {
+      res.sendStatus(404);
+    } else {
+      res.send(rows[0]);
+    }
+  } catch (err) {
+    console.error(err);
+    res.sendStatus(500);
+  }
 };
 
-const edit = (req, res) => {
-  const item = req.body;
+const edit = async (req, res) => {
+  try {
+    const item = req.body;
 
-  // TODO validations (length, format...)
+    // TODO validations (length, format...)
 
-  item.id = parseInt(req.params.id, 10);
+    item.id = parseInt(req.params.id, 10);
 
-  models.items
-    .update(item)
-    .then(([result]) => {
-      if (result.affectedRows === 0) {
-        res.sendStatus(404);
-      } else {
-        res.sendStatus(204);
-      }
-    })
-    .catch((err) => {
-      console.error(err);
-      res.sendStatus(500);
-    });
+    const [result] = await models.items.update(item);
+    if (result.affectedRows === 0) {
+      res.sendStatus(404);
+    } else {
+      res.sendStatus(204);
+    }
+  } catch (err) {
+    console.error(err);
+    res.sendStatus(500);
+  }
 };
 
-const add = (req, res) => {
-  const item = req.body;
+const add = async (req, res) => {
+  try {
+    const item = req.body;
 
-  // TODO validations (length, format...)
+    // TODO validations (length, format...)
 
-  models.items
-    .insert(item)
-    .then(([result]) => {
+    const [result] = await models.items.insert(item);
+    if (result) {
       res.location(`/items/${result.insertId}`).sendStatus(201);
-    })
-    .catch((err) => {
-      console.error(err);
-      res.sendStatus(500);
-    });
+    }
+  } catch (err) {
+    console.error(err);
+    res.sendStatus(500);
+  }
 };
 
-const destroy = (req, res) => {
-  models.items
-    .delete(req.params.id)
-    .then(([result]) => {
-      if (result.affectedRows === 0) {
-        res.sendStatus(404);
-      } else {
-        res.sendStatus(204);
-      }
-    })
-    .catch((err) => {
-      console.error(err);
-      res.sendStatus(500);
-    });
+const destroy = async (req, res) => {
+  try {
+    const [result] = await models.items.delete(req.params.id);
+    if (result.affectedRows === 0) {
+      res.sendStatus(404);
+    } else {
+      res.sendStatus(204);
+    }
+  } catch (err) {
+    console.error(err);
+    res.sendStatus(500);
+  }
 };
 
 module.exports = {

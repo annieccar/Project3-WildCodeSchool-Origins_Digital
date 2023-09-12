@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useState } from "react";
 import CategoryMenu from "./CategoryMenu";
 
@@ -11,22 +12,22 @@ export default function Footbar() {
   return (
     <>
       <div className="fixed bottom-0 w-full">
-        <div className="bg-dark w-full h-12 flex justify-around lg:hidden ">
-          <div className="h-full  p-1">
+        <div className="bg-dark w-full h-12 flex justify-around lg:hidden">
+          <Link to="/" className="h-full  p-1">
             <img
               className="w-full h-full"
               src="/src/assets/images/Home.svg"
               alt="home-logo"
             />
-          </div>
+          </Link>
 
-          <div className="h-full p-1">
+          <Link to="/playlists" className="h-full p-1">
             <img
               className="w-full h-full"
               src="/src/assets/images/Playlist.svg"
               alt="playlist-logo"
             />
-          </div>
+          </Link>
 
           <div className="h-full p-1">
             <img

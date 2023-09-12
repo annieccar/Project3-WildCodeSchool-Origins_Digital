@@ -42,7 +42,7 @@ export default function Video() {
             <track default kind="captions" />
             <source
               src={`${import.meta.env.VITE_BACKEND_URL}/public/videos/${
-                videoInfos.name
+                videoInfos.file_name
               }.mp4`}
               type="video/mp4"
             />

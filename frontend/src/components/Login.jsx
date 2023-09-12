@@ -1,13 +1,28 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useCurrentUserContext } from "../contexts/CurrentUserContext";
+import LoginErrorPopUp from "./LoginErrorPopUp";
+import { useBlurredBackgroundContext } from "../contexts/BlurredBackgroundContext";
 
 export default function Login() {
+  const { setIsBackgroundBlurred } = useBlurredBackgroundContext();
   const { setUser } = useCurrentUserContext();
 
   const navigate = useNavigate();
+
+  const [loginErrorPopUpOpen, setloginErrorPopUpOpen] = useState(false);
+
+  const handleLoginError = () => {
+    setloginErrorPopUpOpen(true);
+    setIsBackgroundBlurred(true);
+  };
+
+  const handleCloseModal = () => {
+    setloginErrorPopUpOpen(false);
+    setIsBackgroundBlurred(false);
+  };
 
   const {
     register,
@@ -40,14 +55,6 @@ export default function Login() {
   const emailRegister = register("email", registerOptions.email);
   const passwordRegister = register("password", registerOptions.password);
 
-  const [noMatch, setNoMatch] = useState("");
-
-  useEffect(() => {
-    if (noMatch) {
-      setNoMatch(() => "");
-    }
-  }, [errors.email, errors.password]);
-
   const handleLoginRegistration = async (loginFormData) => {
     await axios
       .post(
@@ -61,12 +68,12 @@ export default function Login() {
       })
       .catch((err) => {
         console.error(err);
-        setNoMatch(() => "No user matches this credentials.");
+        handleLoginError();
       });
   };
 
   return (
-    <div className="min-h-[60vh] min-w-[45%] mx-10 flex flex-col justify-items-center items-center">
+    <div className="min-h-[60vh] min-w-[45%] mx-10 flex flex-col justify-items-center items-center ">
       <p className=" font-bold text-xl text-orange ">
         You already have an account
       </p>
@@ -79,7 +86,7 @@ export default function Login() {
             Email:
           </label>
           <input
-            className="rounded-md border-[3px] p-1  border-orange bg-dark"
+            className="rounded-md border-[3px] p-1 h-9 border-orange bg-dark"
             type="text"
             placeholder="Enter your email address"
             onChange={emailRegister.onChange}
@@ -111,8 +118,13 @@ export default function Login() {
       <div role="alert" className="max-w-[230px] font-medium text-[#FF2415]">
         {errors.email && <p> {errors.email.message}</p>}
         {errors.password && <p>{errors.password.message}</p>}
-        {noMatch && <p>{noMatch}</p>}
       </div>
+
+      <LoginErrorPopUp
+        className="bg-orange"
+        isOpen={loginErrorPopUpOpen}
+        onClose={handleCloseModal}
+      />
     </div>
   );
 }
