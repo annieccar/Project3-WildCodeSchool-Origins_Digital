@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import PropTypes from "prop-types";
+import { useCurrentUserContext } from "../contexts/CurrentUserContext";
 
 export default function AddFavoritesPopUp({ videoInfos, setAddPlaylist }) {
   const [userPlaylists, setUserPlaylists] = useState(null);
@@ -10,9 +11,11 @@ export default function AddFavoritesPopUp({ videoInfos, setAddPlaylist }) {
     "--Select a playlist--"
   );
 
+  const { user } = useCurrentUserContext();
+
   const getPlaylistsByUser = () => {
     axios
-      .get(`${import.meta.env.VITE_BACKEND_URL}/api/playlists/user/2`)
+      .get(`${import.meta.env.VITE_BACKEND_URL}/api/playlists/user/${user.id}`)
       .then((res) => setUserPlaylists(res.data))
       .catch((err) => console.error(err));
   };
@@ -30,7 +33,7 @@ export default function AddFavoritesPopUp({ videoInfos, setAddPlaylist }) {
       try {
         await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/playlists`, {
           name: playlistName,
-          user_id: 2,
+          user_id: user.id,
         });
         getPlaylistsByUser();
         setPlaylistName("");
@@ -153,8 +156,8 @@ AddFavoritesPopUp.propTypes = {
   videoInfos: PropTypes.shape({
     id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
-    duration: PropTypes.number.isRequired,
-    details: PropTypes.string.isRequired,
+    duration: PropTypes.string.isRequired,
+    details: PropTypes.string,
     category_id: PropTypes.number,
   }).isRequired,
   setAddPlaylist: PropTypes.func.isRequired,
