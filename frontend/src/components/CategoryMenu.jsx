@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
+import formatStringFromDb from "../services/formatStringFromDb";
 
 export default function CategoryMenu({ setCategorySelection }) {
   const [categories, setCategories] = useState([]);
@@ -39,7 +40,7 @@ export default function CategoryMenu({ setCategorySelection }) {
                 className="text-white font-primary font-bold text-l mb-2"
                 onClick={() => handleClick(elem.id)}
               >
-                {elem.name}
+                {formatStringFromDb(elem.name)}
               </button>
             ))}
             <button
