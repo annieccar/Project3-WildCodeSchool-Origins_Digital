@@ -64,20 +64,6 @@ const editUserTypeID = async (req, res) => {
     console.error(err);
     res.sendStatus(500);
   }
-
-  // models.users
-  //   .updateUserType(user)
-  //   .then(([result]) => {
-  //     if (result.affectedRows) {
-  //       res.status(201).json({ id: result.insertId, ...req.body });
-  //     } else {
-  //       res.sendStatus(500);
-  //     }
-  //   })
-  //   .catch((err) => {
-  //     console.error(err);
-  //     res.sendStatus(500);
-  //   });
 };
 
 const add = async (req, res) => {
