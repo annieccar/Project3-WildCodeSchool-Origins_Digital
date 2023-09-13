@@ -35,6 +35,7 @@ export default function CategoryMenu({ setCategorySelection }) {
             </p>
             {categories.map((elem) => (
               <button
+                key={elem.name}
                 type="button"
                 className="text-white font-primary font-bold text-l mb-2"
                 onClick={() => handleClick(elem.id)}
