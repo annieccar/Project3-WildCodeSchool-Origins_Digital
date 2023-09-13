@@ -1,12 +1,44 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useCurrentUserContext } from "../contexts/CurrentUserContext";
 import CategoryMenu from "./CategoryMenu";
+import ToolboxPopUp from "./ToolboxPopUp";
 
 export default function Footbar() {
+  const { user } = useCurrentUserContext();
+  const navigate = useNavigate();
+
   const [categorySelection, setCategorySelection] = useState(false);
+  const [isMobile, setIsMobile] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [toolboxOpen, setToolboxOpen] = useState(false);
 
   const handleCategory = () => {
     setCategorySelection(true);
   };
+
+  const handleToolboxClick = () => {
+    if (isLoggedIn) {
+      setToolboxOpen(true);
+    } else {
+      navigate("/login");
+    }
+  };
+
+  const handleResize = () => {
+    if (window.innerWidth <= 500) {
+      setIsMobile(true);
+    } else {
+      setIsMobile(false);
+    }
+  };
+
+  useEffect(() => {
+    if (user) {
+      setIsLoggedIn(true);
+    }
+    handleResize();
+  }, [user]);
 
   return (
     <>
@@ -42,10 +74,30 @@ export default function Footbar() {
               alt="menu-logo"
             />
           </button>
+          {user.usertype_id === 3 && (
+            <button
+              className="h-full p-1"
+              type="button"
+              onClick={handleToolboxClick}
+            >
+              <img
+                className="w-full h-full"
+                src="/src/assets/images/Tool.svg"
+                alt="menu-tool"
+              />
+            </button>
+          )}
         </div>
       </div>
       {categorySelection && (
         <CategoryMenu setCategorySelection={setCategorySelection} />
+      )}
+      {toolboxOpen && (
+        <ToolboxPopUp
+          isOpen={toolboxOpen}
+          onClose={() => setToolboxOpen(!toolboxOpen)}
+          isMobile={isMobile}
+        />
       )}
     </>
   );

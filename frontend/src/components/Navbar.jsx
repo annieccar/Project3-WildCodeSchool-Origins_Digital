@@ -6,7 +6,7 @@ import { useCurrentUserContext } from "../contexts/CurrentUserContext";
 import logo from "../assets/images/origins-digital.svg";
 import CategoryMenuDesktop from "./CategoryMenuDesktop";
 import magnifier from "../assets/images/Vector.png";
-// import ToolboxPopUp from "./ToolboxPopUp";
+import ToolboxPopUp from "./ToolboxPopUp";
 
 export default function Navbar() {
   const { user } = useCurrentUserContext();
@@ -57,7 +57,7 @@ export default function Navbar() {
 
   const handleToolboxClick = () => {
     if (isLoggedIn) {
-      setToolboxOpen(!toolboxOpen);
+      setToolboxOpen(true);
     } else {
       navigate("/login");
     }
@@ -100,7 +100,11 @@ export default function Navbar() {
             </button>
           </div>
           <button type="button" onClick={() => setCategorySelection(true)}>
-            <h1 className="font-primary font-bold text-lg hover:text-orange -translate-x-10  ">
+            <h1
+              className={`font-primary font-bold text-lg hover:text-orange -translate-x-10 ${
+                categorySelection && "text-orange"
+              } `}
+            >
               Categories
             </h1>
           </button>
@@ -109,11 +113,17 @@ export default function Navbar() {
               Playlists
             </h1>
           </button>
-          <button type="button" onClick={handleToolboxClick}>
-            <h1 className="font-primary font-bold text-lg hover:text-orange -translate-x-10  ">
-              Management tools
-            </h1>
-          </button>
+          {user.usertype_id === 3 && (
+            <button type="button" onClick={handleToolboxClick}>
+              <h1
+                className={`font-primary font-bold text-lg hover:text-orange -translate-x-10 ${
+                  toolboxOpen && "text-orange"
+                } `}
+              >
+                Management tools
+              </h1>
+            </button>
+          )}
         </div>
       )}
 
@@ -172,9 +182,13 @@ export default function Navbar() {
           <CategoryMenuDesktop setCategorySelection={setCategorySelection} />
         </>
       )}
-      {/* {toolboxOpen && (
-        <ToolboxPopUp isOpen={toolboxOpen} onClose={handleToolboxClick} />
-      )} */}
+      {toolboxOpen && (
+        <ToolboxPopUp
+          isOpen={toolboxOpen}
+          onClose={() => setToolboxOpen(!toolboxOpen)}
+          isMobile={isMobile}
+        />
+      )}
     </nav>
   );
 }
