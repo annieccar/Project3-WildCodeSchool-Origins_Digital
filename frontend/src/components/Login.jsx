@@ -1,10 +1,10 @@
 import { useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useCurrentUserContext } from "../contexts/CurrentUserContext";
 import LoginErrorPopUp from "./LoginErrorPopUp";
 import { useBlurredBackgroundContext } from "../contexts/BlurredBackgroundContext";
+import expressAPI from "../services/expressAPI";
 
 export default function Login() {
   const { setIsBackgroundBlurred } = useBlurredBackgroundContext();
@@ -55,12 +55,9 @@ export default function Login() {
   const emailRegister = register("email", registerOptions.email);
   const passwordRegister = register("password", registerOptions.password);
 
-  const handleLoginRegistration = async (loginFormData) => {
-    await axios
-      .post(
-        `${import.meta.env.VITE_BACKEND_URL}/api/auth/signin`,
-        loginFormData
-      )
+  const handleLoginRegistration = (loginFormData) => {
+    expressAPI
+      .post(`/api/auth/login`, loginFormData)
       .then((res) => {
         setUser(res.data);
         localStorage.setItem("user", JSON.stringify(res.data));
