@@ -50,7 +50,7 @@ export default function Category() {
   };
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center bg-dark">
       {categoryDetails && (
         <h1 className="text-orange font-primary font-bold text-2xl lg:text-3xl m-6 w-[340px] lg:w-[700px]">
           {capitalizeFirstLetter(categoryDetails.name)}
@@ -94,8 +94,8 @@ export default function Category() {
                   <img
                     src={`${
                       import.meta.env.VITE_BACKEND_URL
-                    }/Public/thumbnails/${elem.name}.png`}
-                    alt={elem.name}
+                    }/Public/thumbnails/${elem.file_name}.png`}
+                    alt={elem.file_name}
                     className="w-40 lg:w-80 mx-3.5 my-2 lg:mx-10 lg:my-6"
                   />
                   <div className="bg-black absolute right-5 lg:right-12 bottom-3 lg:bottom-7 text-sm rounded-sm px-1 font-primary">

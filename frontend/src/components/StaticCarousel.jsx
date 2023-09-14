@@ -82,7 +82,7 @@ export default function StaticCarousel({ videosArray, carousselName }) {
                     }
                   }}
                   src={`${import.meta.env.VITE_BACKEND_URL}/Public/thumbnails/${
-                    elem.name
+                    elem.file_name
                   }.png`}
                   key={elem.id}
                   alt={elem.name}

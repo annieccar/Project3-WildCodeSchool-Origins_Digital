@@ -96,7 +96,6 @@ const readVideos = async (req, res) => {
 
 const readVideosWithCarousel = async (req, res) => {
   try {
-    // console.log("hello");
     const [rows] = await models.carousels.findVideosWithCarousselName();
 
     if (rows) {
@@ -110,10 +109,6 @@ const readVideosWithCarousel = async (req, res) => {
   }
 };
 
-const toto = () => {
-  // console.log("toto");
-};
-
 module.exports = {
   browse,
   read,
@@ -122,5 +117,4 @@ module.exports = {
   destroy,
   readVideos,
   readVideosWithCarousel,
-  toto,
 };

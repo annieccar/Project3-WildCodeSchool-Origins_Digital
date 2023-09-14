@@ -14,7 +14,7 @@ export default function HeroCarousel() {
       .get(`${import.meta.env.VITE_BACKEND_URL}/api/carousels/1/videos`)
       .then((response) => {
         const names = [];
-        response.data.map((elem) => names.push(elem.name));
+        response.data.map((elem) => names.push(elem.file_name));
         setVideoNames(names);
       })
       .catch((err) => console.error(err));
@@ -56,9 +56,9 @@ export default function HeroCarousel() {
         Trending Now
       </h1>
       {videoNames.length > 0 && (
-        <div className="w-80 lg:w-3/5 overflow-hidden relative">
+        <div className="w-80 lg:w-[900px] overflow-hidden relative">
           <div
-            className="flex w-full transition ease-out duration-1000"
+            className="flex w-80 lg:w-[900px] transition ease-out duration-1000"
             style={{
               transform: `translateX(-${currentImageIndex * 100}%)`,
             }}
@@ -70,7 +70,7 @@ export default function HeroCarousel() {
                 }/Public/thumbnails/${elem}.png`}
                 key={elem}
                 alt={elem}
-                className="mx-auto"
+                className="w-80 lg:w-[900px] object-cover"
               />
             ))}
           </div>
