@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useCurrentUserContext } from "../contexts/CurrentUserContext";
-import DynamicCarousel from "../components/DynamicCarousel";
+import FavoritesCarousel from "../components/FavoritesCarousel";
 
 export default function Favorites() {
   const [playlists, setPlaylists] = useState(null);
@@ -23,14 +23,14 @@ export default function Favorites() {
   }, []);
 
   return (
-    <div className="bg-dark flex flex-col items-center gap-7 py-5">
+    <div className="bg-dark flex flex-col items-center py-5">
       <h1 className="text-orange lg:text-3xl font-semibold">My Playlists</h1>
       {playlists &&
         playlists.map((playlist) => (
           <div className="flex flex-col gap-5" key={playlist.id}>
             <button
               type="button"
-              className="flex gap-2 ml-5 items-center"
+              className="flex gap-2 ml-5 items-center translate-y-10"
               onClick={() => navigate(`/playlists/${playlist.id}`)}
             >
               <h1 className="text-orange lg:text-2xl font-semibold">
@@ -41,7 +41,7 @@ export default function Favorites() {
               })`}</p>
             </button>
             <div>
-              <DynamicCarousel playlist={playlist} />
+              <FavoritesCarousel playlist={playlist} />
             </div>
           </div>
         ))}

@@ -12,5 +12,8 @@ router.delete("/:id", carouselsControllers.destroy);
 
 // Get videos associatedd with a caroussel
 router.get("/:id/videos", carouselsControllers.readVideos);
+// Get all videos with their associated carousel
+router.get("/videos", carouselsControllers.readVideosWithCarousel);
+router.get("/toto", carouselsControllers.toto);
 
 module.exports = router;

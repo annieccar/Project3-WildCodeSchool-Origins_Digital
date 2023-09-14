@@ -22,8 +22,8 @@ export default function UserProfile() {
     user.usertype_id = userTypeId;
 
     axios
-      .patch(
-        `${import.meta.env.VITE_BACKEND_URL}/api/users/${user.id}`,
+      .put(
+        `${import.meta.env.VITE_BACKEND_URL}/api/users/${user.id}/usertype`,
         userDetails
       )
       .then(() => {

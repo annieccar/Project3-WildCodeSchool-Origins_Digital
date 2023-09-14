@@ -1,4 +1,4 @@
--- Active: 1689174540931@@127.0.0.1@3306@origins_digital
+-- Active: 1689178327332@@127.0.0.1@3306@origins_digital
 
 INSERT INTO `category` (`name`) VALUES ('nature'), ('landscapes');
 
@@ -118,8 +118,8 @@ INSERT INTO
         `carousel_name`,
         `carousel_length`
     )
-VALUES ('Hero Slider', 5);
+VALUES ('Hero Slider', 5), ('landscape', 10), ('nature', 10);
 
 INSERT INTO
     `video_has_carousel` (`video_id`, `carousel_id`)
-VALUES (1, 1), (2, 1), (3, 1), (4, 1), (5, 1);
+VALUES (1, 1), (2, 1), (3, 1), (4, 1), (5, 1), (1, 2), (2, 2), (3, 2), (4, 2), (5, 3), (6, 3), (7, 3), (8, 3);

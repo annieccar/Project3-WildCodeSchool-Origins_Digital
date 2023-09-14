@@ -94,6 +94,26 @@ const readVideos = async (req, res) => {
   }
 };
 
+const readVideosWithCarousel = async (req, res) => {
+  try {
+    // console.log("hello");
+    const [rows] = await models.carousels.findVideosWithCarousselName();
+
+    if (rows) {
+      res.send(rows);
+    } else {
+      res.sendStatus(400);
+    }
+  } catch (err) {
+    console.error(err);
+    res.sendStatus(500);
+  }
+};
+
+const toto = () => {
+  // console.log("toto");
+};
+
 module.exports = {
   browse,
   read,
@@ -101,4 +121,6 @@ module.exports = {
   add,
   destroy,
   readVideos,
+  readVideosWithCarousel,
+  toto,
 };
