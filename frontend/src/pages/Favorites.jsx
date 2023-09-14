@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCurrentUserContext } from "../contexts/CurrentUserContext";
 import FavoritesCarousel from "../components/FavoritesCarousel";
-
 import expressAPI from "../services/expressAPI";
 
 export default function Favorites() {
