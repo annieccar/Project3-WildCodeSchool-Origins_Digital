@@ -11,6 +11,9 @@ import UserProfile from "../pages/UserProfile";
 import CategoryManagement from "../pages/CategoryManagement";
 import VideoManagement from "../pages/VideoManagement";
 import CarouselManagement from "../pages/CarouselManagement";
+import UserManagement from "../pages/UserManagement";
+import UserProfileManagement from "../pages/UserProfileManagement";
+import CreateUserManagement from "../pages/CreateUserManagement";
 import NotFound from "../pages/NotFound";
 
 function Router() {
@@ -27,6 +30,9 @@ function Router() {
       <Route path="/admin/category" element={<CategoryManagement />} />
       <Route path="/admin/video" element={<VideoManagement />} />
       <Route path="/admin/carousel" element={<CarouselManagement />} />
+      <Route path="/admin/users" element={<UserManagement />} />
+      <Route path="/admin/users/:id" element={<UserProfileManagement />} />
+      <Route path="/admin/users/create" element={<CreateUserManagement />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );
