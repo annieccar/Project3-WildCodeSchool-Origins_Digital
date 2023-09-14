@@ -50,10 +50,12 @@ const edit = async (req, res) => {
 };
 
 const add = async (req, res) => {
+  // console.log(req.body);
   try {
-    const carousel = req.body;
-
-    // TODO validations (length, format...)
+    const carousel = {
+      carousel_name: req.body.name,
+      carousel_length: parseInt(req.body.length, 10),
+    };
 
     const [result] = await models.carousels.insert(carousel);
 
