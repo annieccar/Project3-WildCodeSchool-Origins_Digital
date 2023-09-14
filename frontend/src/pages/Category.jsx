@@ -96,12 +96,12 @@ export default function Category() {
                   <HoverVideoPlayer
                     videoSrc={`${
                       import.meta.env.VITE_BACKEND_URL
-                    }/Public/videos/${elem.name}.mp4`}
+                    }/Public/videos/${elem.file_name}.mp4`}
                     pausedOverlay={
                       <img
                         src={`${
                           import.meta.env.VITE_BACKEND_URL
-                        }/Public/thumbnails/${elem.name}.png`}
+                        }/Public/thumbnails/${elem.file_name}.png`}
                         alt={elem.name}
                         className="rounded-md"
                       />

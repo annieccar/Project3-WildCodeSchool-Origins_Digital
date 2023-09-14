@@ -54,7 +54,7 @@ export default function StaticCarousel({ videosArray, carousselName }) {
 
   return (
     <div className="flex flex-col items-start w-100 lg:w-1000px py-5">
-      <h1 className="text-orange font-primary font-bold text-xl my-3 ml-5">
+      <h1 className="text-orange font-primary font-bold text-xl my-3 mb-6 ml-5">
         {carousselName}
       </h1>
       {videos.length > 0 && (
@@ -84,7 +84,7 @@ export default function StaticCarousel({ videosArray, carousselName }) {
                   src={`${import.meta.env.VITE_BACKEND_URL}/Public/thumbnails/${
                     elem.file_name
                   }.png`}
-                  key={elem.id}
+                  key={elem.file_name}
                   alt={elem.name}
                   className="mx-2 w-36 lg:w-[180px]"
                 />

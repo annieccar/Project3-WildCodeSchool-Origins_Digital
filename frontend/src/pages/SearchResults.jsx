@@ -22,7 +22,7 @@ export default function SearchResults() {
   ];
 
   return (
-    <div>
+    <div className="bg-dark">
       <p className="text-center text-orange text-2xl drop-shadow-md font-semibold font-primary m-8 ">
         Your search results
       </p>
