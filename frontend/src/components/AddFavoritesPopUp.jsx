@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 import PropTypes from "prop-types";
+import { useCurrentUserContext } from "../contexts/CurrentUserContext";
+import expressAPI from "../services/expressAPI";
 
 export default function AddFavoritesPopUp({ videoInfos, setAddPlaylist }) {
   const [userPlaylists, setUserPlaylists] = useState(null);
@@ -10,9 +11,11 @@ export default function AddFavoritesPopUp({ videoInfos, setAddPlaylist }) {
     "--Select a playlist--"
   );
 
+  const { user } = useCurrentUserContext();
+
   const getPlaylistsByUser = () => {
-    axios
-      .get(`${import.meta.env.VITE_BACKEND_URL}/api/playlists/user/2`)
+    expressAPI
+      .get(`/api/playlists/user/${user.id}`)
       .then((res) => setUserPlaylists(res.data))
       .catch((err) => console.error(err));
   };
@@ -28,9 +31,9 @@ export default function AddFavoritesPopUp({ videoInfos, setAddPlaylist }) {
   const handlePlaylistCreation = async () => {
     if (playlistName.trim().length) {
       try {
-        await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/playlists`, {
+        await expressAPI.post(`/api/playlists`, {
           name: playlistName,
-          user_id: 2,
+          user_id: user.id,
         });
         getPlaylistsByUser();
         setPlaylistName("");
@@ -43,15 +46,10 @@ export default function AddFavoritesPopUp({ videoInfos, setAddPlaylist }) {
 
   const handleAddPlaylist = () => {
     if (selectedPlaylist !== "--Select a playlist--") {
-      axios.post(
-        `${
-          import.meta.env.VITE_BACKEND_URL
-        }/api/playlists/${selectedPlaylist}/video`,
-        {
-          video_id: videoInfos.id,
-          playlist_id: selectedPlaylist,
-        }
-      );
+      expressAPI.post(`/api/playlists/${selectedPlaylist}/video`, {
+        video_id: videoInfos.id,
+        playlist_id: selectedPlaylist,
+      });
       setAddPlaylist(false);
     }
   };
@@ -153,8 +151,8 @@ AddFavoritesPopUp.propTypes = {
   videoInfos: PropTypes.shape({
     id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
-    duration: PropTypes.number.isRequired,
-    details: PropTypes.string.isRequired,
+    duration: PropTypes.string.isRequired,
+    details: PropTypes.string,
     category_id: PropTypes.number,
   }).isRequired,
   setAddPlaylist: PropTypes.func.isRequired,

@@ -1,10 +1,13 @@
 import { Link, useNavigate } from "react-router-dom";
 import { BiUserCircle } from "react-icons/bi";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { useEffect, useState } from "react";
 import { useCurrentUserContext } from "../contexts/CurrentUserContext";
 
 import logo from "../assets/images/origins-digital.svg";
 import CategoryMenuDesktop from "./CategoryMenuDesktop";
+import expressAPI from "../services/expressAPI";
 import magnifier from "../assets/images/Vector.png";
 import ToolboxPopUp from "./ToolboxPopUp";
 
@@ -29,14 +32,20 @@ export default function Navbar() {
   };
 
   const handleLogOut = () => {
-    setIsLoggedIn(false);
-    localStorage.clear();
-    setUserMenuSelected(false);
-    navigate("/");
+    expressAPI.get("/api/auth/logout").then((res) => {
+      if (res.status === 200) {
+        setIsLoggedIn(false);
+        localStorage.clear();
+        setUserMenuSelected(false);
+        navigate("/");
+      } else {
+        toast.error("Impossible to logout");
+      }
+    });
   };
 
   const handleResize = () => {
-    if (window.innerWidth <= 500) {
+    if (window.innerWidth <= 1024) {
       setIsMobile(true);
     } else {
       setIsMobile(false);
@@ -189,6 +198,7 @@ export default function Navbar() {
           isMobile={isMobile}
         />
       )}
+      <ToastContainer />
     </nav>
   );
 }

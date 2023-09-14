@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import axios from "axios";
+import expressAPI from "../services/expressAPI";
 
 import { useCurrentUserContext } from "../contexts/CurrentUserContext";
 import pencil from "../assets/images/Pencil.svg";
@@ -27,11 +27,8 @@ export default function UpdateUserDetails() {
       usertype_id: user.usertype_id,
     };
 
-    axios
-      .put(
-        `${import.meta.env.VITE_BACKEND_URL}/api/users/${user.id}`,
-        userDetails
-      )
+    expressAPI
+      .put(`/api/users/${user.id}`, userDetails)
       .then((res) => {
         localStorage.setItem("user", JSON.stringify(res.data));
         if (res.status === 201) {
@@ -49,7 +46,10 @@ export default function UpdateUserDetails() {
 
   return (
     <>
-      <form className="w-80" onSubmit={handleSubmit(onSubmit)}>
+      <form
+        className="w-80 flex flex-col justify-start"
+        onSubmit={handleSubmit(onSubmit)}
+      >
         <h1 className="text-orange font-primary font-bold text-xl py-3">
           Your Profile
         </h1>
@@ -73,7 +73,7 @@ export default function UpdateUserDetails() {
           </label>
           {/* eslint-disable react/jsx-props-no-spreading */}
           <input
-            className=" focus:outline-none mb-2 px-2 rounded-lg border-2 border-solid border-orange bg-dark text-gray font-primary "
+            className="h-9 focus:outline-none mb-2 px-2 rounded-lg border-2 border-solid border-orange bg-dark text-gray font-primary "
             type="text"
             {...register("username", {
               required: true,
@@ -97,7 +97,7 @@ export default function UpdateUserDetails() {
             First Name
           </label>
           <input
-            className=" focus:outline-none mb-2 px-2 rounded-lg border-2 border-solid border-orange bg-dark text-gray font-primary "
+            className="h-9 focus:outline-none mb-2 px-2 rounded-lg border-2 border-solid border-orange bg-dark text-gray font-primary "
             type="text"
             {...register("firstname", {
               required: true,
@@ -121,7 +121,7 @@ export default function UpdateUserDetails() {
             Last Name
           </label>
           <input
-            className="focus:outline-none mb-2 px-2 rounded-lg border-2 border-solid border-orange bg-dark text-gray font-primary "
+            className="h-9 focus:outline-none mb-2 px-2 rounded-lg border-2 border-solid border-orange bg-dark text-gray font-primary "
             type="text"
             {...register("lastname", {
               required: true,
@@ -145,7 +145,7 @@ export default function UpdateUserDetails() {
             Email Address
           </label>
           <input
-            className="focus:outline-none mb-2 px-2 rounded-lg border-2 border-solid border-orange bg-dark text-gray font-primary "
+            className="h-9 focus:outline-none mb-2 px-2 rounded-lg border-2 border-solid border-orange bg-dark text-gray font-primary "
             type="text"
             {...register("email", {
               required: true,
@@ -169,7 +169,7 @@ export default function UpdateUserDetails() {
             Password
           </label>
           <input
-            className="focus:outline-none mb-2 px-2 rounded-lg border-2 border-solid border-orange bg-dark text-gray font-primary "
+            className="h-9 focus:outline-none mb-2 px-2 rounded-lg border-2 border-solid border-orange bg-dark text-gray font-primary "
             type="password"
             {...register("password", {
               required: true,
@@ -192,7 +192,7 @@ export default function UpdateUserDetails() {
             Confirm password
           </label>
           <input
-            className="focus:outline-none mb-2 px-2 rounded-lg border-2 border-solid border-orange bg-dark text-gray font-primary "
+            className="h-9 focus:outline-none mb-2 px-2 rounded-lg border-2 border-solid border-orange bg-dark text-gray font-primary "
             type="password"
             {...register("confirmpassword", {
               required: true,
@@ -207,7 +207,7 @@ export default function UpdateUserDetails() {
         </div>
         <div className="flex justify-center my-5">
           <input
-            className="text-white focus:outline-none font-primary font-semibold rounded-full w-auto px-4 py-0.5 bg-orange-gradient"
+            className="text-white h-8 focus:outline-none font-primary font-semibold rounded-full w-auto px-4 py-0.5 bg-orange-gradient"
             type="submit"
             value="Save Changes"
           />

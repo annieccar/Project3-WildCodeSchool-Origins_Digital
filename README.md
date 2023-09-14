@@ -20,7 +20,7 @@ Origins Digital is a website that hosts videos chosen by the administrator, and 
 To run this project in its development phase, you'll need video and image files :
 
 - First, download and unzip thumbnails.zip folder and video.zip folder from https://www.mediafire.com/folder/njzr98k63e3js/Origins_Digital_backend_assets
-- Then paste both those folders in `backend/public` folder.
+- Then paste both those folders inside `backend/public` folder.
 
 ### Available Commands
 

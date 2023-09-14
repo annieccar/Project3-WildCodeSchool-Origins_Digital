@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
 import AddFavoritesPopUp from "../components/AddFavoritesPopUp";
 import SharePopUp from "../components/SharePopUp";
+import expressApi from "../services/expressAPI";
 
 export default function Video() {
   const { id } = useParams();
@@ -12,8 +12,8 @@ export default function Video() {
   const [shareVideo, setShareVideo] = useState(false);
 
   useEffect(() => {
-    axios
-      .get(`${import.meta.env.VITE_BACKEND_URL}/api/videos/${id}`)
+    expressApi
+      .get(`/api/videos/${id}`)
       .then((res) => setVideoInfos(res.data))
       .catch((err) => console.error(err));
   }, []);
@@ -42,7 +42,7 @@ export default function Video() {
             <track default kind="captions" />
             <source
               src={`${import.meta.env.VITE_BACKEND_URL}/public/videos/${
-                videoInfos.name
+                videoInfos.file_name
               }.mp4`}
               type="video/mp4"
             />
