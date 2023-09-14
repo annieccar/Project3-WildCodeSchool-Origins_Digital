@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import axios from "axios";
+import expressAPI from "../services/expressAPI";
 
 import { useCurrentUserContext } from "../contexts/CurrentUserContext";
 import pencil from "../assets/images/Pencil.svg";
@@ -27,11 +27,8 @@ export default function UpdateUserDetails() {
       usertype_id: user.usertype_id,
     };
 
-    axios
-      .put(
-        `${import.meta.env.VITE_BACKEND_URL}/api/users/${user.id}`,
-        userDetails
-      )
+    expressAPI
+      .put(`/api/users/${user.id}`, userDetails)
       .then((res) => {
         localStorage.setItem("user", JSON.stringify(res.data));
         if (res.status === 201) {
