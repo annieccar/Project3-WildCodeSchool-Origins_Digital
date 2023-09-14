@@ -22,7 +22,7 @@ export default function UserProfile() {
     user.usertype_id = userTypeId;
 
     expressAPI
-      .patch(`/api/users/${user.id}`, userDetails)
+      .put(`/api/users/${user.id}/usertype`, userDetails)
       .then(() => {
         localStorage.setItem("user", JSON.stringify(user));
       })
