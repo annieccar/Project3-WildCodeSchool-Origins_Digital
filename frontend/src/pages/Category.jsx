@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import axios from "axios";
-
 import HoverVideoPlayer from "react-hover-video-player";
+import expressAPI from "../services/expressAPI";
+
 import magnifier from "../assets/images/Vector.png";
 import formatTimeFromDb from "../services/formatTimeFromDb";
 
@@ -15,8 +15,8 @@ export default function Category() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios
-      .get(`${import.meta.env.VITE_BACKEND_URL}/api/categories/${id}`)
+    expressAPI
+      .get(`/api/categories/${id}`)
       .then((response) => {
         setCategoryDetails(response.data);
       })
@@ -24,8 +24,8 @@ export default function Category() {
   }, [id]);
 
   useEffect(() => {
-    axios
-      .get(`${import.meta.env.VITE_BACKEND_URL}/api/categories/${id}/videos`)
+    expressAPI
+      .get(`/api/categories/${id}/videos`)
       .then((response) => {
         setCategoryVideos(response.data);
       })

@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useCurrentUserContext } from "../contexts/CurrentUserContext";
 import DynamicCarousel from "../components/DynamicCarousel";
+import expressAPI from "../services/expressAPI";
 
 export default function Favorites() {
   const [playlists, setPlaylists] = useState(null);
@@ -10,12 +10,8 @@ export default function Favorites() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios
-      .get(
-        `${import.meta.env.VITE_BACKEND_URL}/api/playlists/user/${
-          user.id
-        }/videos`
-      )
+    expressAPI
+      .get(`/api/playlists/user/${user.id}/videos`)
       .then((res) => {
         setPlaylists(res.data);
       })

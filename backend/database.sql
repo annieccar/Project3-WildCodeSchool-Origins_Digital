@@ -1,4 +1,4 @@
--- Active: 1689174540931@@127.0.0.1@3306@origins_digital
+-- Active: 1689178327332@@127.0.0.1@3306@origins_digital
 
 -- SQLBook: Code
 
@@ -53,7 +53,7 @@ CREATE TABLE
         `birthdate` DATE NOT NULL,
         `gender` VARCHAR(45) NOT NULL,
         `email` VARCHAR(128) NOT NULL,
-        `hashedpassword` VARCHAR(255) NOT NULL,
+        `hashedPassword` VARCHAR(255) NOT NULL,
         `profileimage` VARCHAR(255) NULL,
         `usertype_id` INT NOT NULL,
         PRIMARY KEY (`id`),

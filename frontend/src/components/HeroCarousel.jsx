@@ -1,17 +1,17 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 import {
   BsFillArrowRightCircleFill,
   BsFillArrowLeftCircleFill,
 } from "react-icons/bs";
+import expressAPI from "../services/expressAPI";
 
 export default function HeroCarousel() {
   const [videoNames, setVideoNames] = useState([]);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   useEffect(() => {
-    axios
-      .get(`${import.meta.env.VITE_BACKEND_URL}/api/carousels/1/videos`)
+    expressAPI
+      .get(`/api/carousels/1/videos`)
       .then((response) => {
         const names = [];
         response.data.map((elem) => names.push(elem.name));

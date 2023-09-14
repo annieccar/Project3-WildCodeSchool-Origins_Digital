@@ -9,13 +9,14 @@ const playlistsRoutes = require("./routes/playlists.routes");
 const categoriesRoutes = require("./routes/categories.routes");
 const carouselsRoutes = require("./routes/carousels.routes");
 const authRoutes = require("./routes/auth.routes");
+const authorization = require("./middlewares/authorization");
 
 // example
 router.use("/items", itemsRoutes);
 // project routes
-router.use("/users", usersRoutes);
-router.use("/videos", videosRoutes);
-router.use("/playlists", playlistsRoutes);
+router.use("/users", authorization, usersRoutes);
+router.use("/videos", authorization, videosRoutes);
+router.use("/playlists", authorization, playlistsRoutes);
 router.use("/categories", categoriesRoutes);
 router.use("/carousels", carouselsRoutes);
 router.use("/auth", authRoutes);
