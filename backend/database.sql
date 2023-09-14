@@ -82,8 +82,7 @@ CREATE TABLE
 CREATE TABLE
     IF NOT EXISTS `carousel` (
         `id` INT NOT NULL AUTO_INCREMENT,
-        `carousel_name` VARCHAR(64) NOT NULL,
-        `carousel_length` INT NOT NULL,
+        `title` VARCHAR(64) NOT NULL,
         PRIMARY KEY (`id`)
     ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
 

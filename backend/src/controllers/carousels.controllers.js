@@ -15,6 +15,7 @@ const browse = async (req, res) => {
 };
 
 const read = async (req, res) => {
+  // console.log("read req body : ", req.body);
   try {
     const [rows] = await models.carousels.find(req.params.id);
     if (rows[0] == null) {
@@ -52,12 +53,7 @@ const edit = async (req, res) => {
 const add = async (req, res) => {
   // console.log(req.body);
   try {
-    const carousel = {
-      carousel_name: req.body.name,
-      carousel_length: parseInt(req.body.length, 10),
-    };
-
-    const [result] = await models.carousels.insert(carousel);
+    const [result] = await models.carousels.insert(req.body);
 
     if (result) {
       res.location(`/carousels/${result.insertId}`).sendStatus(201);

@@ -6,11 +6,9 @@ class CarouselsManager extends AbstractManager {
   }
 
   insert(carousel) {
-    return this.database.query(
-      `INSERT INTO ${this.table} (carousel_name,
-    carousel_length) VALUES (?, ?)`,
-      [carousel.carousel_name, carousel.carousel_length]
-    );
+    return this.database.query(`INSERT INTO ${this.table} (title) VALUES (?)`, [
+      carousel.title,
+    ]);
   }
 
   update(carousel) {

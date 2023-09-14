@@ -114,11 +114,8 @@ VALUES (
     );
 
 INSERT INTO
-    `carousel` (
-        `carousel_name`,
-        `carousel_length`
-    )
-VALUES ('Hero Slider', 5);
+    `carousel` (`title`)
+VALUES ('Hero Slider');
 
 INSERT INTO
     `video_has_carousel` (`video_id`, `carousel_id`)

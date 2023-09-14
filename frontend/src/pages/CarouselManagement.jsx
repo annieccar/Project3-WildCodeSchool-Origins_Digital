@@ -2,19 +2,19 @@ import { useEffect, useState } from "react";
 import expressAPI from "../services/expressAPI";
 
 export default function CarouselManagement() {
-  const [newCarousel, setNewCarousel] = useState({});
+  const [newCarouselName, setNewCarouselName] = useState({});
   const [carouselList, setCarouselList] = useState([]);
-  // console.table(newCarousel);
+  // console.table(newCarouselName);
   // console.table(carouselList);
 
   const createCarousel = () => {
-    expressAPI.post(`/api/carousels/`, newCarousel).then(
+    expressAPI.post(`/api/carousels/`, newCarouselName).then(
       (res) => res.status === 201
       //  && console.log("created")
     );
   };
   const handleCreateCarousel = () => {
-    if (!newCarousel.name || !newCarousel.length) {
+    if (!newCarouselName) {
       return;
       // console.log("missing infos");
     }
@@ -22,11 +22,14 @@ export default function CarouselManagement() {
   };
 
   useEffect(() => {
-    expressAPI.get().then((res) => setCarouselList(res.data));
+    expressAPI.get(`/api/carousels/`).then((res) => setCarouselList(res.data));
   }, []);
 
-  const handleCarouselSelected = (currentCarousel) => {
-    expressAPI.get(`/api/carousels/${currentCarousel.id}`);
+  const handleCarouselSelected = (currentCarouselId) => {
+    // console.log(currentCarouselId);
+    expressAPI
+      .get(`/api/carousels/${currentCarouselId}`)
+      .then((res) => res.status === 201);
   };
   return (
     <div>
@@ -38,22 +41,10 @@ export default function CarouselManagement() {
             type="text"
             name="newCarouselName"
             id="newCarouselName"
-            onChange={(e) =>
-              setNewCarousel({ ...newCarousel, name: e.target.value })
-            }
+            onChange={(e) => setNewCarouselName({ title: e.target.value })}
           />
         </div>
-        <div>
-          <p>New carousel length</p>
-          <input
-            type="number"
-            name="newCarouselLength"
-            id="newCarouselLength"
-            onChange={(e) =>
-              setNewCarousel({ ...newCarousel, length: e.target.value })
-            }
-          />
-        </div>
+
         <button type="button" onClick={handleCreateCarousel}>
           Create
         </button>
@@ -65,9 +56,9 @@ export default function CarouselManagement() {
             <button
               type="button"
               key={carousel.id}
-              onClick={handleCarouselSelected(carousel)}
+              onClick={() => handleCarouselSelected(carousel.id)}
             >
-              {carousel.carousel_name}
+              {carousel.title}
             </button>
           ))}
       </div>
