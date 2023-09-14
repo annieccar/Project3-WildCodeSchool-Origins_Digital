@@ -53,7 +53,7 @@ CREATE TABLE
         `birthdate` DATE NOT NULL,
         `gender` VARCHAR(45) NOT NULL,
         `email` VARCHAR(128) NOT NULL,
-        `hashedpassword` VARCHAR(255) NOT NULL,
+        `hashedPassword` VARCHAR(255) NOT NULL,
         `profileimage` VARCHAR(255) NULL,
         `usertype_id` INT NOT NULL,
         PRIMARY KEY (`id`),

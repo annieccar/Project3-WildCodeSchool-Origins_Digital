@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import axios from "axios";
+import expressAPI from "../services/expressAPI";
 import formatTimeFromDb from "../services/formatTimeFromDb";
 
 export default function Playlist() {
@@ -13,21 +13,21 @@ export default function Playlist() {
   const navigate = useNavigate();
 
   const fetchPlaylistVideos = () => {
-    axios
-      .get(`${import.meta.env.VITE_BACKEND_URL}/api/playlists/${id}/videos`)
+    expressAPI
+      .get(`/api/playlists/${id}/videos`)
       .then((res) => setPlaylistVideos(res.data));
   };
 
   const fetchCategories = () => {
-    axios
-      .get(`${import.meta.env.VITE_BACKEND_URL}/api/categories`)
+    expressAPI
+      .get(`/api/categories`)
       .then((res) => setCategories(res.data))
       .catch((err) => console.error(err));
   };
 
   const fetchPlaylistName = () => {
-    axios
-      .get(`${import.meta.env.VITE_BACKEND_URL}/api/playlists/${id}`)
+    expressAPI
+      .get(`/api/playlists/${id}`)
       .then((res) => setPlaylist(res.data))
       .catch((err) => console.error(err));
   };

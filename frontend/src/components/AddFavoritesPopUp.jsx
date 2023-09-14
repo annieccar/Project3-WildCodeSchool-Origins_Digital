@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 import PropTypes from "prop-types";
 import { useCurrentUserContext } from "../contexts/CurrentUserContext";
+import expressAPI from "../services/expressAPI";
 
 export default function AddFavoritesPopUp({ videoInfos, setAddPlaylist }) {
   const [userPlaylists, setUserPlaylists] = useState(null);
@@ -14,8 +14,8 @@ export default function AddFavoritesPopUp({ videoInfos, setAddPlaylist }) {
   const { user } = useCurrentUserContext();
 
   const getPlaylistsByUser = () => {
-    axios
-      .get(`${import.meta.env.VITE_BACKEND_URL}/api/playlists/user/${user.id}`)
+    expressAPI
+      .get(`/api/playlists/user/${user.id}`)
       .then((res) => setUserPlaylists(res.data))
       .catch((err) => console.error(err));
   };
@@ -31,7 +31,7 @@ export default function AddFavoritesPopUp({ videoInfos, setAddPlaylist }) {
   const handlePlaylistCreation = async () => {
     if (playlistName.trim().length) {
       try {
-        await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/playlists`, {
+        await expressAPI.post(`/api/playlists`, {
           name: playlistName,
           user_id: user.id,
         });
@@ -46,15 +46,10 @@ export default function AddFavoritesPopUp({ videoInfos, setAddPlaylist }) {
 
   const handleAddPlaylist = () => {
     if (selectedPlaylist !== "--Select a playlist--") {
-      axios.post(
-        `${
-          import.meta.env.VITE_BACKEND_URL
-        }/api/playlists/${selectedPlaylist}/video`,
-        {
-          video_id: videoInfos.id,
-          playlist_id: selectedPlaylist,
-        }
-      );
+      expressAPI.post(`/api/playlists/${selectedPlaylist}/video`, {
+        video_id: videoInfos.id,
+        playlist_id: selectedPlaylist,
+      });
       setAddPlaylist(false);
     }
   };

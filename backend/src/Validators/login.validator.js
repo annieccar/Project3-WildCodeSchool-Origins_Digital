@@ -1,6 +1,6 @@
 const { checkSchema } = require("express-validator");
 
-const loginUserSchema = checkSchema({
+const loginSchema = checkSchema({
   email: {
     exists: {
       errorMessage: "An email is required",
@@ -26,4 +26,4 @@ const loginUserSchema = checkSchema({
   },
 });
 
-module.exports = loginUserSchema;
+module.exports = loginSchema;
