@@ -75,7 +75,7 @@ export default function Footbar() {
               alt="menu-logo"
             />
           </button>
-          {user.usertype_id === 3 && (
+          {user?.usertype_id === 3 && (
             <button
               className="h-full p-1"
               type="button"

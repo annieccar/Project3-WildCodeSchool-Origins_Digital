@@ -122,7 +122,7 @@ export default function Navbar() {
               Playlists
             </h1>
           </button>
-          {user.usertype_id === 3 && (
+          {user?.usertype_id === 3 && (
             <button type="button" onClick={handleToolboxClick}>
               <h1
                 className={`font-primary font-bold text-lg hover:text-orange -translate-x-10 ${
