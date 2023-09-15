@@ -2,10 +2,11 @@ import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import useOnClickOutside from "../hooks/useOnClickOutside";
+import useMediaQuery from "../hooks/useMediaQuery";
 
-export default function ToolboxPopUp({ isOpen, onClose, isMobile }) {
+export default function ToolboxPopUp({ isOpen, onClose }) {
   const [isPopupOpen, setIsPopupOpen] = useState(isOpen);
-
+  const isDesktop = useMediaQuery("(min-width:1024px)");
   const popUpRef = useRef(null);
 
   const navigate = useNavigate();
@@ -28,7 +29,7 @@ export default function ToolboxPopUp({ isOpen, onClose, isMobile }) {
     <div
       ref={popUpRef}
       className={`backdrop-blur-md border-solid border-2 border-orange w-60 h-54 px-5 py-3 rounded-md flex flex-col gap-2 items-start absolute z-50 top-14 right-1/3 translate-x-3/4 ${
-        isMobile && "top-auto bottom-14 right-52 "
+        !isDesktop && "top-auto bottom-14 right-52 "
       } `}
     >
       <button
@@ -66,5 +67,4 @@ export default function ToolboxPopUp({ isOpen, onClose, isMobile }) {
 ToolboxPopUp.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
-  isMobile: PropTypes.bool.isRequired,
 };

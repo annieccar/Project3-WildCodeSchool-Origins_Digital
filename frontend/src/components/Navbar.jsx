@@ -65,11 +65,7 @@ export default function Navbar() {
   };
 
   const handleToolboxClick = () => {
-    if (isLoggedIn) {
-      setToolboxOpen(true);
-    } else {
-      navigate("/login");
-    }
+    setToolboxOpen(true);
   };
 
   useEffect(() => {
@@ -195,7 +191,6 @@ export default function Navbar() {
         <ToolboxPopUp
           isOpen={toolboxOpen}
           onClose={() => setToolboxOpen(!toolboxOpen)}
-          isMobile={isMobile}
         />
       )}
       <ToastContainer />

@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 import { useCurrentUserContext } from "../contexts/CurrentUserContext";
 
 import CategoryMenu from "./CategoryMenu";
@@ -7,11 +7,8 @@ import ToolboxPopUp from "./ToolboxPopUp";
 
 export default function Footbar() {
   const { user } = useCurrentUserContext();
-  const navigate = useNavigate();
 
   const [categorySelection, setCategorySelection] = useState(false);
-  const [isMobile, setIsMobile] = useState(true);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [toolboxOpen, setToolboxOpen] = useState(false);
 
   const handleCategory = () => {
@@ -19,27 +16,8 @@ export default function Footbar() {
   };
 
   const handleToolboxClick = () => {
-    if (isLoggedIn) {
-      setToolboxOpen(true);
-    } else {
-      navigate("/login");
-    }
+    setToolboxOpen(true);
   };
-
-  const handleResize = () => {
-    if (window.innerWidth <= 500) {
-      setIsMobile(true);
-    } else {
-      setIsMobile(false);
-    }
-  };
-
-  useEffect(() => {
-    if (user) {
-      setIsLoggedIn(true);
-    }
-    handleResize();
-  }, [user]);
 
   return (
     <>
@@ -97,7 +75,6 @@ export default function Footbar() {
         <ToolboxPopUp
           isOpen={toolboxOpen}
           onClose={() => setToolboxOpen(!toolboxOpen)}
-          isMobile={isMobile}
         />
       )}
     </>
