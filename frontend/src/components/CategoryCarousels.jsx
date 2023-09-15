@@ -47,7 +47,7 @@ export default function CategoryCarousels() {
       <div className="flex flex-col items-center pb-16">
         {categoryCarousels.map((array) => (
           <div
-            className="relative w-80 lg:w-[980px]"
+            className="relative w-100 lg:w-[980px]"
             key={`${array[0].carousel_id}`}
           >
             <StaticCarousel
@@ -59,7 +59,7 @@ export default function CategoryCarousels() {
               onClick={() => {
                 navigate(`/category/${array[0].category_id}`);
               }}
-              className="text-white bg-orange-gradient font-primary font-semibold rounded-full w-auto h-8 px-4 py-0.5 absolute right-0 top-8"
+              className="text-white bg-orange-gradient font-primary font-semibold rounded-full w-auto h-8 px-4 py-0.5 absolute right-5 lg:right-0 top-8"
             >
               View more
             </button>

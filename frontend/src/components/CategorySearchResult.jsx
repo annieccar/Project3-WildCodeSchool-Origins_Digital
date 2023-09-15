@@ -29,14 +29,14 @@ export default function CategorySearchResults({ categoryName, searchResults }) {
                       <HoverVideoPlayer
                         videoSrc={`${
                           import.meta.env.VITE_BACKEND_URL
-                        }/Public/videos/${video.name}.mp4`}
+                        }/Public/videos/${video.file_name}.mp4`}
                         pausedOverlay={
                           <img
                             className="rounded-md relative "
                             src={`${import.meta.env.VITE_BACKEND_URL}${
                               import.meta.env.VITE_THUMBNAILS_PATH
-                            }/${video.name}.png`}
-                            alt={`${video.name}`}
+                            }/${video.file_name}.png`}
+                            alt={`${video.file_name}`}
                           />
                         }
                         playbackRangeEnd={5}

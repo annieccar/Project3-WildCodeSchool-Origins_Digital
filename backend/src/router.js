@@ -15,7 +15,7 @@ const authorization = require("./middlewares/authorization");
 router.use("/items", itemsRoutes);
 // project routes
 router.use("/users", authorization, usersRoutes);
-router.use("/videos", authorization, videosRoutes);
+router.use("/videos", videosRoutes);
 router.use("/playlists", authorization, playlistsRoutes);
 router.use("/categories", categoriesRoutes);
 router.use("/carousels", carouselsRoutes);
