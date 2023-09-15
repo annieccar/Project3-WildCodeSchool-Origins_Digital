@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
+import formatStringFromDb from "../services/formatStringFromDb";
 import expressAPI from "../services/expressAPI";
 
 export default function CategoryMenu({ setCategorySelection }) {
@@ -40,7 +41,7 @@ export default function CategoryMenu({ setCategorySelection }) {
                 className="text-white font-primary font-bold text-l mb-2"
                 onClick={() => handleClick(elem.id)}
               >
-                {elem.name}
+                {formatStringFromDb(elem.name)}
               </button>
             ))}
             <button

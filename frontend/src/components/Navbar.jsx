@@ -9,6 +9,7 @@ import logo from "../assets/images/origins-digital.svg";
 import CategoryMenuDesktop from "./CategoryMenuDesktop";
 import expressAPI from "../services/expressAPI";
 import magnifier from "../assets/images/Vector.png";
+import ToolboxPopUp from "./ToolboxPopUp";
 
 export default function Navbar() {
   const { user } = useCurrentUserContext();
@@ -19,6 +20,7 @@ export default function Navbar() {
   const [userMenuSelected, setUserMenuSelected] = useState(false);
   const [categorySelection, setCategorySelection] = useState(false);
   const [keyWord, setKeyWord] = useState("");
+  const [toolboxOpen, setToolboxOpen] = useState(false);
 
   const handleUserMenu = () => {
     setUserMenuSelected(true);
@@ -62,6 +64,10 @@ export default function Navbar() {
     navigate(`/search/name=${keyWord}`);
   };
 
+  const handleToolboxClick = () => {
+    setToolboxOpen(true);
+  };
+
   useEffect(() => {
     if (user) {
       setIsLoggedIn(true);
@@ -99,7 +105,11 @@ export default function Navbar() {
             </button>
           </div>
           <button type="button" onClick={() => setCategorySelection(true)}>
-            <h1 className="font-primary font-bold text-lg hover:text-orange -translate-x-10  ">
+            <h1
+              className={`font-primary font-bold text-lg hover:text-orange -translate-x-10 ${
+                categorySelection && "text-orange"
+              } `}
+            >
               Categories
             </h1>
           </button>
@@ -108,6 +118,17 @@ export default function Navbar() {
               Playlists
             </h1>
           </button>
+          {user?.usertype_id === 3 && (
+            <button type="button" onClick={handleToolboxClick}>
+              <h1
+                className={`font-primary font-bold text-lg hover:text-orange -translate-x-10 ${
+                  toolboxOpen && "text-orange"
+                } `}
+              >
+                Management tools
+              </h1>
+            </button>
+          )}
         </div>
       )}
 
@@ -165,6 +186,12 @@ export default function Navbar() {
           </button>
           <CategoryMenuDesktop setCategorySelection={setCategorySelection} />
         </>
+      )}
+      {toolboxOpen && (
+        <ToolboxPopUp
+          isOpen={toolboxOpen}
+          onClose={() => setToolboxOpen(!toolboxOpen)}
+        />
       )}
       <ToastContainer />
     </nav>

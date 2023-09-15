@@ -82,7 +82,7 @@ VALUES (
         '2000-01-01',
         'female',
         'annie@toto.com',
-        'password',
+        '$argon2id$v=19$m=65536,t=5,p=1$42bG/LgUck6OQjfWBg3YCA$sbfjzLw09tkiz/xHdEJ5KmCGY0H9L24r3lbAy46xDuY',
         3
     ), (
         'KillianC',
@@ -91,7 +91,7 @@ VALUES (
         '2000-03-03',
         'male',
         'killian@toto.com',
-        'password',
+        '$argon2id$v=19$m=65536,t=5,p=1$42bG/LgUck6OQjfWBg3YCA$sbfjzLw09tkiz/xHdEJ5KmCGY0H9L24r3lbAy46xDuY',
         2
     ), (
         'DamienM',
@@ -100,7 +100,7 @@ VALUES (
         '2000-02-02',
         'male',
         'damien@toto.com',
-        'password',
+        '$argon2id$v=19$m=65536,t=5,p=1$42bG/LgUck6OQjfWBg3YCA$sbfjzLw09tkiz/xHdEJ5KmCGY0H9L24r3lbAy46xDuY',
         2
     ), (
         'ThibautP',
@@ -109,7 +109,7 @@ VALUES (
         '2000-04-04',
         'male',
         'thibaut@toto.com',
-        'password',
+        '$argon2id$v=19$m=65536,t=5,p=1$42bG/LgUck6OQjfWBg3YCA$sbfjzLw09tkiz/xHdEJ5KmCGY0H9L24r3lbAy46xDuY',
         1
     );
 
