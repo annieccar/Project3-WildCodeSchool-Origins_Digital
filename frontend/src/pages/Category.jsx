@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import HoverVideoPlayer from "react-hover-video-player";
 import expressAPI from "../services/expressAPI";
 
 import magnifier from "../assets/images/Vector.png";
+import formatTimeFromDb from "../services/formatTimeFromDb";
 
 export default function Category() {
   const { id } = useParams();
@@ -50,7 +52,7 @@ export default function Category() {
   };
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center bg-dark">
       {categoryDetails && (
         <h1 className="text-orange font-primary font-bold text-2xl lg:text-3xl m-6 w-[340px] lg:w-[700px]">
           {capitalizeFirstLetter(categoryDetails.name)}
@@ -91,18 +93,31 @@ export default function Category() {
                   className="relative"
                   onClick={() => handleClick(elem)}
                 >
-                  <img
-                    src={`${
+                  <HoverVideoPlayer
+                    videoSrc={`${
                       import.meta.env.VITE_BACKEND_URL
-                    }/Public/thumbnails/${elem.name}.png`}
-                    alt={elem.name}
-                    className="w-40 lg:w-80 mx-3.5 my-2 lg:mx-10 lg:my-6"
+                    }/Public/videos/${elem.file_name}.mp4`}
+                    pausedOverlay={
+                      <img
+                        src={`${
+                          import.meta.env.VITE_BACKEND_URL
+                        }/Public/thumbnails/${elem.file_name}.png`}
+                        alt={elem.name}
+                        className="rounded-md"
+                      />
+                    }
+                    playbackRangeEnd={5}
+                    loadingStateTimeout={1000}
+                    controls
+                    controlsList="nodownload nofullscreen"
+                    className="w-40 lg:w-80 mx-3.5 my-1 lg:mx-10 lg:mt-6 rounded-md"
                   />
-                  <div className="bg-black absolute right-5 lg:right-12 bottom-3 lg:bottom-7 text-sm rounded-sm px-1 font-primary">
-                    00:{elem.duration}
+
+                  <div className="bg-white text-black font-bold absolute rounded-lg right-5 lg:right-12 bottom-5 lg:bottom-5 text-sm px-1 font-primary z-10">
+                    {formatTimeFromDb(elem.duration)}
                   </div>
                 </button>
-                <p className="mb-3 font-primary text-md lg:text-xl font-bold">
+                <p className="mb-3 font-primary text-orange text-md lg:text-xl font-bold">
                   {elem.name}
                 </p>
               </div>

@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+
+import HoverVideoPlayer from "react-hover-video-player";
 import expressAPI from "../services/expressAPI";
 import formatTimeFromDb from "../services/formatTimeFromDb";
 
@@ -44,21 +46,21 @@ export default function Playlist() {
   };
 
   return (
-    <div className="bg-dark flex flex-col gap-3 mt-5 pb-20">
+    <div className="bg-dark flex flex-col gap-3 lg:m-10 pb-20">
       {playlist && (
-        <h1 className="text-center text-orange font-semibold lg:text-3xl">
+        <h1 className="text-center text-2xl text-orange font-semibold lg:text-3xl">
           {playlist.name}
         </h1>
       )}
       {playlistVideos && categories && (
         <>
-          <div className="flex gap-2 mb-5 mx-auto lg:justify-end lg:mr-5">
+          <div className="flex justify-center gap-2 mb-5 mx-3 lg:justify-end lg:mr-5">
             <input
               type="text"
               placeholder="Search"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="rounded-lg bg-dark border-2 border-orange focus:outline-none pl-1"
+              className="w-[140px] rounded-lg bg-dark border-2 border-orange focus:outline-none pl-1 mr-5"
             />
             <select
               className="bg-dark object-fit rounded-lg border-2"
@@ -92,14 +94,27 @@ export default function Playlist() {
                     className="relative"
                     onClick={() => navigate(`/videos/${video.id}`)}
                   >
-                    <img
-                      className="w-64 rounded-lg"
-                      src={`${
+                    <HoverVideoPlayer
+                      videoSrc={`${
                         import.meta.env.VITE_BACKEND_URL
-                      }/public/thumbnails/${video.file_name}.png`}
-                      alt=""
+                      }/Public/videos/${video.file_name}.mp4`}
+                      pausedOverlay={
+                        <img
+                          className="w-64 rounded-lg"
+                          src={`${
+                            import.meta.env.VITE_BACKEND_URL
+                          }/public/thumbnails/${video.file_name}.png`}
+                          alt=""
+                        />
+                      }
+                      playbackRangeEnd={5}
+                      loadingStateTimeout={1000}
+                      controls
+                      controlsList="nodownload nofullscreen"
+                      className="w-64 rounded-lg relative"
                     />
-                    <div className="w-16 mr-1 mb-1 bg-white text-dark lg:text-md font-bold rounded-lg absolute z-10 right-0 bottom-0">
+
+                    <div className="w-12 mr-1 mb-1 bg-white text-dark lg:text-sm font-bold rounded-lg absolute z-10 right-0 bottom-2">
                       {formatTimeFromDb(video.duration)}
                     </div>
                   </button>

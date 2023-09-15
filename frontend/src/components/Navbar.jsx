@@ -100,7 +100,7 @@ export default function Navbar() {
               <img
                 src={magnifier}
                 alt="search"
-                className="translate-y-1 -translate-x-10"
+                className="translate-y-1 -translate-x-8 w-6 h-6"
               />
             </button>
           </div>
