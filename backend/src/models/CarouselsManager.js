@@ -30,7 +30,7 @@ class CarouselsManager extends AbstractManager {
 
   findVideosWithCarousselName() {
     return this.database.query(
-      `SELECT name, file_name, carousel_id, carousel_name, category_id FROM video 
+      `SELECT video.id, name, file_name, carousel_id, carousel_name, category_id FROM video 
       JOIN video_has_carousel ON video_has_carousel.video_id= video.id 
       JOIN carousel ON carousel.id=video_has_carousel.carousel_id`
     );

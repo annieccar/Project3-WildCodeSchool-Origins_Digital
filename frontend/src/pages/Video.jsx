@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import AddFavoritesPopUp from "../components/AddFavoritesPopUp";
 import SharePopUp from "../components/SharePopUp";
 import expressApi from "../services/expressAPI";
+import StaticCarousel from "../components/StaticCarousel";
 
 export default function Video() {
   const { id } = useParams();
@@ -10,13 +11,31 @@ export default function Video() {
   const [details, setDetails] = useState(false);
   const [addPlaylist, setAddPlaylist] = useState(false);
   const [shareVideo, setShareVideo] = useState(false);
+  const [categoryVideos, setCategoryVideos] = useState([]);
+
+  // useEffect(() => {
+  //   expressApi
+  //     .get(`/api/videos/${id}`)
+  //     .then((res) => {
+  //       setVideoInfos(res.data);
+  //     })
+  //     .catch((err) => console.error(err));
+  // }, [id]);
 
   useEffect(() => {
     expressApi
       .get(`/api/videos/${id}`)
-      .then((res) => setVideoInfos(res.data))
+      .then((res) => {
+        setVideoInfos(res.data);
+        expressApi
+          .get(`/api/categories/${res.data.category_id}/videos`)
+          .then((response) => {
+            setCategoryVideos(response.data.filter((video) => video.id !== id));
+          })
+          .catch((err) => console.error(err));
+      })
       .catch((err) => console.error(err));
-  }, []);
+  }, [id]);
 
   const handleAddPlaylist = () => {
     setAddPlaylist(!addPlaylist);
@@ -33,12 +52,16 @@ export default function Video() {
     setShareVideo(false);
   };
 
+  const navigate = useNavigate();
+
   return (
-    <div>
+    <div className="flex flex-col items-center bg-dark">
       {videoInfos && (
         <div className="mt-8 flex flex-col items-center">
-          <h1 className="mb-5 text-white font-primary">{videoInfos.name}</h1>
-          <video className="w-10/12 lg:w-1/2" controls>
+          <h1 className="mb-5 text-orange font-primary text-2xl lg:text-3xl font-bold">
+            {videoInfos.name}
+          </h1>
+          <video className="w-10/12 lg:w-[1000px]" controls>
             <track default kind="captions" />
             <source
               src={`${import.meta.env.VITE_BACKEND_URL}/public/videos/${
@@ -47,7 +70,7 @@ export default function Video() {
               type="video/mp4"
             />
           </video>
-          <div className="w-10/12 lg:w-1/2 mt-5 flex justify-between">
+          <div className="w-10/12 lg:w-[1000px] mt-5 flex justify-between">
             <button
               className="flex items-center gap-2"
               type="button"
@@ -146,6 +169,23 @@ export default function Video() {
             />
           )}
           {shareVideo && <SharePopUp videoInfos={videoInfos} />}
+        </div>
+      )}
+      {categoryVideos && (
+        <div className="relative">
+          <StaticCarousel
+            videosArray={categoryVideos}
+            carousselName="More videos like this"
+          />
+          <button
+            type="button"
+            onClick={() => {
+              navigate(`/category/${videoInfos.category_id}`);
+            }}
+            className="text-white bg-orange-gradient font-primary font-semibold rounded-full w-auto h-8 px-4 py-0.5 absolute right-5 lg:right-0 top-8"
+          >
+            See all
+          </button>
         </div>
       )}
     </div>
