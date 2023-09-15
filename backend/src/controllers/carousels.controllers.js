@@ -29,6 +29,23 @@ const read = async (req, res) => {
   }
 };
 
+const readCarouselVideos = async (req, res) => {
+  // console.log("read req body : ", req.body);
+  try {
+    const [rows] = await models.carousels.selectVideosByCarouselId(
+      req.params.id
+    );
+    if (rows[0] == null) {
+      res.sendStatus(404);
+    } else {
+      res.send(rows);
+    }
+  } catch (err) {
+    console.error(err);
+    res.sendStatus(500);
+  }
+};
+
 const edit = async (req, res) => {
   try {
     const carousel = req.body;
@@ -99,4 +116,5 @@ module.exports = {
   add,
   destroy,
   readVideos,
+  readCarouselVideos,
 };

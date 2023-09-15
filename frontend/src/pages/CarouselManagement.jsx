@@ -4,6 +4,8 @@ import expressAPI from "../services/expressAPI";
 export default function CarouselManagement() {
   const [newCarouselName, setNewCarouselName] = useState({});
   const [carouselList, setCarouselList] = useState([]);
+  const [videosList, setvideosList] = useState([]);
+
   // console.table(newCarouselName);
   // console.table(carouselList);
 
@@ -27,9 +29,13 @@ export default function CarouselManagement() {
 
   const handleCarouselSelected = (currentCarouselId) => {
     // console.log(currentCarouselId);
-    expressAPI
-      .get(`/api/carousels/${currentCarouselId}`)
-      .then((res) => res.status === 201);
+    expressAPI.get(`/api/carousels/${currentCarouselId}`).then((res) => {
+      if (res.status === 200) {
+        setvideosList(res.data);
+      } else {
+        throw new ReferenceError();
+      }
+    });
   };
   return (
     <div>
@@ -61,6 +67,27 @@ export default function CarouselManagement() {
               {carousel.title}
             </button>
           ))}
+      </div>
+      <div>
+        {videosList.length > 0 && (
+          <div>
+            <h3>{videosList[0].carousel_name}</h3>
+            <ul className=" border-solid border-2 border-orange w-48 px-5 py-3 rounded-md">
+              {videosList.map((video) => (
+                <li key={video.video_name} className="flex ">
+                  <label htmlFor={`${video.video_name}`}>
+                    {video.video_name}
+                  </label>
+                  <input
+                    type="checkbox"
+                    name={`${video.video_name}`}
+                    id={`${video.video_name}`}
+                  />
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
     </div>
   );
