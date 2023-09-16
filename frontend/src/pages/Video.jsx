@@ -13,15 +13,6 @@ export default function Video() {
   const [shareVideo, setShareVideo] = useState(false);
   const [categoryVideos, setCategoryVideos] = useState([]);
 
-  // useEffect(() => {
-  //   expressApi
-  //     .get(`/api/videos/${id}`)
-  //     .then((res) => {
-  //       setVideoInfos(res.data);
-  //     })
-  //     .catch((err) => console.error(err));
-  // }, [id]);
-
   useEffect(() => {
     expressApi
       .get(`/api/videos/${id}`)
