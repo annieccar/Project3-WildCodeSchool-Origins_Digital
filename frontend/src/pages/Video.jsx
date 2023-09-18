@@ -52,7 +52,11 @@ export default function Video() {
           <h1 className="mb-5 text-orange font-primary text-2xl lg:text-3xl font-bold">
             {videoInfos.name}
           </h1>
-          <video className="w-10/12 lg:w-[1000px]" controls>
+          <video
+            className="w-10/12 lg:w-[1000px]"
+            controls
+            key={videoInfos.file_name}
+          >
             <track default kind="captions" />
             <source
               src={`${import.meta.env.VITE_BACKEND_URL}/public/videos/${

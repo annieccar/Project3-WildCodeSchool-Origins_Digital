@@ -60,13 +60,6 @@ const updateUserSchema = checkSchema({
       errorMessage: "Your password must contain between 8 and 64 characters",
     },
   },
-  profileimage: {
-    exists: {
-      options: {
-        checkFalsy: false,
-      },
-    },
-  },
   usertype_id: {
     exists: {
       errorMessage: "A usertype id is required",
