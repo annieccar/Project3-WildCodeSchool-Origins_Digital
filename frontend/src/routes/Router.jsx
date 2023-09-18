@@ -12,21 +12,32 @@ import CategoryManagement from "../pages/CategoryManagement";
 import VideoManagement from "../pages/VideoManagement";
 import CarouselManagement from "../pages/CarouselManagement";
 import UserManagement from "../pages/UserManagement";
+import ProtectedRoute from "../components/ProtectedRoute";
 import UserProfileManagement from "../pages/UserProfileManagement";
 import CreateUserManagement from "../pages/CreateUserManagement";
 import NotFound from "../pages/NotFound";
+import { useCurrentUserContext } from "../contexts/CurrentUserContext";
 
 function Router() {
+  const { user } = useCurrentUserContext();
   return (
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<SignUpLogin />} />
       <Route path="/category/:id" element={<Category />} />
-      <Route path="/playlists" element={<Favorites />} />
-      <Route path="/playlists/:id" element={<Playlist />} />
       <Route path="/search/:query" element={<SearchResults />} />
-      <Route path="/videos/:id" element={<Video />} />
-      <Route path="/profile" element={<UserProfile />} />
+      <Route
+        element={
+          <ProtectedRoute
+            isAllowed={user?.usertype_id === 2 || user?.usertype_id === 3}
+          />
+        }
+      >
+        <Route path="/playlists" element={<Favorites />} />
+        <Route path="/playlists/:id" element={<Playlist />} />
+        <Route path="/videos/:id" element={<Video />} />
+        <Route path="/profile" element={<UserProfile />} />
+      </Route>
       <Route path="/admin/category" element={<CategoryManagement />} />
       <Route path="/admin/video" element={<VideoManagement />} />
       <Route path="/admin/carousel" element={<CarouselManagement />} />

@@ -1,12 +1,14 @@
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import HoverVideoPlayer from "react-hover-video-player";
 import formatStringFromDb from "../services/formatStringFromDb";
+import formatTimeFromDb from "../services/formatTimeFromDb";
 
 export default function CategorySearchResults({ categoryName, searchResults }) {
   return (
     <div>
       {searchResults?.length !== 0 && (
-        <div>
+        <div className="mx-2 lg:mx-10">
           <div>
             <h2 className=" text-orange text-xl drop-shadow-md font-semibold font-primary m-3 ml-12 mt-16">
               {formatStringFromDb(categoryName)}
@@ -24,20 +26,31 @@ export default function CategorySearchResults({ categoryName, searchResults }) {
                       className="m-4 relative  hover:scale-[110%] duration-300 ease-in-out"
                       key={video.id}
                     >
-                      <img
-                        className="rounded-md relative "
-                        src={`${import.meta.env.VITE_BACKEND_URL}${
-                          import.meta.env.VITE_THUMBNAILS_PATH
-                        }/${video.name}.png`}
-                        alt={`${video.name}`}
+                      <HoverVideoPlayer
+                        videoSrc={`${
+                          import.meta.env.VITE_BACKEND_URL
+                        }/Public/videos/${video.file_name}.mp4`}
+                        pausedOverlay={
+                          <img
+                            className="rounded-md relative "
+                            src={`${import.meta.env.VITE_BACKEND_URL}${
+                              import.meta.env.VITE_THUMBNAILS_PATH
+                            }/${video.file_name}.png`}
+                            alt={`${video.file_name}`}
+                          />
+                        }
+                        playbackRangeEnd={5}
+                        loadingStateTimeout={1000}
+                        controls
+                        controlsList="nodownload nofullscreen"
+                        className="rounded-md"
                       />
-                      <p className="ml-1 mt-1">
+
+                      <p className="ml-1 mt-1 font-primary font-bold text-lg">
                         {formatStringFromDb(video.name)}
                       </p>
-                      <div className="absolute px-0.5 rounded-xl top-1 right-1 z-10 drop-shadow-[0_1.2px_1.2px_rgba(100,100,100,1)]  ">
-                        <p className="text-xs text- font-medium drop-shadow-[0_0.8px_1.8px_rgba(240,100,10,1)] box-decoration-slice ">
-                          {video.duration}
-                        </p>
+                      <div className="bg-white text-black font-bold absolute rounded-lg right-2 lg:right-3 bottom-11 lg:bottom-11 text-sm px-1 font-primary z-10">
+                        {formatTimeFromDb(video.duration)}
                       </div>
                     </div>
                   </Link>

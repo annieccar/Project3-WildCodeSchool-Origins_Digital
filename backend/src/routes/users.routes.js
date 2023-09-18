@@ -4,11 +4,16 @@ const router = express.Router();
 
 const usersControllers = require("../controllers/users.controllers");
 
+const createUserSchema = require("../Validators/createUser.validator");
 const updateUserSchema = require("../Validators/updateUser.validator");
 const validateSchema = require("../middlewares/validateSchema");
 const { hashPassword } = require("../middlewares/hashPassword");
+const checkUserDoesntExists = require("../middlewares/checkUserDoesntExist");
+const adminUserPasswordUpdate = require("../middlewares/adminUserPasswordUpdate");
+const checkRoles = require("../middlewares/checkRoles");
 
 router.get("/", usersControllers.browse);
+router.get("/usertypes", usersControllers.browseUsertypes);
 router.get("/:id", usersControllers.read);
 router.put(
   "/:id",
@@ -16,8 +21,20 @@ router.put(
   hashPassword,
   usersControllers.edit
 );
-router.patch("/:id", usersControllers.editUserTypeID);
-router.post("/", usersControllers.add);
+router.put(
+  "/:id/admin",
+  checkRoles(3),
+  adminUserPasswordUpdate,
+  usersControllers.edit
+);
+router.put("/:id/usertype", usersControllers.editUserTypeID);
+router.post(
+  "/",
+  validateSchema(createUserSchema),
+  checkUserDoesntExists,
+  hashPassword,
+  usersControllers.add
+);
 router.delete("/:id", usersControllers.destroy);
 
 module.exports = router;

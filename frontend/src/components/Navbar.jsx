@@ -1,11 +1,15 @@
 import { Link, useNavigate } from "react-router-dom";
 import { BiUserCircle } from "react-icons/bi";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { useEffect, useState } from "react";
 import { useCurrentUserContext } from "../contexts/CurrentUserContext";
 
 import logo from "../assets/images/origins-digital.svg";
 import CategoryMenuDesktop from "./CategoryMenuDesktop";
+import expressAPI from "../services/expressAPI";
 import magnifier from "../assets/images/Vector.png";
+import ToolboxPopUp from "./ToolboxPopUp";
 
 export default function Navbar() {
   const { user } = useCurrentUserContext();
@@ -16,6 +20,7 @@ export default function Navbar() {
   const [userMenuSelected, setUserMenuSelected] = useState(false);
   const [categorySelection, setCategorySelection] = useState(false);
   const [keyWord, setKeyWord] = useState("");
+  const [toolboxOpen, setToolboxOpen] = useState(false);
 
   const handleUserMenu = () => {
     setUserMenuSelected(true);
@@ -27,10 +32,16 @@ export default function Navbar() {
   };
 
   const handleLogOut = () => {
-    setIsLoggedIn(false);
-    localStorage.clear();
-    setUserMenuSelected(false);
-    navigate("/");
+    expressAPI.get("/api/auth/logout").then((res) => {
+      if (res.status === 200) {
+        setIsLoggedIn(false);
+        localStorage.clear();
+        setUserMenuSelected(false);
+        navigate("/");
+      } else {
+        toast.error("Impossible to logout");
+      }
+    });
   };
 
   const handleResize = () => {
@@ -51,6 +62,10 @@ export default function Navbar() {
 
   const handleSearch = () => {
     navigate(`/search/name=${keyWord}`);
+  };
+
+  const handleToolboxClick = () => {
+    setToolboxOpen(true);
   };
 
   useEffect(() => {
@@ -85,12 +100,16 @@ export default function Navbar() {
               <img
                 src={magnifier}
                 alt="search"
-                className="translate-y-1 -translate-x-10"
+                className="translate-y-1 -translate-x-8 w-6 h-6"
               />
             </button>
           </div>
           <button type="button" onClick={() => setCategorySelection(true)}>
-            <h1 className="font-primary font-bold text-lg hover:text-orange -translate-x-10  ">
+            <h1
+              className={`font-primary font-bold text-lg hover:text-orange -translate-x-10 ${
+                categorySelection && "text-orange"
+              } `}
+            >
               Categories
             </h1>
           </button>
@@ -99,6 +118,17 @@ export default function Navbar() {
               Playlists
             </h1>
           </button>
+          {user?.usertype_id === 3 && (
+            <button type="button" onClick={handleToolboxClick}>
+              <h1
+                className={`font-primary font-bold text-lg hover:text-orange -translate-x-10 ${
+                  toolboxOpen && "text-orange"
+                } `}
+              >
+                Management tools
+              </h1>
+            </button>
+          )}
         </div>
       )}
 
@@ -135,7 +165,7 @@ export default function Navbar() {
           <button type="button" onClick={() => setUserMenuSelected(false)}>
             <div className="fixed top-20 bottom-12 left-0 right-0 " />
           </button>
-          <div className="backdrop-blur-md border-solid border-2 border-orange w-32 px-5 py-3 rounded-md flex flex-col gap-2 items-start absolute z-50 top-14 right-2 ">
+          <div className="backdrop-blur-md border-solid border-2 border-orange w-32 px-5 py-3 rounded-md flex flex-col gap-2 items-start fixed z-50 top-14 right-2 ">
             <button type="button" onClick={handleMyProfile}>
               <p className="text-white hover:text-orange font-primary font-bold my-2">
                 My profile
@@ -157,6 +187,13 @@ export default function Navbar() {
           <CategoryMenuDesktop setCategorySelection={setCategorySelection} />
         </>
       )}
+      {toolboxOpen && (
+        <ToolboxPopUp
+          isOpen={toolboxOpen}
+          onClose={() => setToolboxOpen(!toolboxOpen)}
+        />
+      )}
+      <ToastContainer />
     </nav>
   );
 }

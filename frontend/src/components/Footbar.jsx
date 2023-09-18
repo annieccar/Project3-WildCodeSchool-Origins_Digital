@@ -1,12 +1,22 @@
-import { Link } from "react-router-dom";
 import { useState } from "react";
+import { Link } from "react-router-dom";
+import { useCurrentUserContext } from "../contexts/CurrentUserContext";
+
 import CategoryMenu from "./CategoryMenu";
+import ToolboxPopUp from "./ToolboxPopUp";
 
 export default function Footbar() {
+  const { user } = useCurrentUserContext();
+
   const [categorySelection, setCategorySelection] = useState(false);
+  const [toolboxOpen, setToolboxOpen] = useState(false);
 
   const handleCategory = () => {
     setCategorySelection(true);
+  };
+
+  const handleToolboxClick = () => {
+    setToolboxOpen(true);
   };
 
   return (
@@ -43,10 +53,29 @@ export default function Footbar() {
               alt="menu-logo"
             />
           </button>
+          {user?.usertype_id === 3 && (
+            <button
+              className="h-full p-1"
+              type="button"
+              onClick={handleToolboxClick}
+            >
+              <img
+                className="w-full h-full"
+                src="/src/assets/images/Tool.svg"
+                alt="menu-tool"
+              />
+            </button>
+          )}
         </div>
       </div>
       {categorySelection && (
         <CategoryMenu setCategorySelection={setCategorySelection} />
+      )}
+      {toolboxOpen && (
+        <ToolboxPopUp
+          isOpen={toolboxOpen}
+          onClose={() => setToolboxOpen(!toolboxOpen)}
+        />
       )}
     </>
   );

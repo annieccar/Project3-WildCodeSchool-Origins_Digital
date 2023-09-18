@@ -17,4 +17,5 @@ export function CurrentUserContextProvider({ children }) {
     </CurrentUserContext.Provider>
   );
 }
+
 CurrentUserContextProvider.propTypes = { children: PropTypes.node.isRequired };

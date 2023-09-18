@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import expressAPI from "../services/expressAPI";
 
 export default function VideoManagement() {
   const [videos, setVideos] = useState([]);
@@ -22,8 +22,8 @@ export default function VideoManagement() {
   };
 
   useEffect(() => {
-    axios
-      .get(`${import.meta.env.VITE_BACKEND_URL}/api/video`)
+    expressAPI
+      .get(`/api/video`)
       .then((response) => setVideos(response.data))
       .catch((error) =>
         console.error("Erreur lors de la récupération des vidéos:", error)
