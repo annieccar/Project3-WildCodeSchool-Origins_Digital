@@ -11,13 +11,37 @@ class CarouselsManager extends AbstractManager {
     ]);
   }
 
+  insertJointure({ carouselId, idAdded }) {
+    const initialSql = `INSERT INTO video_has_carousel (video_id, carousel_id) VALUES`;
+    const values = [];
+    idAdded.map((value) => values.push(value.video_id, carouselId));
+
+    return this.database.query(
+      `${initialSql}${values.map((value, index) =>
+        index % 2 === 0 ? " (?" : " ?)"
+      )}`,
+      values
+    );
+  }
+
+  deleteJointure({ carouselId, idRemoved }) {
+    const initialSql = `DELETE FROM video_has_carousel WHERE carousel_id = ? AND (`;
+    const values = [carouselId];
+    idRemoved.map((value) => values.push(value.video_id));
+
+    return this.database.query(
+      `${initialSql}${values.map(
+        (value, index) =>
+          (index === 1 ? "video_id = ?" : null) ||
+          (index > 1 ? " OR video_id = ?" : null)
+      )})`.replaceAll(",", ""),
+      values
+    );
+  }
+
   selectVideosByCarouselId(id) {
     return this.database.query(
-      `SELECT c.id AS carousel_id, c.title AS carousel_name, v.name AS video_name, vhc.carousel_id AS join_id FROM ${this.table} AS c
-      INNER JOIN video_has_carousel AS vhc ON c.id = vhc.carousel_id
-      RIGHT JOIN video AS v ON vhc.video_id = v.id
-      WHERE c.id = ?
-      OR vhc.carousel_id IS NULL`,
+      `select title, carousel.id, video_id from carousel left join video_has_carousel on carousel.id = video_has_carousel.carousel_id where carousel.id = ?`,
       [id]
     );
   }
@@ -27,6 +51,12 @@ class CarouselsManager extends AbstractManager {
       `UPDATE ${this.table} SET title = ? WHERE id = ?`,
       [carousel.title, carousel.id]
     );
+  }
+
+  findByCarouselTitle(title) {
+    return this.database.query(`select * from  ${this.table} where title = ?`, [
+      title,
+    ]);
   }
 
   findVideos(id) {
