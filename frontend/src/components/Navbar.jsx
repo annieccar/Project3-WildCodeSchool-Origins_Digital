@@ -140,7 +140,13 @@ export default function Navbar() {
         >
           {user.profileimage ? (
             <div className="flex items-center my-2">
-              <img src={`${user.profileimage}`} alt="user" />
+              <img
+                src={`${
+                  import.meta.env.VITE_BACKEND_URL
+                }/public/profileimages/${user.profileimage}`}
+                alt="user"
+                className="rounded-full h-10 mr-3"
+              />
               <p className="font-primary font-">{user.username}</p>
             </div>
           ) : (

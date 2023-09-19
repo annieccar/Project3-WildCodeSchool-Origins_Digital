@@ -7,11 +7,13 @@ const usersControllers = require("../controllers/users.controllers");
 const updateUserSchema = require("../Validators/updateUser.validator");
 const validateSchema = require("../middlewares/validateSchema");
 const { hashPassword } = require("../middlewares/hashPassword");
+const fileUpload = require("../middlewares/multer");
 
 router.get("/", usersControllers.browse);
 router.get("/:id", usersControllers.read);
 router.put(
   "/:id",
+  fileUpload,
   validateSchema(updateUserSchema),
   hashPassword,
   usersControllers.edit

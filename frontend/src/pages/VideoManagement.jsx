@@ -23,7 +23,7 @@ export default function VideoManagement() {
 
   useEffect(() => {
     expressAPI
-      .get(`/api/video`)
+      .get(`/api/videos`)
       .then((response) => setVideos(response.data))
       .catch((error) =>
         console.error("Erreur lors de la récupération des vidéos:", error)
@@ -31,7 +31,7 @@ export default function VideoManagement() {
   }, []);
 
   return (
-    <div className="w-screen h-screen flex flex-col items-center p-2 md:p-0">
+    <div className="w-screen bg-dark flex flex-col items-center p-2 md:p-0">
       <h3 className="flex text-orange p-3 md:p-5 text-2xl md:text-3xl">
         Videos Management
       </h3>

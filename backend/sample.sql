@@ -204,8 +204,8 @@ VALUES (
         5
     ), (
         28,
-        'Kitesurf',
-        'kitesurf',
+        'Kitesurfing',
+        'kitesurfing',
         '00:00:51',
         'Kitesurfer in action',
         3
