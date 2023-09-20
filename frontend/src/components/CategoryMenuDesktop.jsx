@@ -26,7 +26,7 @@ export default function CategoryMenuDesktop({ setCategorySelection }) {
   return (
     <div>
       {categories.length > 0 && (
-        <div className="backdrop-blur-md border-solid border-2 border-orange w-48 px-5 py-3 rounded-md flex flex-col gap-2 items-start absolute z-50 top-14 right-1/2 translate-x-3/4 ">
+        <div className="backdrop-blur-md border-solid border-2 border-orange w-48 px-5 py-3 rounded-md flex flex-col gap-2 items-start absolute z-50 top-14 right-1/2">
           {categories.map((elem) => (
             <button
               key={elem.id}

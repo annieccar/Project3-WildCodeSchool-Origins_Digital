@@ -13,6 +13,8 @@ import VideoManagement from "../pages/VideoManagement";
 import CarouselManagement from "../pages/CarouselManagement";
 import UserManagement from "../pages/UserManagement";
 import ProtectedRoute from "../components/ProtectedRoute";
+import UserProfileManagement from "../pages/UserProfileManagement";
+import CreateUserManagement from "../pages/CreateUserManagement";
 import NotFound from "../pages/NotFound";
 import { useCurrentUserContext } from "../contexts/CurrentUserContext";
 import NotPremium from "../pages/NotPremium";
@@ -60,8 +62,10 @@ function Router() {
         <Route path="/admin/category" element={<CategoryManagement />} />
         <Route path="/admin/video" element={<VideoManagement />} />
         <Route path="/admin/carousel" element={<CarouselManagement />} />
-        <Route path="/admin/user" element={<UserManagement />} />
-        <Route path="*" element={<NotFound />} />
+        <Route path="/admin/users" element={<UserManagement />} />
+        <Route path="/admin/users/:id" element={<UserProfileManagement />} />
+      <Route path="/admin/users/create" element={<CreateUserManagement />} />
+      <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
   );
