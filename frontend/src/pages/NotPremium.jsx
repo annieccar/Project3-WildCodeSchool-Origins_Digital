@@ -3,15 +3,18 @@ import { useNavigate } from "react-router-dom";
 export default function NotPremium() {
   const navigate = useNavigate();
   return (
-    <>
-      {/* <div
+    <div className=" bg-dark h-screen flex justify-center items-center">
+      <div
         role="button"
         onClick={() => navigate("/")}
-        className="fixed z-0 top-0 bottom-0 left-0 right-0 backdrop-blur-md h-screen"
-      /> */}
-      <div className="bg-dark border-solid z-50 border-2 border-orange w-[330px] px-5 py-3 rounded-md flex flex-col gap-2 items-center bottom-1/2 right-1/2 ">
+        className="fixed top-0 bottom-0 left-0 right-0 h-screen"
+        tabIndex={0}
+        onKeyDown={() => navigate("/")}
+        aria-label="Navigate to the homepage"
+      />
+      <div className="bg-dark border-solid border-2 border-orange w-[330px] px-5 py-3 rounded-md flex flex-col gap-2 items-center bottom-1/2 right-1/2 -translate-y-16 ">
         <p className="text-white text-center font-primary font-bold text-md my-2">
-          You need a premium membership to watch this video
+          You need a premium membership to access this page
         </p>
         <div>
           <button
@@ -26,6 +29,6 @@ export default function NotPremium() {
           </button>
         </div>
       </div>
-    </>
+    </div>
   );
 }

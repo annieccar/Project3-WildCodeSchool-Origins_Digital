@@ -136,7 +136,7 @@ export default function Navbar() {
                 >
                   <div className="fixed top-0 bottom-12 left-0 right-0" />
                 </button>
-                <div className="absolute -translate-y-10 -translate-x-10">
+                <div className="absolute -translate-y-10 translate-x-24">
                   <CategoryMenuDesktop
                     setCategorySelection={setCategorySelection}
                   />

@@ -48,7 +48,7 @@ export default function UserManagement() {
   };
 
   return (
-    <div className="bg-dark flex flex-col lg:flex-row mt-10">
+    <div className="bg-dark flex flex-col lg:flex-row pt-10">
       <div className="flex flex-col lg:w-1/2">
         <div className="flex justify-center mb-5">
           <button
