@@ -23,7 +23,7 @@ export default function VideoManagement() {
 
   useEffect(() => {
     expressAPI
-      .get(`/api/video`)
+      .get(`/api/videos`)
       .then((response) => setVideos(response.data))
       .catch((error) =>
         console.error("Erreur lors de la récupération des vidéos:", error)

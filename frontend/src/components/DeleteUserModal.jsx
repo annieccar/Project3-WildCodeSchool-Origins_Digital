@@ -15,7 +15,7 @@ function DeleteUserModal({ username, closeModal, handleUserDelete }) {
         </p>
         <p className="text-orange font-semibold">{username}</p>
 
-        <div className="flex justify-around w-full mt-5">
+        <div className="flex flex-col md:flex-row gap-2 justify-center w-full mt-5">
           <button
             type="button"
             onClick={closeModal}

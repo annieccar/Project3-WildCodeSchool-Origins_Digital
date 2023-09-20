@@ -1,15 +1,22 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useForm } from "react-hook-form";
 import { createPortal } from "react-dom";
+import PropTypes from "prop-types";
+import { useForm } from "react-hook-form";
 import CustomModal from "../components/CustomModal";
 import expressAPI from "../services/expressAPI";
 import visa from "../assets/images/Visa.png";
+import {
+  registerOptions,
+  giveTodayDate,
+} from "../validators/createUserManagement.validator";
 
-export default function CreateUserManagement() {
+export default function CreateUserManagement({ setUsers }) {
   const [usertypes, setUsertypes] = useState(null);
   const [modal, setModal] = useState(false);
   const navigate = useNavigate();
+
+  const isDesktop = window.innerWidth > 1024;
 
   useEffect(() => {
     expressAPI
@@ -18,106 +25,13 @@ export default function CreateUserManagement() {
       .catch((err) => console.error(err));
   }, []);
 
-  function giveTodayDate() {
-    const date = new Date();
-    let month = date.getMonth().toString();
-    if (month.length === 1) {
-      month = "0".concat(month);
-    }
-    let day = date.getDate().toString();
-    if (day.length === 1) {
-      day = "0".concat(day);
-    }
-    return `${date.getFullYear()}-${month}-${day}`;
-  }
-
   const {
     watch,
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
-
-  const registerOptions = {
-    username: {
-      required: "An username must be registered.",
-      pattern: {
-        value: /[a-z0-9éèàëñçù^*+'\\"=²&§$¤€£<>()|%°.-_@]/gi,
-        message: "Registered username contains forbidden characters.",
-      },
-      minLength: {
-        value: 3,
-        message: "An username must have at least 3 characters.",
-      },
-      maxLength: {
-        value: 64,
-        message: "An username must have less than 64 characters.",
-      },
-    },
-    firstname: {
-      required: "A firstname must be registered.",
-      pattern: {
-        value: /[a-z0-9éèàëñçù]/gi,
-        message: "Registered firstname contains forbidden characters.",
-      },
-      minLength: {
-        value: 2,
-        message: "A firstname must have at least 2 characters.",
-      },
-      maxLength: {
-        value: 64,
-        message: "A firstname must have less than 64 characters.",
-      },
-    },
-    lastname: {
-      required: "A lastname must be registered.",
-      pattern: {
-        value: /[a-z0-9éèàëñçù]/gi,
-        message: "Registered lastname contains forbidden characters.",
-      },
-      minLength: {
-        value: 2,
-        message: "A lastname must have at least 2 characters.",
-      },
-      maxLength: {
-        value: 64,
-        message: "A lastname must have less than 64 characters.",
-      },
-    },
-    birthdate: {
-      required: "A birthdate must be registered.",
-      validate: (value) =>
-        (value > "1900-01-01" && value < giveTodayDate()) ||
-        "Your birthdate must be posterior to January 1st, 1900.",
-    },
-    gender: {
-      required: "A gender must be registered.",
-    },
-    email: {
-      required: "An email must be registered.",
-      pattern: {
-        value: /^[a-z0-9.-_]+@[a-z]+\.[a-z]{2,4}$/gi,
-        message:
-          'Registered email has the wrong format. It must resemble "johndoe@example.com."',
-      },
-    },
-    password: {
-      required: "A password must be registered.",
-      minLength: {
-        value: 8,
-        message: "A valid password must have at least 8 characters.",
-      },
-      maxLength: {
-        value: 64,
-        message: "A valid password must have less than 64 characters.",
-      },
-    },
-    passwordconfirmation: {
-      required: "A password confirmation must be registered.",
-      validate: (value) =>
-        value === watch("password") || "Passwords do not match.",
-    },
-  };
 
   const usernameRegister = register("username", registerOptions.username);
   const firstnameRegister = register("firstname", registerOptions.firstname);
@@ -127,28 +41,33 @@ export default function CreateUserManagement() {
   const emailRegister = register("email", registerOptions.email);
   const usertypeRegister = register("usertype_id", registerOptions.usertype_id);
   const passwordRegister = register("password", registerOptions.password);
-  const passwordConfirmationRegister = register(
-    "passwordconfirmation",
-    registerOptions.passwordconfirmation
-  );
+  const passwordConfirmationRegister = register("passwordconfirmation", {
+    required: "A password confirmation must be registered.",
+    validate: (value) =>
+      value === watch("password") || "Passwords do not match.",
+  });
 
   const onSubmit = (data) => {
     expressAPI
       .post(`/api/users/`, data)
       .then((res) => {
-        if (res.status === 201) {
-          navigate("/admin/users");
+        if (res.status === 201 && isDesktop) {
+          reset();
+          expressAPI.get(`/api/users`).then((result) => setUsers(result.data));
         } else {
-          setModal(true);
+          navigate("/admin/users");
         }
       })
-      .catch((err) => console.error(err));
+      .catch((err) => {
+        console.error(err);
+        setModal(true);
+      });
   };
 
   return (
-    <div className="flex flex-col w-full mt-5 pb-16 md:pb-10 bg-dark md:items-center">
+    <div className="flex flex-col w-full mt-5 pb-16 lg:pb-10 bg-dark lg:w-1/2 lg:mt-2 lg:items-center">
       {usertypes && (
-        <div className="flex flex-col md:w-1/3">
+        <div className="flex flex-col lg:w-3/5">
           <h1 className="text-center text-xl text-orange font-bold mb-5">
             User profile creation
           </h1>
@@ -231,7 +150,7 @@ export default function CreateUserManagement() {
                 <p className="text-[#FF2415]"> {errors.birthdate.message}</p>
               )}
             </div>
-            <fieldset className="flex flex-col gap-1 py-2 my-2">
+            <fieldset className="flex flex-col gap-1 pt-2 mt-4 mb-2">
               <legend className="font-bold">Select the gender:</legend>
 
               <div className="flex justify-between items-center w-3/4">
@@ -398,3 +317,11 @@ export default function CreateUserManagement() {
     </div>
   );
 }
+
+CreateUserManagement.propTypes = {
+  setUsers: PropTypes.func,
+};
+
+CreateUserManagement.defaultProps = {
+  setUsers: null,
+};

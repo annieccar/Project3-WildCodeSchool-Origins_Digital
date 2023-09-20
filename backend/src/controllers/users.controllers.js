@@ -53,6 +53,26 @@ const edit = async (req, res) => {
   }
 };
 
+const editByAdmin = async (req, res) => {
+  try {
+    const user = req.body;
+
+    // TODO validations (length, format...)
+
+    user.id = parseInt(req.params.id, 10);
+
+    const [result] = await models.users.updateByAdmin(user);
+    if (result.affectedRows) {
+      res.status(201).json({ id: result.insertId, ...req.body });
+    } else {
+      res.sendStatus(500);
+    }
+  } catch (err) {
+    console.error(err);
+    res.sendStatus(500);
+  }
+};
+
 const editUserTypeID = async (req, res) => {
   try {
     const user = req.body;
@@ -119,6 +139,7 @@ module.exports = {
   edit,
   add,
   destroy,
+  editByAdmin,
   editUserTypeID,
   browseUsertypes,
 };

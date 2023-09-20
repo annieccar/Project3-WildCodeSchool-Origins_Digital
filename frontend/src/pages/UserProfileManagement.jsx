@@ -1,13 +1,20 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
 import { createPortal } from "react-dom";
+import PropTypes from "prop-types";
+import { useForm } from "react-hook-form";
 import visa from "../assets/images/Visa.png";
 import expressAPI from "../services/expressAPI";
 import CustomModal from "../components/CustomModal";
 import DeleteUserModal from "../components/DeleteUserModal";
+import registerOptions from "../validators/userProfileManagement.validator";
 
-export default function UserProfileManagement() {
+export default function UserProfileManagement({
+  userProps,
+  setUpdate,
+  setUsers,
+  setCreate,
+}) {
   const { id } = useParams();
   const [user, setUser] = useState(null);
   const [usertypes, setUsertypes] = useState(null);
@@ -15,13 +22,41 @@ export default function UserProfileManagement() {
   const [deleteModal, setDeleteModal] = useState(false);
   const [msg, setMsg] = useState("");
   const navigate = useNavigate();
+  const isDesktop = window.innerWidth > 1024;
+
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm();
+
+  const usernameRegister = register("username", registerOptions.username);
+  const firstnameRegister = register("firstname", registerOptions.firstname);
+  const lastnameRegister = register("lastname", registerOptions.lastname);
+  const emailRegister = register("email", registerOptions.email);
+  const usertypeRegister = register("usertype_id", registerOptions.usertype_id);
 
   useEffect(() => {
-    expressAPI
-      .get(`/api/users/${id}`)
-      .then((res) => setUser(res.data))
-      .catch((err) => console.error(err));
-  }, []);
+    if (isDesktop) {
+      setUser(userProps);
+    } else {
+      expressAPI
+        .get(`/api/users/${id}`)
+        .then((res) => setUser(res.data))
+        .catch((err) => console.error(err));
+    }
+  }, [userProps]);
+
+  useEffect(() => {
+    if (user) {
+      setValue("username", user.username);
+      setValue("firstname", user.firstname);
+      setValue("lastname", user.lastname);
+      setValue("email", user.email);
+      setValue("usertype_id", user.usertype_id);
+    }
+  }, [user]);
 
   useEffect(() => {
     expressAPI
@@ -32,125 +67,48 @@ export default function UserProfileManagement() {
 
   const handleUserDelete = () => {
     expressAPI
-      .delete(`/api/users/${id}`)
+      .delete(`/api/users/${user.id}`)
       .then((res) => {
-        if (res.status === 204) {
+        if (res.status === 204 && isDesktop) {
+          setUpdate(false);
+          expressAPI.get(`/api/users`).then((result) => setUsers(result.data));
+          setCreate(true);
+        } else {
           navigate("/admin/users");
         }
       })
       .catch((err) => console.error(err));
   };
 
-  const {
-    watch,
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
-
-  const registerOptions = {
-    username: {
-      required: "An username must be registered.",
-      pattern: {
-        value: /[a-z0-9éèàëñçù^*+'\\"=²&§$¤€£<>()|%°.-_@]/gi,
-        message: "Registered username contains forbidden characters.",
-      },
-      minLength: {
-        value: 3,
-        message: "An username must have at least 3 characters.",
-      },
-      maxLength: {
-        value: 64,
-        message: "An username must have less than 64 characters.",
-      },
-    },
-    firstname: {
-      required: "A firstname must be registered.",
-      pattern: {
-        value: /[a-z0-9éèàëñçù]/gi,
-        message: "Registered firstname contains forbidden characters.",
-      },
-      minLength: {
-        value: 2,
-        message: "A firstname must have at least 2 characters.",
-      },
-      maxLength: {
-        value: 64,
-        message: "A firstname must have less than 64 characters.",
-      },
-    },
-    lastname: {
-      required: "A lastname must be registered.",
-      pattern: {
-        value: /[a-z0-9éèàëñçù]/gi,
-        message: "Registered lastname contains forbidden characters.",
-      },
-      minLength: {
-        value: 2,
-        message: "A lastname must have at least 2 characters.",
-      },
-      maxLength: {
-        value: 64,
-        message: "A lastname must have less than 64 characters.",
-      },
-    },
-    email: {
-      required: "An email must be registered.",
-      pattern: {
-        value: /^[a-z0-9.-_]+@[a-z]+\.[a-z]{2,4}$/gi,
-        message:
-          'Registered email has the wrong format. It must resemble "johndoe@example.com."',
-      },
-    },
-    password: {
-      minLength: {
-        value: 8,
-        message: "A valid password must have at least 8 characters.",
-      },
-      maxLength: {
-        value: 64,
-        message: "A valid password must have less than 64 characters.",
-      },
-    },
-    passwordconfirmation: {
-      validate: (value) =>
-        value === watch("password") || "Passwords do not match.",
-    },
-  };
-
-  const usernameRegister = register("username", registerOptions.username);
-  const firstnameRegister = register("firstname", registerOptions.firstname);
-  const lastnameRegister = register("lastname", registerOptions.lastname);
-  const emailRegister = register("email", registerOptions.email);
-  const usertypeRegister = register("usertype_id", registerOptions.usertype_id);
-  const passwordRegister = register("password", registerOptions.password);
-  const passwordConfirmationRegister = register(
-    "passwordconfirmation",
-    registerOptions.passwordconfirmation
-  );
-
   const onSubmit = (data) => {
-    const userData = { ...data, id: user.id, profileimage: user.profileimage };
-
     expressAPI
-      .put(`/api/users/${user.id}/admin`, userData)
+      .put(`/api/users/${user.id}/admin`, data)
       .then((res) => {
         if (res.status === 201) {
+          if (isDesktop) {
+            expressAPI
+              .get(`/api/users`)
+              .then((result) => setUsers(result.data));
+            setUser({ id: user.id, ...data });
+          }
           setMsg("User updated");
-          setModal(true);
-        } else {
-          setMsg("Something went wrong, retry later");
           setModal(true);
         }
       })
-      .catch((err) => console.error(err));
+      .catch((err) => {
+        console.error(err);
+        setMsg("Something went wrong, retry later");
+        setModal(true);
+      });
   };
 
   return (
-    <div className="bg-dark flex flex-col w-full pb-16 md:pb-10 md:items-center">
+    <div className="bg-dark flex flex-col w-full pb-16 lg:w-1/2 lg:items-center">
       {user && usertypes && (
-        <div className="flex flex-col mt-5 md:w-1/3">
-          <h1 className="text-center text-xl text-orange font-bold mb-5">{`${user.username}`}</h1>
+        <div className="flex flex-col mt-5 lg:w-3/5 lg:mt-0">
+          <h1 className="text-center text-xl text-orange font-bold mb-5">
+            {user.username}
+          </h1>
           <form
             onSubmit={handleSubmit(onSubmit)}
             className="flex flex-col gap-3 w-10/12 mx-auto"
@@ -253,47 +211,6 @@ export default function UserProfileManagement() {
                 ))}
               </select>
             </div>
-            <div className="flex flex-col">
-              <label
-                htmlFor="password"
-                className="font-primary font-bold text-lg py-2"
-              >
-                Password
-              </label>
-              <input
-                type="password"
-                name={passwordRegister.name}
-                onChange={passwordRegister.onChange}
-                ref={passwordRegister.ref}
-                aria-invalid={errors.passwordRegister ? "true" : "false"}
-                className="bg-dark border-2 border-orange focus:outline-none rounded-lg pl-2 py-1 w-full"
-              />
-              {errors.password && (
-                <p className="text-[#FF2415]"> {errors.password.message}</p>
-              )}
-            </div>
-            <div className="flex flex-col">
-              <label
-                className="py-2 pl-1 font-semibold"
-                htmlFor="passwordconfirmation"
-              >
-                Confirm password:
-              </label>
-              <input
-                className="bg-dark border-2 border-orange focus:outline-none rounded-lg w-full pl-1 py-1"
-                type="password"
-                placeholder="Confirm new password"
-                onChange={passwordConfirmationRegister.onChange}
-                name={passwordConfirmationRegister.name}
-                ref={passwordConfirmationRegister.ref}
-                aria-invalid={errors.passwordconfirmation ? "true" : "false"}
-              />
-              {errors.passwordconfirmation && (
-                <p className="text-[#FF2415]">
-                  {errors.passwordconfirmation.message}
-                </p>
-              )}
-            </div>
             <div>
               <h1 className="text-orange font-primary font-bold text-xl py-3">
                 Payment Info:
@@ -351,3 +268,26 @@ export default function UserProfileManagement() {
     </div>
   );
 }
+
+UserProfileManagement.propTypes = {
+  userProps: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    username: PropTypes.string.isRequired,
+    firstname: PropTypes.string.isRequired,
+    birthdate: PropTypes.string.isRequired,
+    gender: PropTypes.string.isRequired,
+    email: PropTypes.string.isRequired,
+    profileimage: PropTypes.string,
+    usertype_id: PropTypes.number.isRequired,
+  }),
+  setUpdate: PropTypes.func,
+  setUsers: PropTypes.func,
+  setCreate: PropTypes.func,
+};
+
+UserProfileManagement.defaultProps = {
+  userProps: null,
+  setUpdate: null,
+  setUsers: null,
+  setCreate: null,
+};

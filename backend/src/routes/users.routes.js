@@ -9,7 +9,6 @@ const updateUserSchema = require("../Validators/updateUser.validator");
 const validateSchema = require("../middlewares/validateSchema");
 const { hashPassword } = require("../middlewares/hashPassword");
 const checkUserDoesntExists = require("../middlewares/checkUserDoesntExist");
-const adminUserPasswordUpdate = require("../middlewares/adminUserPasswordUpdate");
 const checkRoles = require("../middlewares/checkRoles");
 
 router.get("/", usersControllers.browse);
@@ -21,12 +20,7 @@ router.put(
   hashPassword,
   usersControllers.edit
 );
-router.put(
-  "/:id/admin",
-  checkRoles(3),
-  adminUserPasswordUpdate,
-  usersControllers.edit
-);
+router.put("/:id/admin", checkRoles(3), usersControllers.editByAdmin);
 router.put("/:id/usertype", usersControllers.editUserTypeID);
 router.post(
   "/",

@@ -5,6 +5,12 @@ class UsersManager extends AbstractManager {
     super({ table: "user" });
   }
 
+  findAll() {
+    return this.database.query(
+      `SELECT u.*, ut.type_name FROM ${this.table} u JOIN usertype ut ON u.usertype_id = ut.id`
+    );
+  }
+
   findUsertypes() {
     return this.database.query(`SELECT * FROM usertype`);
   }
@@ -36,6 +42,20 @@ class UsersManager extends AbstractManager {
         user.email,
         user.hashedPassword,
         user.profileimage,
+        user.usertype_id,
+        user.id,
+      ]
+    );
+  }
+
+  updateByAdmin(user) {
+    return this.database.query(
+      `UPDATE ${this.table} SET username = ?, firstname = ?, lastname = ?, email = ?, usertype_id = ? WHERE id = ?`,
+      [
+        user.username,
+        user.firstname,
+        user.lastname,
+        user.email,
         user.usertype_id,
         user.id,
       ]
