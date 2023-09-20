@@ -8,7 +8,7 @@ import PaymentDetailsPopUp from "../components/PaymentDetailsPopUp";
 import expressAPI from "../services/expressAPI";
 
 export default function UserProfile() {
-  const { user } = useCurrentUserContext();
+  const { user, setUser } = useCurrentUserContext();
 
   const [premium, setPremium] = useState(false);
   const [userTypeId, setUserTypeId] = useState(user.usertype_id);
@@ -25,6 +25,7 @@ export default function UserProfile() {
       .put(`/api/users/${user.id}/usertype`, userDetails)
       .then(() => {
         localStorage.setItem("user", JSON.stringify(user));
+        setUser({ ...user });
       })
       .catch((err) => {
         console.error(err);

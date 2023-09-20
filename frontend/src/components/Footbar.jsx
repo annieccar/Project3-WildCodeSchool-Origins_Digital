@@ -13,10 +13,12 @@ export default function Footbar() {
 
   const handleCategory = () => {
     setCategorySelection(true);
+    setToolboxOpen(false);
   };
 
   const handleToolboxClick = () => {
     setToolboxOpen(true);
+    setCategorySelection(false);
   };
 
   return (
