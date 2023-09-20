@@ -10,12 +10,14 @@ const validateSchema = require("../middlewares/validateSchema");
 const { hashPassword } = require("../middlewares/hashPassword");
 const checkUserDoesntExists = require("../middlewares/checkUserDoesntExist");
 const checkRoles = require("../middlewares/checkRoles");
+const fileUpload = require("../middlewares/multer");
 
 router.get("/", usersControllers.browse);
 router.get("/usertypes", usersControllers.browseUsertypes);
 router.get("/:id", usersControllers.read);
 router.put(
   "/:id",
+  fileUpload,
   validateSchema(updateUserSchema),
   hashPassword,
   usersControllers.edit

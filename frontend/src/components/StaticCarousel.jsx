@@ -81,7 +81,7 @@ export default function StaticCarousel({ videosArray, carousselName }) {
                       navigate(`/videos/${elem.id}`);
                     }
                   }}
-                  src={`${import.meta.env.VITE_BACKEND_URL}/Public/thumbnails/${
+                  src={`${import.meta.env.VITE_BACKEND_URL}/public/thumbnails/${
                     elem.file_name
                   }.png`}
                   key={elem.file_name}

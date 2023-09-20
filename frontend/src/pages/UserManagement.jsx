@@ -5,6 +5,7 @@ import pencil from "../assets/images/Pencil.svg";
 import expressAPI from "../services/expressAPI";
 import CreateUserManagement from "./CreateUserManagement";
 import UserProfileManagement from "./UserProfileManagement";
+import useMediaQuery from "../hooks/useMediaQuery";
 
 export default function UserManagement() {
   const [search, setSearch] = useState("");
@@ -14,7 +15,7 @@ export default function UserManagement() {
   const [create, setCreate] = useState(true);
 
   const navigate = useNavigate();
-  const isDesktop = window.innerWidth > 1024;
+  const isDesktop = useMediaQuery("(min-width: 1024px)");
 
   useEffect(() => {
     expressAPI.get(`/api/users`).then((res) => setUsers(res.data));
@@ -37,9 +38,9 @@ export default function UserManagement() {
     setCreate(false);
   };
 
-  const handleUpdateUser = async (user) => {
+  const handleUpdateUser = (user) => {
     if (isDesktop) {
-      await handleUserProps(user);
+      handleUserProps(user);
       handleFormUpdate();
     } else {
       navigate(`/admin/users/${user.id}`);

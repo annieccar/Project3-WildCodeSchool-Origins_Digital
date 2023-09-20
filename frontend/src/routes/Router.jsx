@@ -26,6 +26,7 @@ function Router() {
       <Route path="/login" element={<SignUpLogin />} />
       <Route path="/category/:id" element={<Category />} />
       <Route path="/search/:query" element={<SearchResults />} />
+
       <Route
         element={
           <ProtectedRoute

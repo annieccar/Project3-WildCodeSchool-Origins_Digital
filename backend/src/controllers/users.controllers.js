@@ -37,8 +37,11 @@ const edit = async (req, res) => {
   try {
     const user = req.body;
 
-    // TODO validations (length, format...)
-
+    if (req.file) {
+      user.profileimage = req.file.filename;
+    } else {
+      user.profileimage = null;
+    }
     user.id = parseInt(req.params.id, 10);
 
     const [result] = await models.users.update(user);

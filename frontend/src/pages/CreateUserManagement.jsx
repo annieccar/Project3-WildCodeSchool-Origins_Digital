@@ -10,13 +10,14 @@ import {
   registerOptions,
   giveTodayDate,
 } from "../validators/createUserManagement.validator";
+import useMediaQuery from "../hooks/useMediaQuery";
 
 export default function CreateUserManagement({ setUsers }) {
   const [usertypes, setUsertypes] = useState(null);
   const [modal, setModal] = useState(false);
   const navigate = useNavigate();
 
-  const isDesktop = window.innerWidth > 1024;
+  const isDesktop = useMediaQuery("(min-width: 1024px)");
 
   useEffect(() => {
     expressAPI

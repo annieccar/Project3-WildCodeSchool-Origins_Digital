@@ -10,7 +10,7 @@ import { useState, useEffect } from "react";
  */
 
 const useMediaQuery = (query) => {
-  const [matches, setMatches] = useState(false);
+  const [matches, setMatches] = useState(window.matchMedia(query).matches);
 
   useEffect(() => {
     const media = window.matchMedia(query);
@@ -20,7 +20,7 @@ const useMediaQuery = (query) => {
     const listener = () => setMatches(media.matches);
     window.addEventListener("resize", listener);
     return () => window.removeEventListener("resize", listener);
-  }, [matches, query]);
+  }, [matches]);
 
   return matches;
 };

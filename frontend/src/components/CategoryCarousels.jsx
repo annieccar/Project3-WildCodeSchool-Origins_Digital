@@ -11,25 +11,21 @@ export default function CategoryCarousels() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    expressAPI
-      .get("/api/categories")
-      .then((response) => {
-        setCategories(response.data);
-      })
-      .catch((err) => console.error(err));
+    const fetchData = async () => {
+      try {
+        const categoriesResponse = await expressAPI.get("/api/categories");
+        const videoResponse = await expressAPI.get("/api/carousels/videos");
+        setCategories(categoriesResponse.data);
+        setVideoByCategories(videoResponse.data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    fetchData();
   }, []);
 
   useEffect(() => {
-    expressAPI
-      .get("/api/carousels/videos")
-      .then((response) => {
-        setVideoByCategories(response.data);
-      })
-      .catch((err) => console.error(err));
-  }, []);
-
-  useEffect(() => {
-    if (categories.length > 0 && videoByCategories.length > 0) {
+    if (videoByCategories.length > 0 && categories.length > 0) {
       const categoriesWithVideos = categories.map((category) => {
         const categoryArray = videoByCategories.filter(
           (video) => video.carousel_name === category.name

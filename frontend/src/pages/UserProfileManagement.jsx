@@ -8,6 +8,7 @@ import expressAPI from "../services/expressAPI";
 import CustomModal from "../components/CustomModal";
 import DeleteUserModal from "../components/DeleteUserModal";
 import registerOptions from "../validators/userProfileManagement.validator";
+import useMediaQuery from "../hooks/useMediaQuery";
 
 export default function UserProfileManagement({
   userProps,
@@ -22,7 +23,7 @@ export default function UserProfileManagement({
   const [deleteModal, setDeleteModal] = useState(false);
   const [msg, setMsg] = useState("");
   const navigate = useNavigate();
-  const isDesktop = window.innerWidth > 1024;
+  const isDesktop = useMediaQuery("(min-width: 1024px)");
 
   const {
     register,
