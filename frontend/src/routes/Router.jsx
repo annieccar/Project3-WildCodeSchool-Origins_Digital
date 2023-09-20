@@ -64,8 +64,8 @@ function Router() {
         <Route path="/admin/carousel" element={<CarouselManagement />} />
         <Route path="/admin/users" element={<UserManagement />} />
         <Route path="/admin/users/:id" element={<UserProfileManagement />} />
-      <Route path="/admin/users/create" element={<CreateUserManagement />} />
-      <Route path="*" element={<NotFound />} />
+        <Route path="/admin/users/create" element={<CreateUserManagement />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
   );
