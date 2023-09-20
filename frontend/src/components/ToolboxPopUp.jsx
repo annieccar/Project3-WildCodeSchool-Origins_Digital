@@ -55,7 +55,7 @@ export default function ToolboxPopUp({ isOpen, onClose }) {
       </button>
       <button
         type="button"
-        onClick={() => handleClick("user")}
+        onClick={() => handleClick("users")}
         className="text-white hover:text-orange font-primary font-bold text-l my-2"
       >
         Users management

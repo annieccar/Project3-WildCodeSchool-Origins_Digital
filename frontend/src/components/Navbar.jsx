@@ -171,7 +171,7 @@ export default function Navbar() {
           <button type="button" onClick={() => setUserMenuSelected(false)}>
             <div className="fixed top-20 bottom-12 left-0 right-0 " />
           </button>
-          <div className="backdrop-blur-md border-solid border-2 border-orange w-32 px-5 py-3 rounded-md flex flex-col gap-2 items-start absolute z-50 top-14 right-2 ">
+          <div className="backdrop-blur-md border-solid border-2 border-orange w-32 px-5 py-3 rounded-md flex flex-col gap-2 items-start fixed z-50 top-14 right-2 ">
             <button type="button" onClick={handleMyProfile}>
               <p className="text-white hover:text-orange font-primary font-bold my-2">
                 My profile
