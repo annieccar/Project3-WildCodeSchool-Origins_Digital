@@ -34,14 +34,15 @@ function CarouselManagementList({
   };
 
   return (
-    <div>
-      <p>Carousels list</p>
+    <div className="m-2 mr-6">
+      <p className="mx-4 my-2 font-semibold  text-orange">Carousels list</p>
       <div className="flex flex-col border-solid border-2 border-orange w-48 px-5 py-3 rounded-md">
         {carouselList.length > 0 &&
           carouselList.map((carousel) => (
             <button
-              className={`border-solid border-1 border-orange ${
-                carousel.id === currentCarousel.carouselId && "bg-orange"
+              className={`m-2 p-1 border-solid border-2 border-orange rounded-3xl ${
+                carousel.id === currentCarousel.carouselId &&
+                "bg-[linear-gradient(90deg,_#FF8200_0%,_#FF2415_100%)]"
               }`}
               type="button"
               key={carousel.id}

@@ -66,6 +66,8 @@ function CarouselManagementCreate({
             title: "Carousel created",
             content: `Carousel ${currentCarousel.title} has been created in the database.`,
           });
+          handleCarouselError();
+          setCarouselManagementDisplay(2);
         }
       })
       .catch((err) => {
@@ -82,9 +84,8 @@ function CarouselManagementCreate({
               "Error during database writing: the new carousel could not be saved.",
           });
         }
-      })
-      .then(handleCarouselError());
-    setCarouselManagementDisplay(2);
+        return handleCarouselError();
+      });
   };
 
   const handleCreateCarousel = () => {
@@ -95,37 +96,45 @@ function CarouselManagementCreate({
       });
       return handleCarouselError();
     }
+
     return createCarousel();
   };
 
   return (
-    <div>
-      <h2>Create new carousel</h2>
-      <div className="flex max-h-10">
-        <p>New carousel name : </p>
-        <input
-          className="max-h-9 w-52 h-10 font-primary text-base lg:text-xl p-2 border-2 bg-dark lg:border-2 border-orange rounded-md focus:outline-none "
-          type="text"
-          name="newCarouselName"
-          id="newCarouselName"
-          value={currentCarousel.title}
-          onChange={(e) =>
-            setCurrentCarousel({ ...currentCarousel, title: e.target.value })
-          }
-        />
+    <div className="flex w-full h-full flex-col flex-grow px-2 pb-4 bg-dark">
+      <h2 className="font-bold text-xl text-orange self-center pb-4">
+        Create new carousel
+      </h2>
+      <div className="flex max-h-10 flex-col">
+        <div className="flex flex-wrap items-center m-2">
+          <p className="px-3 py-1">New carousel name : </p>
+          <input
+            className="max-h-9 w-52 font-primary text-base p-2 border-2 bg-dark lg:border-2 border-orange rounded-md focus:outline-none "
+            type="text"
+            name="newCarouselName"
+            id="newCarouselName"
+            placeholder="Enter carousel name"
+            value={currentCarousel.title}
+            onChange={(e) =>
+              setCurrentCarousel({ ...currentCarousel, title: e.target.value })
+            }
+          />
+        </div>
         <CarouselManagementVideoList
           videosList={videosList}
           currentCarousel={currentCarousel}
           setCurrentCarousel={setCurrentCarousel}
           categoriesList={categoriesList}
         />
-        <button
-          className="w-36 h-9 rounded-3xl font-primary font-semibold bg-[linear-gradient(90deg,_#FF8200_0%,_#FF2415_100%)]"
-          type="button"
-          onClick={handleCreateCarousel}
-        >
-          Create
-        </button>
+        <div className=" pb-24">
+          <button
+            className="w-48 h-14 py-3 mx-20 mt-5 rounded-3xl font-semibold bg-[linear-gradient(90deg,_#FF8200_0%,_#FF2415_100%)]"
+            type="button"
+            onClick={handleCreateCarousel}
+          >
+            Create new carousel
+          </button>
+        </div>
       </div>
     </div>
   );

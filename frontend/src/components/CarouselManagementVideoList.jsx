@@ -3,6 +3,7 @@ import PropTypes, { shape } from "prop-types";
 
 import formatStringFromDb from "../services/formatStringFromDb";
 import magnifier from "../assets/images/Vector.png";
+import refresh from "../assets/images/refresh.svg";
 
 function CarouselManagementVideoList({
   videosList,
@@ -12,7 +13,7 @@ function CarouselManagementVideoList({
 }) {
   const [videoListFilters, setVideoListFilters] = useState({
     videoName: "",
-    category: null,
+    category: "",
   });
 
   const isChecked = (videoId) => {
@@ -70,64 +71,94 @@ function CarouselManagementVideoList({
       );
   };
   const resetFilters = () => {
-    setVideoListFilters({ videoName: "", category: null });
+    setVideoListFilters({ videoName: "", category: "" });
   };
 
   return (
     videosList.length > 0 && (
-      <div>
-        <div>
-          <label htmlFor="categories">Filter by category</label>
-          <select
-            name="categories"
-            id="categories"
-            onChange={(e) =>
-              setVideoListFilters({
-                ...videoListFilters,
-                category: parseInt(e.target.value, 10),
-              })
-            }
-          >
-            <option value={0}>-- Choose a category -- </option>
-            {categoriesList.map((category) => (
-              <option key={category.id} value={category.id}>
-                {formatStringFromDb(category.name)}
-              </option>
-            ))}
-          </select>
-          <input
-            type="text"
-            className="bg-dark w-36 lg:w-48 h-8 lg:h-8 font-primary text-lg lg:text-xl p-2 border-2 lg:border-2 border-orange rounded-md text-gray "
-            placeholder="search"
-            value={videoListFilters.videoName}
-            onChange={(e) =>
-              setVideoListFilters({
-                ...videoListFilters,
-                videoName: e.target.value,
-              })
-            }
-          />
-          <img src={magnifier} className="  h-5 w-5 " alt="search" />
-          <button type="button" onClick={resetFilters}>
-            Reset filters
-          </button>
-        </div>
-        <ul className=" border-solid border-2 border-orange w-48 px-5 py-3 rounded-md">
-          {applyFiltersToVideosList().map((video) => (
-            <li key={video.name} className="flex ">
-              <label htmlFor={`${video.name}`}>
-                {formatStringFromDb(video.name)}
+      <div className="bg-dark">
+        <h3 className="mx-8 my-4 font-semibold  text-orange">Assign videos</h3>
+        <div className="flex flex-col w-full max-w-[1200px] border-solid border-2 border-orange px-5 py-3 rounded-md">
+          <div className="flex self-end flex-grow max-w-[530px] m-2 rounded-md color:[#010D18] bg-[linear-gradient(90deg,#181001_0%,_#FF680A_50%,#181001_100%)]">
+            <div className=" bg-dark m-0.5 rounded-md w-full">
+              <label htmlFor="categories" className="m-2">
+                Video list filters:
               </label>
-              <input
-                type="checkbox"
-                checked={isChecked(video.id)}
-                onChange={() => handleCheckbox(video.id)}
-                name={`${video.name}`}
-                id={`${video.name}`}
-              />
-            </li>
-          ))}
-        </ul>
+              <div className="flex flex-wrap items-center">
+                <select
+                  name="categories"
+                  id="categories"
+                  value={videoListFilters.category}
+                  onChange={(e) =>
+                    setVideoListFilters({
+                      ...videoListFilters,
+                      category: parseInt(e.target.value, 10),
+                    })
+                  }
+                  className=" bg-dark xs:w-[136px] w-full font-primary text-sm lg:text-md  m-2 my-1 p-1 border-2 border-orange rounded-md text-gray "
+                >
+                  <option value={0}>--By category-- </option>
+                  {categoriesList.map((category) => (
+                    <option key={category.id} value={category.id}>
+                      {formatStringFromDb(category.name)}
+                    </option>
+                  ))}
+                </select>
+                <div className="flex justify-between items-center m-2 my-1 p-1 xs:w-[136px] w-full border-2 border-orange rounded-md placeholder:text-gray ">
+                  <input
+                    type="text"
+                    className="w-24 mx-1  bg-dark font-primary text-sm lg:text-md "
+                    placeholder="By video name"
+                    value={videoListFilters.videoName}
+                    onChange={(e) =>
+                      setVideoListFilters({
+                        ...videoListFilters,
+                        videoName: e.target.value,
+                      })
+                    }
+                  />
+                  <img src={magnifier} className="h-5 w-5" alt="search" />
+                </div>
+
+                <button
+                  type="button"
+                  onClick={resetFilters}
+                  className="flex items-center border-solid border-2 p-1 border-orange rounded-3xl m-2  text-sm"
+                >
+                  <img
+                    src={refresh}
+                    alt="refresh icon"
+                    className="h-5 w-5 mx-2"
+                  />
+                  <span className="mx-2">Reset filters</span>
+                </button>
+              </div>
+            </div>
+          </div>
+          <ul
+            className=" grid auto-rows-fr grid-flow-row xs:grid-cols-2 gap-x-14 gap-y sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 w-full border-solid border-2 border-orange  
+          px-5 py-3 rounded-md "
+          >
+            {applyFiltersToVideosList().map((video) => (
+              <li key={video.name} className="">
+                <div className="flex items-center justify-between ">
+                  <label htmlFor={`${video.name}`}>
+                    {formatStringFromDb(video.name)}
+                  </label>
+                  <input
+                    type="checkbox"
+                    checked={isChecked(video.id)}
+                    onChange={() => handleCheckbox(video.id)}
+                    name={`${video.name}`}
+                    id={`${video.name}`}
+                    className="accent-orange rounded-md focus:ring-orange  focus:ring-2 "
+                  />
+                </div>
+                <hr className="my-3 w-full h-px border-t-0  bg-[linear-gradient(90deg,#010D18_0%,_#FF680A_50%,#010D18_100%)]  " />
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     )
   );
