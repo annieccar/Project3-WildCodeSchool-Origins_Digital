@@ -13,7 +13,6 @@ const hashPassword = async (req, res, next) => {
     if (hashedPassword) {
       req.body.hashedPassword = hashedPassword;
       delete req.body.password;
-
       next();
     } else {
       res.sendStatus(400);

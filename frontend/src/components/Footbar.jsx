@@ -1,12 +1,34 @@
-import { Link } from "react-router-dom";
 import { useState } from "react";
+import { Link } from "react-router-dom";
+import { useCurrentUserContext } from "../contexts/CurrentUserContext";
+
 import CategoryMenu from "./CategoryMenu";
+import ToolboxPopUp from "./ToolboxPopUp";
+import SearchMenu from "./SearchMenu";
 
 export default function Footbar() {
+  const { user } = useCurrentUserContext();
+
   const [categorySelection, setCategorySelection] = useState(false);
+  const [toolboxOpen, setToolboxOpen] = useState(false);
+  const [searchMenu, setSearchMenu] = useState(false);
 
   const handleCategory = () => {
     setCategorySelection(true);
+    setToolboxOpen(false);
+    setSearchMenu(false);
+  };
+
+  const handleToolboxClick = () => {
+    setToolboxOpen(true);
+    setCategorySelection(false);
+    setSearchMenu(false);
+  };
+
+  const handleSearch = () => {
+    setSearchMenu(true);
+    setToolboxOpen(false);
+    setCategorySelection(false);
   };
 
   return (
@@ -29,13 +51,13 @@ export default function Footbar() {
             />
           </Link>
 
-          <div className="h-full p-1">
+          <button className="h-full p-1" type="button" onClick={handleSearch}>
             <img
               className="w-full h-full"
               src="/src/assets/images/Search.svg"
               alt="search-logo"
             />
-          </div>
+          </button>
           <button className="h-full p-1" type="button" onClick={handleCategory}>
             <img
               className="w-full h-full"
@@ -43,11 +65,31 @@ export default function Footbar() {
               alt="menu-logo"
             />
           </button>
+          {user?.usertype_id === 3 && (
+            <button
+              className="h-full p-1"
+              type="button"
+              onClick={handleToolboxClick}
+            >
+              <img
+                className="w-full h-full"
+                src="/src/assets/images/Tool.svg"
+                alt="menu-tool"
+              />
+            </button>
+          )}
         </div>
       </div>
       {categorySelection && (
         <CategoryMenu setCategorySelection={setCategorySelection} />
       )}
+      {toolboxOpen && (
+        <ToolboxPopUp
+          isOpen={toolboxOpen}
+          onClose={() => setToolboxOpen(!toolboxOpen)}
+        />
+      )}
+      {searchMenu && <SearchMenu setSearchMenu={setSearchMenu} />}
     </>
   );
 }

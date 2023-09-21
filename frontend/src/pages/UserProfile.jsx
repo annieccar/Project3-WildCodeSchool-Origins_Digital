@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { useCurrentUserContext } from "../contexts/CurrentUserContext";
 
 import UpdateUserDetails from "../components/UpdateUserDetails";
 import AddPaymentInfo from "../components/AddPaymentInfo";
 import ExistingPaymentDetails from "../components/ExistingPaymentDetails";
 import PaymentDetailsPopUp from "../components/PaymentDetailsPopUp";
+import expressAPI from "../services/expressAPI";
 
 export default function UserProfile() {
-  const { user } = useCurrentUserContext();
+  const { user, setUser } = useCurrentUserContext();
 
   const [premium, setPremium] = useState(false);
   const [userTypeId, setUserTypeId] = useState(user.usertype_id);
@@ -21,13 +21,11 @@ export default function UserProfile() {
     };
     user.usertype_id = userTypeId;
 
-    axios
-      .patch(
-        `${import.meta.env.VITE_BACKEND_URL}/api/users/${user.id}`,
-        userDetails
-      )
+    expressAPI
+      .put(`/api/users/${user.id}/usertype`, userDetails)
       .then(() => {
         localStorage.setItem("user", JSON.stringify(user));
+        setUser({ ...user });
       })
       .catch((err) => {
         console.error(err);

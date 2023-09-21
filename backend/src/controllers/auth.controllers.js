@@ -1,17 +1,25 @@
 const models = require("../models");
+const { encodeJWT } = require("../helpers/jwtHelper");
+const { verifyPassword } = require("../helpers/argon2Helper");
 
-const signIn = async (req, res) => {
+const login = async (req, res) => {
   try {
-    const [result] = await models.users.findOneByEmail(req.body.email);
-    if (req.body.password === result[0].hashedpassword) {
-      delete req.body.password;
-      const informations = result[0];
-      delete informations.hashedpassword;
+    const isVerified = await verifyPassword(
+      req.user.hashedPassword,
+      req.body.password
+    );
+    if (isVerified) {
+      delete req.user.hashedPassword;
 
-      // JWT Authentication to implement
-      res.status(201).json({
-        ...informations,
+      const token = encodeJWT(req.user);
+
+      res.cookie("auth_token", token, {
+        httpOnly: true,
+        secure: false,
       });
+      res.status(200).json(req.user);
+    } else {
+      res.sendStatus(401);
     }
   } catch (err) {
     console.error(err);
@@ -21,9 +29,13 @@ const signIn = async (req, res) => {
 
 const signUp = async (req, res) => {
   try {
+    if (!req.body.usertype_id) {
+      req.body.usertype_id = 1;
+    }
     const [result] = await models.users.insert(req.body);
     if (result.affectedRows) {
-      delete req.body.password_confirmation;
+      delete req.body.passwordconfirmation;
+      delete req.body.hashedPassword;
       res.status(201).json({ id: result.insertId, ...req.body });
     } else {
       res.sendStatus(500);
@@ -34,7 +46,12 @@ const signUp = async (req, res) => {
   }
 };
 
+const logout = (req, res) => {
+  res.clearCookie("auth_token").sendStatus(200);
+};
+
 module.exports = {
-  signIn,
+  login,
   signUp,
+  logout,
 };

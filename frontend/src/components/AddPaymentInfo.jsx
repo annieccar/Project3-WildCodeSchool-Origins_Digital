@@ -187,7 +187,11 @@ AddPaymentInfo.propTypes = {
   setUserTypeId: PropTypes.func.isRequired,
   setPremium: PropTypes.func.isRequired,
   userTypeId: PropTypes.number.isRequired,
-  setModUpdate: PropTypes.func.isRequired,
+  setModUpdate: PropTypes.func,
   setPaymentDetailsModal: PropTypes.func.isRequired,
   setText: PropTypes.func.isRequired,
+};
+
+AddPaymentInfo.defaultProps = {
+  setModUpdate: null,
 };

@@ -34,8 +34,10 @@ function CarouselManagementList({
   };
 
   return (
-    <div className="m-2 mr-6">
-      <p className="mx-4 my-2 font-semibold  text-orange">Carousels list</p>
+    <div className="m-2 mr-6 pt-[61px] bg-dark">
+      <p className="mx-4 my-2 pb-2 font-semibold  text-orange">
+        Carousels list
+      </p>
       <div className="flex flex-col border-solid border-2 border-orange w-48 px-5 py-3 rounded-md">
         {carouselList.length > 0 &&
           carouselList.map((carousel) => (

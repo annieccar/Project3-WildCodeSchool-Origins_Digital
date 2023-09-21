@@ -1,10 +1,10 @@
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { useCurrentUserContext } from "../contexts/CurrentUserContext";
 import { useBlurredBackgroundContext } from "../contexts/BlurredBackgroundContext";
 import SignupErrorPopUp from "./SignupErrorPopUp";
+import expressAPI from "../services/expressAPI";
 
 export default function Signup() {
   const { setUser } = useCurrentUserContext();
@@ -37,12 +37,9 @@ export default function Signup() {
     return `${date.getFullYear()}-${month}-${day}`;
   }
 
-  const handleLoginRegistration = async (signupFormData) => {
-    await axios
-      .post(
-        `${import.meta.env.VITE_BACKEND_URL}/api/auth/signup`,
-        signupFormData
-      )
+  const handleLoginRegistration = (signupFormData) => {
+    expressAPI
+      .post(`/api/auth/signup`, signupFormData)
       .then((res) => {
         setUser(res.data);
         localStorage.setItem("user", JSON.stringify(res.data));
@@ -155,7 +152,7 @@ export default function Signup() {
   );
 
   return (
-    <div className="min-h-[60vh] min-w-[50%] mx-12 flex flex-col justify-items-center items-center ">
+    <div className="min-h-[60vh] min-w-[50%] flex flex-col justify-items-center items-center ">
       <p className="font-bold text-xl text-orange ">Create an account</p>
       <form
         className="flex flex-col items-center min-w-[350px]"

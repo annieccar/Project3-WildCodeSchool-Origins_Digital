@@ -151,7 +151,7 @@ export default function CarouselManagement() {
 
   return (
     <div className={` ${isBackgroundBlurred && "blur-sm"}`}>
-      <div className={`flex flex-col mx-2 mt-10 bg-dark `}>
+      <div className={`flex flex-col mx-2 pt-10  bg-dark `}>
         {carouselManagementDisplay === 0 && (
           <h2 className="font-bold text-xl text-orange self-center pb-4 my-3">
             Carousel management
@@ -164,7 +164,7 @@ export default function CarouselManagement() {
               onClick={handleBackToSelectionClick}
               className="w-44 h-10 m-2 rounded-3xl font-primary leading-none border-2 border-orange"
             >
-              <div className="flex">
+              <div className="flex bg-dark">
                 <img
                   src={arrowLeft}
                   alt="left arrow"
@@ -179,7 +179,7 @@ export default function CarouselManagement() {
           <button
             type="button"
             onClick={handleNewCarouselClick}
-            className={`w-44 h-10 m-2 rounded-3xl font-primary bg-[linear-gradient(90deg,_#FF8200_0%,_#FF2415_100%)] ${
+            className={`w-44 h-10 m-2 rounded-3xl lg:absolute lg:top-5 lg:left-5 font-primary bg-[linear-gradient(90deg,_#FF8200_0%,_#FF2415_100%)] ${
               carouselManagementDisplay === 1 && "invisible"
             }`}
           >
@@ -187,7 +187,7 @@ export default function CarouselManagement() {
           </button>
         </div>
       </div>
-      <div className={`flex ${!isDesktop && "justify-center"}`}>
+      <div className="flex min-h-screen md:h-[1700px] lg:h-[1200px] justify-center lg:justify-start bg-dark ">
         <div>
           {isDesktop || carouselManagementDisplay === 0 ? (
             <CarouselManagementList
@@ -201,7 +201,7 @@ export default function CarouselManagement() {
             ""
           )}
         </div>
-        <div className="">
+        <div className="bg-dark">
           {carouselManagementDisplay === 1 && (
             <CarouselManagementCreate
               videosList={videosList}

@@ -21,7 +21,7 @@ class VideosManager extends AbstractManager {
   }
 
   findByQuery(query) {
-    const initialSql = `SELECT t.id, t.name, t.duration, t.details, t.category_id, c.name AS category FROM ${this.table} AS t JOIN category AS c ON c.id = t.category_id`;
+    const initialSql = `SELECT t.id, t.name, t.file_name, t.duration, t.details, t.category_id, c.name AS category FROM ${this.table} AS t JOIN category AS c ON c.id = t.category_id`;
     const where = [];
 
     if (query.id != null) {

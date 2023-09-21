@@ -1,7 +1,7 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import CategorySearchResults from "../components/CategorySearchResult";
+import expressAPI from "../services/expressAPI";
 
 export default function SearchResults() {
   const { query } = useParams();
@@ -9,8 +9,8 @@ export default function SearchResults() {
   const [currentSearch, setCurrentSearch] = useState([]);
 
   useEffect(() => {
-    axios
-      .get(`${import.meta.env.VITE_BACKEND_URL}/api/videos/search?${query}`)
+    expressAPI
+      .get(`/api/videos/search?${query}`)
       .then((res) => {
         setCurrentSearch(res.data);
       })
@@ -22,8 +22,8 @@ export default function SearchResults() {
   ];
 
   return (
-    <div>
-      <p className="text-center text-orange text-2xl drop-shadow-md font-semibold font-primary m-8 ">
+    <div className="bg-dark pb-20">
+      <p className="text-center text-orange text-2xl drop-shadow-md font-semibold font-primary pt-8 ">
         Your search results
       </p>
       {currentSearch.length ? (
