@@ -22,7 +22,9 @@ import NotPremium from "../pages/NotPremium";
 function Router() {
   const { user } = useCurrentUserContext();
 
-  // console.log(user);
+  const FREE_USER_TYPE = 1;
+  const PREMIUM_USER_TYPE = 2;
+  const ADMIN_USER_TYPE = 3;
 
   return (
     <div className="translate-y-16">
@@ -35,9 +37,9 @@ function Router() {
           element={
             <ProtectedRoute
               isAllowed={
-                user?.usertype_id === 1 ||
-                user?.usertype_id === 2 ||
-                user?.usertype_id === 3
+                user?.usertype_id === FREE_USER_TYPE ||
+                user?.usertype_id === PREMIUM_USER_TYPE ||
+                user?.usertype_id === ADMIN_USER_TYPE
               }
             />
           }
@@ -48,9 +50,12 @@ function Router() {
         <Route
           element={
             <ProtectedRoute
-              isAllowed={user?.usertype_id === 2 || user?.usertype_id === 3}
+              isAllowed={
+                user?.usertype_id === PREMIUM_USER_TYPE ||
+                user?.usertype_id === ADMIN_USER_TYPE
+              }
               redirectionPath={
-                user?.usertype_id === 1 ? "/notpremium" : "/login"
+                user?.usertype_id === FREE_USER_TYPE ? "/notpremium" : "/login"
               }
             />
           }
