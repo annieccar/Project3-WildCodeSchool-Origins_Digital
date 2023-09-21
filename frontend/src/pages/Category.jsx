@@ -80,9 +80,11 @@ export default function Category() {
       </div>
 
       {categoryVideos && (
-        <div className="w-[380px] lg:w-[800px] flex flex-wrap justify-center">
+        <div className="w-[380px] lg:w-[800px] flex flex-wrap justify-center mb-16">
           {categoryVideos
-            .filter((elem) => elem.name.includes(keyword))
+            .filter((elem) =>
+              elem.name.toLowerCase().includes(keyword.toLowerCase())
+            )
             .sort(() => orderBy === "" && 0)
             .sort((a, b) => orderBy === "name" && a.name.localeCompare(b.name))
             .sort((a, b) => orderBy === "duration" && a.duration - b.duration)

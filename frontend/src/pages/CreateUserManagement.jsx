@@ -66,7 +66,7 @@ export default function CreateUserManagement({ setUsers }) {
   };
 
   return (
-    <div className="flex flex-col w-full mt-5 pb-16 lg:pb-10 bg-dark lg:w-1/2 lg:mt-2 lg:items-center">
+    <div className="flex flex-col w-full pt-5 pb-16 lg:pb-10 bg-dark lg:w-1/2 lg:mt-2 lg:items-center">
       {usertypes && (
         <div className="flex flex-col lg:w-3/5">
           <h1 className="text-center text-xl text-orange font-bold mb-5">
