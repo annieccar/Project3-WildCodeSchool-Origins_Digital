@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
-import HoverVideoPlayer from "react-hover-video-player";
 import expressAPI from "../services/expressAPI";
-import formatTimeFromDb from "../services/formatTimeFromDb";
+import VideoCardPlaylist from "../components/VideoCardPlaylist";
 
 export default function Playlist() {
   const [playlistVideos, setPlaylistVideos] = useState(null);
@@ -12,7 +11,6 @@ export default function Playlist() {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [search, setSearch] = useState("");
   const { id } = useParams();
-  const navigate = useNavigate();
 
   const fetchPlaylistVideos = () => {
     expressAPI
@@ -39,11 +37,6 @@ export default function Playlist() {
     fetchCategories();
     fetchPlaylistName();
   }, []);
-
-  const getCategory = (categoryId) => {
-    const { name } = categories.find((elem) => elem.id === categoryId);
-    return name;
-  };
 
   return (
     <div className="bg-dark flex flex-col gap-3 lg:m-10 pb-20">
@@ -83,63 +76,21 @@ export default function Playlist() {
                   !selectedCategory.length ||
                   video.category_id === parseInt(selectedCategory, 10)
               )
-              .filter((video) => !search.length || video.name.includes(search))
+              .filter(
+                (video) =>
+                  !search.length ||
+                  video.name
+                    .toLocaleLowerCase()
+                    .trim()
+                    .includes(search.toLocaleLowerCase().trim())
+              )
               .map((video) => (
-                <div
-                  className="flex flex-col items-center gap-2"
-                  key={video.id}
-                >
-                  <button
-                    type="button"
-                    className="relative"
-                    onClick={() => navigate(`/videos/${video.id}`)}
-                  >
-                    <HoverVideoPlayer
-                      videoSrc={`${
-                        import.meta.env.VITE_BACKEND_URL
-                      }/Public/videos/${video.file_name}.mp4`}
-                      pausedOverlay={
-                        <img
-                          className="w-64 rounded-lg"
-                          src={`${
-                            import.meta.env.VITE_BACKEND_URL
-                          }/public/thumbnails/${video.file_name}.png`}
-                          alt=""
-                        />
-                      }
-                      playbackRangeEnd={5}
-                      loadingStateTimeout={1000}
-                      controls
-                      controlsList="nodownload nofullscreen"
-                      className="w-64 rounded-lg relative"
-                    />
-
-                    <div className="w-12 mr-1 mb-1 bg-white text-dark lg:text-sm font-bold rounded-lg absolute z-10 right-0 bottom-2">
-                      {formatTimeFromDb(video.duration)}
-                    </div>
-                  </button>
-                  <div className="flex flex-col gap-1 w-full">
-                    <div className="flex justify-between">
-                      <h3 className="text-orange font-semibold text-xl">
-                        {video.name}
-                      </h3>
-                      {video.category_id && (
-                        <div>
-                          <button
-                            type="button"
-                            className="px-2 pb-1 rounded-lg font-semibold text-sm bg-orange-gradient"
-                            onClick={() =>
-                              navigate(`/category/${video.category_id}`)
-                            }
-                          >
-                            {getCategory(video.category_id)}
-                          </button>
-                        </div>
-                      )}
-                    </div>
-                    <p>{video.details}</p>
-                  </div>
-                </div>
+                <VideoCardPlaylist
+                  video={video}
+                  categories={categories}
+                  playlist={playlist}
+                  fetchPlaylistVideos={fetchPlaylistVideos}
+                />
               ))}
           </div>
         </>

@@ -40,6 +40,13 @@ p.name, p.id`,
       [id]
     );
   }
+
+  deleteVideo({ videoId, playlistId }) {
+    return this.database.query(
+      `DELETE from video_has_playlist WHERE video_id = ? AND playlist_id = ?`,
+      [videoId, playlistId]
+    );
+  }
 }
 
 module.exports = PlaylistsManager;
