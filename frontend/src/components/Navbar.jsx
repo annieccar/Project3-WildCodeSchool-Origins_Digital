@@ -12,7 +12,7 @@ import magnifier from "../assets/images/Vector.png";
 import ToolboxPopUp from "./ToolboxPopUp";
 
 export default function Navbar() {
-  const { user } = useCurrentUserContext();
+  const { user, setUser } = useCurrentUserContext();
   const navigate = useNavigate();
 
   const [isMobile, setIsMobile] = useState(true);
@@ -24,6 +24,8 @@ export default function Navbar() {
 
   const handleUserMenu = () => {
     setUserMenuSelected(true);
+    setToolboxOpen(false);
+    setCategorySelection(false);
   };
 
   const handleMyProfile = () => {
@@ -35,6 +37,7 @@ export default function Navbar() {
     expressAPI.get("/api/auth/logout").then((res) => {
       if (res.status === 200) {
         setIsLoggedIn(false);
+        setUser(null);
         localStorage.clear();
         setUserMenuSelected(false);
         navigate("/");
@@ -53,6 +56,8 @@ export default function Navbar() {
   };
 
   const handlePlaylists = () => {
+    setToolboxOpen(false);
+    setCategorySelection(false);
     if (isLoggedIn) {
       navigate("/playlists");
     } else {
@@ -66,6 +71,8 @@ export default function Navbar() {
 
   const handleToolboxClick = () => {
     setToolboxOpen(true);
+    setCategorySelection(false);
+    setUserMenuSelected(false);
   };
 
   useEffect(() => {
@@ -78,7 +85,7 @@ export default function Navbar() {
   window.addEventListener("resize", handleResize);
 
   return (
-    <nav className="bg-dark flex justify-center items-center h-16 w-full  ">
+    <nav className="bg-dark flex justify-center items-center h-16 w-full z-20 fixed ">
       <Link to="/">
         <img
           className="h-16 mb-1 mt-0.5 fixed top-1 left-0"
@@ -87,7 +94,7 @@ export default function Navbar() {
         />
       </Link>
       {!isMobile && (
-        <div className="w-1/2 flex justify-between items-center">
+        <div className="bg-dark h-16 w-1/2 flex justify-between items-center fixed z-50">
           <div>
             <input
               className="bg-dark w-52 h-10 font-primary text-base lg:text-xl p-2 border-2 lg:border-2 border-orange rounded-md text-gray "
@@ -104,15 +111,39 @@ export default function Navbar() {
               />
             </button>
           </div>
-          <button type="button" onClick={() => setCategorySelection(true)}>
-            <h1
-              className={`font-primary font-bold text-lg hover:text-orange -translate-x-10 ${
-                categorySelection && "text-orange"
-              } `}
+          <div className="relative">
+            <button
+              type="button"
+              onClick={() => {
+                setCategorySelection(true);
+                setUserMenuSelected(false);
+                setToolboxOpen(false);
+              }}
             >
-              Categories
-            </h1>
-          </button>
+              <h1
+                className={`font-primary font-bold text-lg hover:text-orange -translate-x-10 ${
+                  categorySelection && "text-orange"
+                } `}
+              >
+                Categories
+              </h1>
+            </button>
+            {categorySelection && (
+              <>
+                <button
+                  type="button"
+                  onClick={() => setCategorySelection(false)}
+                >
+                  <div className="fixed top-0 bottom-12 left-0 right-0" />
+                </button>
+                <div className="absolute -translate-y-10 translate-x-24">
+                  <CategoryMenuDesktop
+                    setCategorySelection={setCategorySelection}
+                  />
+                </div>
+              </>
+            )}
+          </div>
           <button type="button" onClick={handlePlaylists}>
             <h1 className="font-primary font-bold text-lg hover:text-orange -translate-x-10  ">
               Playlists
@@ -185,14 +216,7 @@ export default function Navbar() {
           </div>
         </>
       )}
-      {categorySelection && (
-        <>
-          <button type="button" onClick={() => setCategorySelection(false)}>
-            <div className="fixed top-0 bottom-12 left-0 right-0" />
-          </button>
-          <CategoryMenuDesktop setCategorySelection={setCategorySelection} />
-        </>
-      )}
+
       {toolboxOpen && (
         <ToolboxPopUp
           isOpen={toolboxOpen}

@@ -22,8 +22,8 @@ export default function SearchResults() {
   ];
 
   return (
-    <div className="bg-dark">
-      <p className="text-center text-orange text-2xl drop-shadow-md font-semibold font-primary m-8 ">
+    <div className="bg-dark pb-20">
+      <p className="text-center text-orange text-2xl drop-shadow-md font-semibold font-primary pt-8 ">
         Your search results
       </p>
       {currentSearch.length ? (

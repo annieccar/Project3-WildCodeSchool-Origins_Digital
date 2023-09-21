@@ -28,9 +28,9 @@ export default function CategoryMenu({ setCategorySelection }) {
       {categories.length > 0 && (
         <>
           <button type="button" onClick={() => setCategorySelection(false)}>
-            <div className="fixed z-10 top-0 bottom-12 left-0 right-0 backdrop-blur-md" />
+            <div className="fixed z-10 top-0 bottom-12 left-0 right-0 " />
           </button>
-          <div className="bg-dark border-solid border-2 border-orange w-56 px-5 py-3 rounded-md flex flex-col gap-2 items-center absolute z-50 bottom-14 right-2 ">
+          <div className="backdrop-blur-xl border-solid border-2 border-orange w-56 px-5 py-3 rounded-md flex flex-col gap-2 items-center fixed z-50 bottom-14 right-2 ">
             <p className="text-orange font-primary font-bold text-lg my-2">
               Select video category:
             </p>

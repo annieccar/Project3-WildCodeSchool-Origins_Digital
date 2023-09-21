@@ -12,11 +12,11 @@ export default function SignUpLogin() {
   };
   return (
     <div
-      className={` flex flex-col items-center my-5 bg-dark text-white ${
+      className={` flex flex-col items-center bg-dark text-white ${
         isBackgroundBlurred && "blur-sm"
       }`}
     >
-      <div className="flex m-5">
+      <div className="flex pt-5">
         <button
           className={
             loginSelected

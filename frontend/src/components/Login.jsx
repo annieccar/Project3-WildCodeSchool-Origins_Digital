@@ -70,7 +70,7 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-[60vh] min-w-[45%] mx-10 flex flex-col justify-items-center items-center ">
+    <div className="min-h-[60vh] min-w-[45%] flex flex-col justify-items-center items-center ">
       <p className=" font-bold text-xl text-orange ">
         You already have an account
       </p>
