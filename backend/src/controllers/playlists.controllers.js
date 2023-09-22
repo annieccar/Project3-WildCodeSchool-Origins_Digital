@@ -143,6 +143,20 @@ const destroy = async (req, res) => {
   }
 };
 
+const destroyVideo = async (req, res) => {
+  try {
+    const [result] = await models.playlists.deleteVideo(req.body);
+    if (result.affectedRows === 0) {
+      res.sendStatus(404);
+    } else {
+      res.sendStatus(204);
+    }
+  } catch (err) {
+    console.error(err);
+    res.sendStatus(500);
+  }
+};
+
 module.exports = {
   browse,
   browseByUser,
@@ -153,4 +167,5 @@ module.exports = {
   add,
   addVideoHasPlaylist,
   destroy,
+  destroyVideo,
 };

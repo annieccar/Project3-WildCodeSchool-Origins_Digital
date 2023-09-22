@@ -1,4 +1,7 @@
+const fs = require("node:fs");
+const path = require("node:path");
 const models = require("../models");
+const { unparse } = require("../helpers/papaparseHelper");
 
 const browse = async (req, res) => {
   try {
@@ -59,8 +62,6 @@ const edit = async (req, res) => {
 const editByAdmin = async (req, res) => {
   try {
     const user = req.body;
-
-    // TODO validations (length, format...)
 
     user.id = parseInt(req.params.id, 10);
 
@@ -136,6 +137,25 @@ const browseUsertypes = async (req, res) => {
   }
 };
 
+const usersToCSV = async (req, res) => {
+  try {
+    let [users] = await models.users.findAll();
+
+    users = users.map((user) => {
+      const { hashedPassword, ...infos } = user;
+      return infos;
+    });
+
+    const csv = unparse(users);
+
+    fs.writeFileSync(path.join(__dirname, "../../public/csv/users.csv"), csv);
+    res.sendStatus(204);
+  } catch (err) {
+    console.error(err);
+    res.sendStatus(500);
+  }
+};
+
 module.exports = {
   browse,
   read,
@@ -145,4 +165,5 @@ module.exports = {
   editByAdmin,
   editUserTypeID,
   browseUsertypes,
+  usersToCSV,
 };
