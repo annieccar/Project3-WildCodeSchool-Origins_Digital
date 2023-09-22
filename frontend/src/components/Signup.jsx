@@ -152,7 +152,7 @@ export default function Signup() {
   );
 
   return (
-    <div className="min-h-[60vh] min-w-[50%] mx-12 flex flex-col justify-items-center items-center ">
+    <div className="min-h-[60vh] min-w-[50%] flex flex-col justify-items-center items-center ">
       <p className="font-bold text-xl text-orange ">Create an account</p>
       <form
         className="flex flex-col items-center min-w-[350px]"

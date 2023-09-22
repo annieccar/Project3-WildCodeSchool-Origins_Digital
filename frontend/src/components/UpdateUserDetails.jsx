@@ -4,11 +4,21 @@ import expressAPI from "../services/expressAPI";
 
 import { useCurrentUserContext } from "../contexts/CurrentUserContext";
 import pencil from "../assets/images/Pencil.svg";
+import trash from "../assets/images/trash.svg";
 
 export default function UpdateUserDetails() {
-  const { user } = useCurrentUserContext();
-
+  const { user, setUser } = useCurrentUserContext();
+  const [displayedImage, setDisplayedImage] = useState(
+    user.profileimage
+      ? `${import.meta.env.VITE_BACKEND_URL}/public/profileimages/${
+          user.profileimage
+        }`
+      : "../../src/assets/images/User.png"
+  );
   const [updateSuccess, setUpdateSuccess] = useState(false);
+  const [uploadPicture, setUploadPicture] = useState(false);
+
+  const [file, setFile] = useState([]);
 
   const {
     register,
@@ -18,19 +28,28 @@ export default function UpdateUserDetails() {
   } = useForm();
 
   const onSubmit = (data) => {
-    const newData = { ...data };
-    delete newData.confirmpassword;
+    const formData = new FormData();
 
-    const userDetails = {
-      ...newData,
-      profileimage: user.profileimage,
-      usertype_id: user.usertype_id,
-    };
+    if (file.length > 0) {
+      formData.append("profileimage", file[0]);
+    } else {
+      formData.append("profileimage", "");
+    }
+
+    formData.append("username", data.username);
+    formData.append("firstname", data.firstname);
+    formData.append("lastname", data.lastname);
+    formData.append("email", data.email);
+    formData.append("password", data.password);
+    formData.append("usertype_id", user.usertype_id);
 
     expressAPI
-      .put(`/api/users/${user.id}`, userDetails)
+      .put(`/api/users/${user.id}`, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      })
       .then((res) => {
-        localStorage.setItem("user", JSON.stringify(res.data));
+        res.data.usertype_id = parseInt(res.data.usertype_id, 10);
+        setUser(res.data);
         if (res.status === 201) {
           setUpdateSuccess(true);
         }
@@ -38,6 +57,8 @@ export default function UpdateUserDetails() {
       .catch((err) => {
         console.error(err);
       });
+
+    setUploadPicture(false);
   };
 
   const handleBlur = () => {
@@ -54,15 +75,50 @@ export default function UpdateUserDetails() {
           Your Profile
         </h1>
         <div className="flex justify-between items-center my-2 pr-3">
-          <img
-            src={
-              user.profileimage
-                ? `${user.profileimage}`
-                : "../../src/assets/images/User.png"
-            }
-            alt="profile"
-          />
-          <img className="h-9 w-9" src={pencil} alt="Edit pencil" />
+          {file.length > 0 ? (
+            <img
+              src={URL.createObjectURL(file[0])}
+              alt="profile"
+              className="rounded-full h-28"
+            />
+          ) : (
+            <img
+              src={displayedImage}
+              alt="profile"
+              className="rounded-full h-28"
+            />
+          )}
+
+          {uploadPicture && (
+            <label className="flex justify-center items-center font-primary text-white h-8 focus:outline-none font-semibold rounded-full bg-orange-gradient border-none w-28">
+              <span>Select file</span>
+              <input
+                type="file"
+                name="profileimage"
+                placeholder="Choose File"
+                onChange={(e) => {
+                  setFile(e.target.files);
+                }}
+                className="hidden"
+              />
+            </label>
+          )}
+          {!uploadPicture && (
+            <div className="flex justify-between w-24">
+              <button type="button" onClick={() => setUploadPicture(true)}>
+                <img className="h-9 w-9" src={pencil} alt="Edit pencil" />
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setDisplayedImage("../../src/assets/images/User.png");
+                  setFile([]);
+                }}
+              >
+                <img className="h-7 w-7" src={trash} alt="trash" />
+              </button>
+            </div>
+          )}
         </div>
         <div className="flex flex-col">
           <label

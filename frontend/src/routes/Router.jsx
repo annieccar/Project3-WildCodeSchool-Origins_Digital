@@ -13,35 +13,66 @@ import VideoManagement from "../pages/VideoManagement";
 import CarouselManagement from "../pages/CarouselManagement";
 import UserManagement from "../pages/UserManagement";
 import ProtectedRoute from "../components/ProtectedRoute";
+import UserProfileManagement from "../pages/UserProfileManagement";
+import CreateUserManagement from "../pages/CreateUserManagement";
 import NotFound from "../pages/NotFound";
 import { useCurrentUserContext } from "../contexts/CurrentUserContext";
+import NotPremium from "../pages/NotPremium";
 
 function Router() {
   const { user } = useCurrentUserContext();
+
+  const FREE_USER_TYPE = 1;
+  const PREMIUM_USER_TYPE = 2;
+  const ADMIN_USER_TYPE = 3;
+
   return (
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/login" element={<SignUpLogin />} />
-      <Route path="/category/:id" element={<Category />} />
-      <Route path="/search/:query" element={<SearchResults />} />
-      <Route
-        element={
-          <ProtectedRoute
-            isAllowed={user?.usertype_id === 2 || user?.usertype_id === 3}
-          />
-        }
-      >
-        <Route path="/playlists" element={<Favorites />} />
-        <Route path="/playlists/:id" element={<Playlist />} />
-        <Route path="/videos/:id" element={<Video />} />
-        <Route path="/profile" element={<UserProfile />} />
-      </Route>
-      <Route path="/admin/category" element={<CategoryManagement />} />
-      <Route path="/admin/video" element={<VideoManagement />} />
-      <Route path="/admin/carousel" element={<CarouselManagement />} />
-      <Route path="/admin/user" element={<UserManagement />} />
-      <Route path="*" element={<NotFound />} />
-    </Routes>
+    <div className="translate-y-16">
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<SignUpLogin />} />
+        <Route path="/category/:id" element={<Category />} />
+        <Route path="/search/:query" element={<SearchResults />} />
+        <Route
+          element={
+            <ProtectedRoute
+              isAllowed={
+                user?.usertype_id === FREE_USER_TYPE ||
+                user?.usertype_id === PREMIUM_USER_TYPE ||
+                user?.usertype_id === ADMIN_USER_TYPE
+              }
+            />
+          }
+        >
+          <Route path="/profile" element={<UserProfile />} />
+          <Route path="/notpremium" element={<NotPremium />} />
+        </Route>
+        <Route
+          element={
+            <ProtectedRoute
+              isAllowed={
+                user?.usertype_id === PREMIUM_USER_TYPE ||
+                user?.usertype_id === ADMIN_USER_TYPE
+              }
+              redirectionPath={
+                user?.usertype_id === FREE_USER_TYPE ? "/notpremium" : "/login"
+              }
+            />
+          }
+        >
+          <Route path="/playlists" element={<Favorites />} />
+          <Route path="/playlists/:id" element={<Playlist />} />
+          <Route path="/videos/:id" element={<Video />} />
+        </Route>
+        <Route path="/admin/category" element={<CategoryManagement />} />
+        <Route path="/admin/video" element={<VideoManagement />} />
+        <Route path="/admin/carousel" element={<CarouselManagement />} />
+        <Route path="/admin/users" element={<UserManagement />} />
+        <Route path="/admin/users/:id" element={<UserProfileManagement />} />
+        <Route path="/admin/users/create" element={<CreateUserManagement />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </div>
   );
 }
 

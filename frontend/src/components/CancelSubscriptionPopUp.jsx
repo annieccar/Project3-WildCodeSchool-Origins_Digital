@@ -18,9 +18,9 @@ export default function CancelSubscriptionPopUp({
       <button type="button" onClick={keepSubscription}>
         <div className="fixed z-10 top-0 bottom-0 left-0 right-0 backdrop-blur-md" />
       </button>
-      <div className="bg-dark border-solid border-2 border-orange w-[330px] px-5 py-3 rounded-md flex flex-col gap-2 items-center absolute z-50 bottom-1/2 right-1/2 translate-x-1/2 translate-y-1/2 ">
+      <div className="bg-dark border-solid border-2 border-orange w-[330px] px-5 py-3 rounded-md flex flex-col gap-2 items-center fixed z-50 bottom-1/2 right-1/2 translate-x-1/2 translate-y-1/2 ">
         <p className="text-white text-center font-primary font-bold text-md my-2">
-          We are sorry to see you go. Ar you sure you want to cancel your
+          We are sorry to see you go. Are you sure you want to cancel your
           subscription to your premium membership and loose access to over 1000
           weekly videos?
         </p>

@@ -7,7 +7,7 @@ import { BlurredBackgroundContextProvider } from "./contexts/BlurredBackgroundCo
 
 function App() {
   return (
-    <div className="h-screen bg-dark text-white font-primary">
+    <div className=" bg-dark text-white font-primary">
       <CurrentUserContextProvider>
         <Navbar />
         <BlurredBackgroundContextProvider>

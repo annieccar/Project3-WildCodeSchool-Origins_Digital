@@ -6,7 +6,7 @@ const validateSchema = (schema) => [
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.mapped() });
+      return res.status(400).send({ errors: errors.mapped() });
     }
     return next();
   },

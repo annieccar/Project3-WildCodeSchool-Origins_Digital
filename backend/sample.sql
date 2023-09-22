@@ -204,8 +204,8 @@ VALUES (
         5
     ), (
         28,
-        'Kitesurf',
-        'kitesurf',
+        'Kitesurfing',
+        'kitesurfing',
         '00:00:51',
         'Kitesurfer in action',
         3
@@ -412,11 +412,8 @@ VALUES (
     );
 
 INSERT INTO
-    `carousel` (
-        `carousel_name`,
-        `carousel_length`
-    )
-VALUES ('Hero Slider', 5), ('landscape', 10), ('sports', 10), ('cars', 10), ('animals', 10), ('people', 10), ('cities', 10);
+    `carousel` (`title`)
+VALUES ('Hero Slider'), ('landscape'), ('sports'), ('cars'), ('animals'), ('people'), ('cities');
 
 INSERT INTO
     origins_digital.video_has_carousel (id, video_id, carousel_id)

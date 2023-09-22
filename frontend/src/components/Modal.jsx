@@ -48,7 +48,7 @@ export default function Modal({
 
   return (
     <dialog
-      className="bg-dark space-x-2 h-[50%] w-[95%] sm:w-[500px]  p-6 sm:p-10  md:p-16  border-4 border-orange rounded-3xl  text-xl text-white font-primary"
+      className="bg-dark space-x-2 h-[50%] w-[95%] sm:w-[500px]  p-6 sm:p-10  md:p-12  border-4 border-orange rounded-3xl  text-white font-primary"
       ref={modalRef}
       onKeyDown={handleKeyDown}
       role="presentation"
@@ -59,7 +59,7 @@ export default function Modal({
           <button
             type="button"
             onClick={handleCloseModal}
-            className="h-12  w-[90%] md:w-[60%] rounded-3xl  font-semibold  bg-[linear-gradient(90deg,#FF8200_0%,_#FF2415_100%)]"
+            className="h-10  w-36 rounded-3xl  font-semibold  border-2 border-orange"
           >
             Close
           </button>
