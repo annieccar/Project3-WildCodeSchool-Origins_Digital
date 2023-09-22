@@ -39,7 +39,7 @@ export default function Playlist() {
   }, []);
 
   return (
-    <div className="bg-dark flex flex-col gap-3 lg:m-10 pb-20">
+    <div className="bg-dark flex flex-col gap-3 pb-20 lg:py-5">
       {playlist && (
         <h1 className="text-center text-2xl text-orange font-semibold lg:text-3xl">
           {playlist.name}
@@ -47,21 +47,21 @@ export default function Playlist() {
       )}
       {playlistVideos && categories && (
         <>
-          <div className="flex justify-center gap-2 mb-5 mx-3 lg:justify-end lg:mr-5">
+          <div className="flex justify-center gap-3 mb-5 mx-3 lg:justify-end lg:mr-5">
             <input
               type="text"
-              placeholder="Search"
+              placeholder="Search..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-[140px] rounded-lg bg-dark border-2 border-orange focus:outline-none pl-1 mr-5"
+              className="w-[140px] rounded-full bg-dark border-2 border-orange focus:outline-none px-2"
             />
             <select
-              className="bg-dark object-fit rounded-lg border-2"
+              className="bg-dark object-fit rounded-full focus:outline-none border-2 px-3"
               name="filters"
               id="filters"
               onChange={(e) => setSelectedCategory(e.target.value)}
             >
-              <option value="">-- Select a filter --</option>
+              <option value="">Select a filter</option>
               {categories.map((category) => (
                 <option value={category.id} key={category.id}>
                   {category.name}

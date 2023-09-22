@@ -85,7 +85,7 @@ export default function AddFavoritesPopUp({ videoInfos, close }) {
               type="text"
               placeholder="Choose a name"
               value={playlistName}
-              className="text-white bg-dark"
+              className="text-white bg-dark focus:outline-none"
               onChange={(e) => setPlaylistName(e.target.value)}
             />
             <div className="flex justify-center">

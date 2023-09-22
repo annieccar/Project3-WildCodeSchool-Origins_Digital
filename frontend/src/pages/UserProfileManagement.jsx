@@ -9,6 +9,7 @@ import DeleteUserModal from "../components/DeleteUserModal";
 import registerOptions from "../validators/userProfileManagement.validator";
 import useMediaQuery from "../hooks/useMediaQuery";
 import { useCurrentUserContext } from "../contexts/CurrentUserContext";
+import { useLoginContext } from "../contexts/LoginContext";
 
 export default function UserProfileManagement({
   userProps,
@@ -25,6 +26,7 @@ export default function UserProfileManagement({
   const navigate = useNavigate();
   const isDesktop = useMediaQuery("(min-width: 1024px)");
   const { user } = useCurrentUserContext();
+  const { setIsLoggedIn } = useLoginContext();
 
   const {
     register,
@@ -74,7 +76,7 @@ export default function UserProfileManagement({
         if (userProfile.username === user.username) {
           expressAPI.get("/api/auth/logout").then((result) => {
             if (result.status === 200) {
-              // setIsLoggedIn(false);
+              setIsLoggedIn(false);
               localStorage.clear();
               navigate("/");
             }
@@ -225,14 +227,14 @@ export default function UserProfileManagement({
             <div className="flex flex-col gap-3 items-center my-5">
               <button
                 type="submit"
-                className="w-40 bg-orange-gradient rounded-full px-3 py-2"
+                className="w-40 bg-orange-gradient font-bold rounded-full px-3 py-2"
               >
                 Save changes
               </button>
               <button
                 type="button"
                 onClick={() => setDeleteModal(true)}
-                className="w-40 border-2 border-orange text-orange rounded-full px-3 py-2"
+                className="w-40 bg-blue-gradient font-bold rounded-full px-3 py-2"
               >
                 Delete this user
               </button>

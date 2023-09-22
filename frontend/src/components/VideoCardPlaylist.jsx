@@ -31,13 +31,18 @@ export default function VideoCardPlaylist({
             video.file_name
           }.mp4`}
           pausedOverlay={
-            <img
-              className="w-64 rounded-lg"
-              src={`${import.meta.env.VITE_BACKEND_URL}/public/thumbnails/${
-                video.file_name
-              }.png`}
-              alt=""
-            />
+            <>
+              <img
+                className="w-64 rounded-lg"
+                src={`${import.meta.env.VITE_BACKEND_URL}/public/thumbnails/${
+                  video.file_name
+                }.png`}
+                alt=""
+              />
+              <div className="w-12 bg-white text-dark lg:text-sm font-bold rounded-lg absolute z-10 right-1 bottom-1">
+                {formatTimeFromDb(video.duration)}
+              </div>
+            </>
           }
           playbackRangeEnd={5}
           loadingStateTimeout={1000}
@@ -45,10 +50,6 @@ export default function VideoCardPlaylist({
           controlsList="nodownload nofullscreen"
           className="w-64 rounded-lg relative"
         />
-
-        <div className="w-12 mr-1 mb-1 bg-white text-dark lg:text-sm font-bold rounded-lg absolute z-10 right-0 bottom-2">
-          {formatTimeFromDb(video.duration)}
-        </div>
       </button>
       <div className="flex flex-col gap-1 w-full">
         <div className="flex justify-between">

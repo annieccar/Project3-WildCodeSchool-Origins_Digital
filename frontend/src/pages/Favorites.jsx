@@ -63,7 +63,7 @@ export default function Favorites() {
                   </button>
                   <button
                     type="button"
-                    className="flex items-center gap-2 border-2 border-orange text-orange font-semibold rounded-full px-2 py-0.5"
+                    className="flex items-center gap-2 bg-blue-gradient font-semibold rounded-full px-2 py-0.5"
                     onClick={() => handleDelete(playlist.id)}
                   >
                     <p className="text-sm lg:text-md">Delete</p>
