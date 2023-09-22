@@ -34,7 +34,8 @@ const signUp = async (req, res) => {
     }
     const [result] = await models.users.insert(req.body);
     if (result.affectedRows) {
-      delete req.body.password_confirmation;
+      delete req.body.passwordconfirmation;
+      delete req.body.hashedPassword;
       res.status(201).json({ id: result.insertId, ...req.body });
     } else {
       res.sendStatus(500);

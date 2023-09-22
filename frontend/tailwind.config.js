@@ -18,8 +18,19 @@ module.exports = {
         primary: "lato",
       },
       backgroundImage: {
-        "orange-gradient": "linear-gradient(90deg, #FF8200 0%, #FF2415 100%)",
+        "orange-gradient": "linear-gradient(90deg,_#FF8200_0%,_#FF2415_100%)",
       },
+      gridTemplateRows: {
+        14: "repeat(14, minmax(0, 1fr))",
+      },
+    },
+    screens: {
+      xs: "420px",
+      sm: "640px",
+      md: "768px",
+      lg: "1024px",
+      xl: "1280px",
+      "2xl": "1536px",
     },
   },
   plugins: [],

@@ -28,7 +28,7 @@ export default function CategoryCarousels() {
     if (videoByCategories.length > 0 && categories.length > 0) {
       const categoriesWithVideos = categories.map((category) => {
         const categoryArray = videoByCategories.filter(
-          (video) => video.carousel_name === category.name
+          (video) => video.title === category.name
         );
         return categoryArray;
       });
@@ -50,7 +50,7 @@ export default function CategoryCarousels() {
           >
             <StaticCarousel
               videosArray={array}
-              carousselName={capitalizeFirstLetter(array[0].carousel_name)}
+              carousselName={capitalizeFirstLetter(array[0].title)}
             />
             <button
               type="button"

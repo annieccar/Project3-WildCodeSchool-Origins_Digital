@@ -28,6 +28,22 @@ const read = async (req, res) => {
   }
 };
 
+const readCarouselVideos = async (req, res) => {
+  try {
+    const [rows] = await models.carousels.selectVideosByCarouselId(
+      req.params.id
+    );
+    if (rows[0] == null) {
+      res.sendStatus(404);
+    } else {
+      res.send(rows);
+    }
+  } catch (err) {
+    console.error(err);
+    res.sendStatus(500);
+  }
+};
+
 const edit = async (req, res) => {
   try {
     const carousel = req.body;
@@ -51,14 +67,35 @@ const edit = async (req, res) => {
 
 const add = async (req, res) => {
   try {
-    const carousel = req.body;
-
-    // TODO validations (length, format...)
-
-    const [result] = await models.carousels.insert(carousel);
-
+    const [result] = await models.carousels.insert(req.body);
     if (result) {
-      res.location(`/carousels/${result.insertId}`).sendStatus(201);
+      res.send(result);
+    }
+  } catch (err) {
+    console.error(err);
+    res.sendStatus(500);
+  }
+};
+
+const addJointure = async (req, res) => {
+  try {
+    const [result] = await models.carousels.insertJointure(req.body);
+    if (result) {
+      res.send(result);
+    }
+  } catch (err) {
+    console.error(err);
+    res.sendStatus(500);
+  }
+};
+
+const removeJointure = async (req, res) => {
+  try {
+    const [result] = await models.carousels.deleteJointure(req.body);
+    if (result.affectedRows === 0) {
+      res.sendStatus(404);
+    } else {
+      res.sendStatus(204);
     }
   } catch (err) {
     console.error(err);
@@ -116,5 +153,8 @@ module.exports = {
   add,
   destroy,
   readVideos,
+  readCarouselVideos,
+  addJointure,
+  removeJointure,
   readVideosWithCarousel,
 };
