@@ -2,11 +2,9 @@ import { createContext, useContext, useMemo, useState } from "react";
 import PropTypes from "prop-types";
 
 const BlurredBackgroundContext = createContext();
+const useBlurredBackgroundContext = () => useContext(BlurredBackgroundContext);
 
-export const useBlurredBackgroundContext = () =>
-  useContext(BlurredBackgroundContext);
-
-export function BlurredBackgroundContextProvider({ children }) {
+function BlurredBackgroundContextProvider({ children }) {
   const [isBackgroundBlurred, setIsBackgroundBlurred] = useState(false);
   const memoizedBlur = useMemo(() => {
     return { isBackgroundBlurred, setIsBackgroundBlurred };
@@ -18,6 +16,8 @@ export function BlurredBackgroundContextProvider({ children }) {
     </BlurredBackgroundContext.Provider>
   );
 }
+
+export { useBlurredBackgroundContext, BlurredBackgroundContextProvider };
 BlurredBackgroundContextProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };

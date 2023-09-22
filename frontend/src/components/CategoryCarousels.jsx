@@ -28,7 +28,7 @@ export default function CategoryCarousels() {
     if (videoByCategories.length > 0 && categories.length > 0) {
       const categoriesWithVideos = categories.map((category) => {
         const categoryArray = videoByCategories.filter(
-          (video) => video.carousel_name === category.name
+          (video) => video.title === category.name
         );
         return categoryArray;
       });
@@ -50,7 +50,7 @@ export default function CategoryCarousels() {
           >
             <div className="flex justify-between items-center">
               <h1 className="text-orange font-primary font-bold text-xl my-3 mb-6 ml-5">
-                {capitalizeFirstLetter(array[0].carousel_name)}
+                {capitalizeFirstLetter(array[0].title)}
               </h1>
               <button
                 type="button"

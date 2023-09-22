@@ -1,7 +1,5 @@
 id,username,firstname,lastname,birthdate,gender,email,profileimage,usertype_id,type_name
-1,AnnieC,Annie,Csd,1999-12-31T23:00:00.000Z,female,annie@toto.com,,3,Administrator
+4,ThibautP,Thibaut,P.,2000-04-03T22:00:00.000Z,male,thibaut@toto.com,,1,Free
 2,KillianC,Killian,C.,2000-03-02T23:00:00.000Z,male,killian@toto.com,,2,Premium
 3,DamienM,Damien,M.,2000-02-01T23:00:00.000Z,male,damien@toto.com,,2,Premium
-4,ThibautP,Thibaut,P.,2000-04-03T22:00:00.000Z,male,thibaut@toto.com,,2,Premium
-25,Toto,Toto,Toto,2023-08-09T22:00:00.000Z,male,toto@toto.com,,3,Administrator
-27,Test,Test,Test,2023-08-08T22:00:00.000Z,male,test@test.com,,1,Free
+1,AnnieC,Annie,C.,1999-12-31T23:00:00.000Z,female,annie@toto.com,,3,Administrator

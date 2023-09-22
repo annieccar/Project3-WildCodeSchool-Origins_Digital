@@ -22,6 +22,17 @@ module.exports = {
         "blue-gradient":
           "linear-gradient(90deg, #0604CC 0%, rgba(63, 190, 167, 0.80) 100%)",
       },
+      gridTemplateRows: {
+        14: "repeat(14, minmax(0, 1fr))",
+      },
+    },
+    screens: {
+      xs: "420px",
+      sm: "640px",
+      md: "768px",
+      lg: "1024px",
+      xl: "1280px",
+      "2xl": "1536px",
     },
   },
   plugins: [],
