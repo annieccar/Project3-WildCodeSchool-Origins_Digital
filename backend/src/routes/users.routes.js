@@ -14,6 +14,7 @@ const fileUpload = require("../middlewares/multer");
 
 router.get("/", usersControllers.browse);
 router.get("/usertypes", usersControllers.browseUsertypes);
+router.get("/csv", usersControllers.usersToCSV);
 router.get("/:id", usersControllers.read);
 router.put(
   "/:id",

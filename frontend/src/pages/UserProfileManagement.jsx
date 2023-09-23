@@ -3,12 +3,13 @@ import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import PropTypes from "prop-types";
 import { useForm } from "react-hook-form";
-import visa from "../assets/images/Visa.png";
 import expressAPI from "../services/expressAPI";
 import CustomModal from "../components/CustomModal";
 import DeleteUserModal from "../components/DeleteUserModal";
 import registerOptions from "../validators/userProfileManagement.validator";
 import useMediaQuery from "../hooks/useMediaQuery";
+import { useCurrentUserContext } from "../contexts/CurrentUserContext";
+import { useLoginContext } from "../contexts/LoginContext";
 
 export default function UserProfileManagement({
   userProps,
@@ -17,13 +18,15 @@ export default function UserProfileManagement({
   setCreate,
 }) {
   const { id } = useParams();
-  const [user, setUser] = useState(null);
+  const [userProfile, setUserProfile] = useState(null);
   const [usertypes, setUsertypes] = useState(null);
   const [modal, setModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
   const [msg, setMsg] = useState("");
   const navigate = useNavigate();
   const isDesktop = useMediaQuery("(min-width: 1024px)");
+  const { user } = useCurrentUserContext();
+  const { setIsLoggedIn } = useLoginContext();
 
   const {
     register,
@@ -40,24 +43,24 @@ export default function UserProfileManagement({
 
   useEffect(() => {
     if (isDesktop) {
-      setUser(userProps);
+      setUserProfile(userProps);
     } else {
       expressAPI
         .get(`/api/users/${id}`)
-        .then((res) => setUser(res.data))
+        .then((res) => setUserProfile(res.data))
         .catch((err) => console.error(err));
     }
   }, [userProps]);
 
   useEffect(() => {
-    if (user) {
-      setValue("username", user.username);
-      setValue("firstname", user.firstname);
-      setValue("lastname", user.lastname);
-      setValue("email", user.email);
-      setValue("usertype_id", user.usertype_id);
+    if (userProfile) {
+      setValue("username", userProfile.username);
+      setValue("firstname", userProfile.firstname);
+      setValue("lastname", userProfile.lastname);
+      setValue("email", userProfile.email);
+      setValue("usertype_id", userProfile.usertype_id);
     }
-  }, [user]);
+  }, [userProfile]);
 
   useEffect(() => {
     expressAPI
@@ -68,8 +71,17 @@ export default function UserProfileManagement({
 
   const handleUserDelete = () => {
     expressAPI
-      .delete(`/api/users/${user.id}`)
+      .delete(`/api/users/${userProfile.id}`)
       .then((res) => {
+        if (userProfile.username === user.username) {
+          expressAPI.get("/api/auth/logout").then((result) => {
+            if (result.status === 200) {
+              setIsLoggedIn(false);
+              localStorage.clear();
+              navigate("/");
+            }
+          });
+        }
         if (res.status === 204 && isDesktop) {
           setUpdate(false);
           expressAPI.get(`/api/users`).then((result) => setUsers(result.data));
@@ -83,14 +95,14 @@ export default function UserProfileManagement({
 
   const onSubmit = (data) => {
     expressAPI
-      .put(`/api/users/${user.id}/admin`, data)
+      .put(`/api/users/${userProfile.id}/admin`, data)
       .then((res) => {
         if (res.status === 201) {
           if (isDesktop) {
             expressAPI
               .get(`/api/users`)
               .then((result) => setUsers(result.data));
-            setUser({ id: user.id, ...data });
+            setUserProfile({ id: userProfile.id, ...data });
           }
           setMsg("User updated");
           setModal(true);
@@ -105,10 +117,10 @@ export default function UserProfileManagement({
 
   return (
     <div className="bg-dark flex flex-col w-full pb-16 lg:w-1/2 lg:items-center">
-      {user && usertypes && (
+      {userProfile && usertypes && (
         <div className="flex flex-col mt-5 lg:w-3/5 lg:mt-0">
           <h1 className="text-center text-xl text-orange font-bold mb-5">
-            {user.username}
+            {userProfile.username}
           </h1>
           <form
             onSubmit={handleSubmit(onSubmit)}
@@ -126,7 +138,7 @@ export default function UserProfileManagement({
                 name={usernameRegister.name}
                 onChange={usernameRegister.onChange}
                 ref={usernameRegister.ref}
-                defaultValue={user.username}
+                defaultValue={userProfile.username}
                 aria-invalid={errors.usernameRegister ? "true" : "false"}
                 className="bg-dark border-2 border-orange focus:outline-none rounded-lg pl-2 py-1 w-full"
               />
@@ -146,7 +158,7 @@ export default function UserProfileManagement({
                 name={firstnameRegister.name}
                 onChange={firstnameRegister.onChange}
                 ref={firstnameRegister.ref}
-                defaultValue={user.firstname}
+                defaultValue={userProfile.firstname}
                 aria-invalid={errors.firstnameRegister ? "true" : "false"}
                 className="bg-dark border-2 border-orange focus:outline-none rounded-lg pl-2 py-1 w-full"
               />
@@ -166,7 +178,7 @@ export default function UserProfileManagement({
                 name={lastnameRegister.name}
                 onChange={lastnameRegister.onChange}
                 ref={lastnameRegister.ref}
-                defaultValue={user.lastname}
+                defaultValue={userProfile.lastname}
                 aria-invalid={errors.lastnameRegister ? "true" : "false"}
                 className="bg-dark border-2 border-orange focus:outline-none rounded-lg pl-2 py-1 w-full"
               />
@@ -186,7 +198,7 @@ export default function UserProfileManagement({
                 name={emailRegister.name}
                 onChange={emailRegister.onChange}
                 ref={emailRegister.ref}
-                defaultValue={user.email}
+                defaultValue={userProfile.email}
                 aria-invalid={errors.emailRegister ? "true" : "false"}
                 className="bg-dark border-2 border-orange focus:outline-none rounded-lg pl-2 py-1 w-full"
               />
@@ -202,7 +214,7 @@ export default function UserProfileManagement({
                 name={usertypeRegister.name}
                 onChange={usertypeRegister.onChange}
                 ref={usertypeRegister.ref}
-                defaultValue={user.usertype_id}
+                defaultValue={userProfile.usertype_id}
                 className="bg-dark border-2 border-orange focus:outline-none rounded-lg pl-2 py-2 w-full"
               >
                 {usertypes.map((usertype) => (
@@ -212,39 +224,17 @@ export default function UserProfileManagement({
                 ))}
               </select>
             </div>
-            <div>
-              <h1 className="text-orange font-primary font-bold text-xl py-3">
-                Payment Info:
-              </h1>
-            </div>
-            <div className="flex flex-col">
-              <label
-                htmlFor="CardNumber"
-                className="text-white font-primary font-bold text-l mb-2 "
-              >
-                Card Number
-              </label>
-              <input
-                className="h-9 focus:outline-none mb-2 px-2 rounded-lg border-2 border-solid border-orange bg-dark text-gray font-primary "
-                type="text"
-                name="cardnumber"
-                defaultValue="**** **** **** 6258"
-              />
-            </div>
-            <div className="flex items-center">
-              <img className="h-[61px]" src={visa} alt="Visa" />
-            </div>
             <div className="flex flex-col gap-3 items-center my-5">
               <button
                 type="submit"
-                className="w-40 bg-orange-gradient rounded-full px-3 py-2"
+                className="w-40 bg-orange-gradient font-bold rounded-full px-3 py-2"
               >
                 Save changes
               </button>
               <button
                 type="button"
                 onClick={() => setDeleteModal(true)}
-                className="w-40 border-2 border-orange text-orange rounded-full px-3 py-2"
+                className="w-40 bg-blue-gradient font-bold rounded-full px-3 py-2"
               >
                 Delete this user
               </button>
@@ -260,7 +250,7 @@ export default function UserProfileManagement({
       {deleteModal &&
         createPortal(
           <DeleteUserModal
-            username={user.username}
+            username={userProfile.username}
             closeModal={() => setDeleteModal(false)}
             handleUserDelete={handleUserDelete}
           />,
