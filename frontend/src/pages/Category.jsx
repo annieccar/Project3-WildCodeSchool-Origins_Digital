@@ -74,7 +74,7 @@ export default function Category() {
         />
         <img
           src={magnifier}
-          className="absolute right-1.5 top-1.5 h-5 w-5 lg:right-[305px]"
+          className="absolute right-1.5 top-1.5 h-5 w-5"
           alt="search"
         />
       </div>

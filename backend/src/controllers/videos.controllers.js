@@ -51,12 +51,25 @@ const edit = async (req, res) => {
 const add = async (req, res) => {
   try {
     const video = req.body;
-
-    // TODO validations (length, format...)
+    const { filename } = req.file;
+    const [fileName] = filename.split(".");
+    video.fileName = fileName;
 
     const [result] = await models.videos.insert(video);
-    if (result) {
-      res.location(`/videos/${result.insertId}`).sendStatus(201);
+    if (result.affectedRows) {
+      res.status(201).json({ id: result.insertId, ...req.body });
+    }
+  } catch (err) {
+    console.error(err);
+    res.sendStatus(500);
+  }
+};
+
+const addThumbnail = async (req, res) => {
+  try {
+    const thumbnailName = req.file.filename;
+    if (thumbnailName) {
+      res.sendStatus(201);
     }
   } catch (err) {
     console.error(err);
@@ -97,6 +110,7 @@ module.exports = {
   read,
   edit,
   add,
+  addThumbnail,
   destroy,
   search,
 };
