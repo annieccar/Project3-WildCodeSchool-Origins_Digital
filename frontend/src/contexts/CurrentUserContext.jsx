@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 
 const CurrentUserContext = createContext();
 
-export const useCurrentUserContext = () => useContext(CurrentUserContext);
+const useCurrentUserContext = () => useContext(CurrentUserContext);
 
-export function CurrentUserContextProvider({ children }) {
+function CurrentUserContextProvider({ children }) {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
   const memoizedUser = useMemo(() => {
     return { user, setUser };
@@ -17,5 +17,7 @@ export function CurrentUserContextProvider({ children }) {
     </CurrentUserContext.Provider>
   );
 }
+
+export { useCurrentUserContext, CurrentUserContextProvider };
 
 CurrentUserContextProvider.propTypes = { children: PropTypes.node.isRequired };

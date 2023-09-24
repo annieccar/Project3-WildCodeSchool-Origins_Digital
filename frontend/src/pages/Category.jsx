@@ -68,13 +68,13 @@ export default function Category() {
           <option value="duration">Duration</option>
         </select>
         <input
-          className="bg-dark w-36 lg:w-48 h-8 lg:h-8 font-primary text-lg lg:text-xl p-2 border-2 lg:border-2 border-orange rounded-md text-gray "
-          placeholder="search"
+          className="bg-dark w-36 lg:w-48 h-8 lg:h-8 font-primary text-lg lg:text-xl p-2 border-2 lg:border-2 border-orange rounded-full text-gray "
+          placeholder="Search..."
           onChange={handleSearch}
         />
         <img
           src={magnifier}
-          className="absolute right-1.5 top-1.5 h-5 w-5"
+          className="absolute right-1.5 top-1.5 h-5 w-5 lg:right-[310px]"
           alt="search"
         />
       </div>
@@ -100,13 +100,18 @@ export default function Category() {
                       import.meta.env.VITE_BACKEND_URL
                     }/Public/videos/${elem.file_name}.mp4`}
                     pausedOverlay={
-                      <img
-                        src={`${
-                          import.meta.env.VITE_BACKEND_URL
-                        }/Public/thumbnails/${elem.file_name}.png`}
-                        alt={elem.name}
-                        className="rounded-md"
-                      />
+                      <>
+                        <img
+                          src={`${
+                            import.meta.env.VITE_BACKEND_URL
+                          }/Public/thumbnails/${elem.file_name}.png`}
+                          alt={elem.name}
+                          className="rounded-md"
+                        />
+                        <div className="bg-white text-black font-bold absolute rounded-lg right-1 bottom-1 text-sm px-1 font-primary z-10">
+                          {formatTimeFromDb(elem.duration)}
+                        </div>
+                      </>
                     }
                     playbackRangeEnd={5}
                     loadingStateTimeout={1000}
@@ -114,10 +119,6 @@ export default function Category() {
                     controlsList="nodownload nofullscreen"
                     className="w-40 lg:w-80 mx-3.5 my-1 lg:mx-10 lg:mt-6 rounded-md"
                   />
-
-                  <div className="bg-white text-black font-bold absolute rounded-lg right-5 lg:right-12 bottom-5 lg:bottom-5 text-sm px-1 font-primary z-10">
-                    {formatTimeFromDb(elem.duration)}
-                  </div>
                 </button>
                 <p className="mb-3 font-primary text-orange text-md lg:text-xl font-bold">
                   {elem.name}
