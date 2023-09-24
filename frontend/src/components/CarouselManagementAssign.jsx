@@ -1,55 +1,48 @@
 import PropTypes, { shape } from "prop-types";
-import { useBlurredBackgroundContext } from "../contexts/BlurredBackgroundContext";
 import expressAPI from "../services/expressAPI";
 import CarouselManagementVideoList from "./CarouselManagementVideoList";
+import popUpMessages from "../json/crslMngmtPopMsg.json";
 
 function CarouselManagementAssign({
   videosList,
   currentCarousel,
   setCurrentCarousel,
   categoriesList,
-  setCarouselErrorPopUpOpen,
-  setCarouselErrorMessage,
+  handlePopUpOpen,
+  setCarouselPopUpMessage,
+  hasVideoAssignmentChanged,
 }) {
-  const { setIsBackgroundBlurred } = useBlurredBackgroundContext();
-
-  const handleCarouselError = () => {
-    setCarouselErrorPopUpOpen(true);
-    setIsBackgroundBlurred(true);
-  };
-
   const handleCarouselDeletion = (id) => {
-    setCarouselErrorMessage({
-      title: "Deletion warning",
-      content:
-        "You are about to delete this carousel permanently. Do you want to continue ?",
-      button: { onValidation: "deleteCarousel", text: "Confirm", value: id },
+    setCarouselPopUpMessage({
+      ...popUpMessages.handleDeletionWarning,
+      value: id,
     });
-    handleCarouselError();
+    handlePopUpOpen();
   };
 
   const saveChanges = () => {
-    if (currentCarousel.modified.length === 0) {
-      setCarouselErrorMessage({
-        title: "Modification error",
-        content: "No modifications to be saved.",
-      });
-      return handleCarouselError();
+    if (!hasVideoAssignmentChanged()) {
+      setCarouselPopUpMessage(popUpMessages.saveChangesNoModif);
+      return handlePopUpOpen();
     }
-    if (currentCarousel.base.length > 10) {
-      setCarouselErrorMessage({
-        title: "Too much videos",
-        content:
-          "Number of videos assigned to a carousel can't exceed 10. Please modify video assignment.",
-      });
-      return handleCarouselError();
+    if (currentCarousel.videosArray.length > 10) {
+      setCarouselPopUpMessage(popUpMessages.handleCreateCarouselTooMuchVideos);
+      return handlePopUpOpen();
     }
-    const addedJointures = currentCarousel.modified.filter(
-      (el) => el.mod === "added"
+
+    const addedJointures = currentCarousel.videosArray.filter(
+      (video) =>
+        !currentCarousel.videosArrayRef.some(
+          (videoRef) => videoRef.video_id === video.video_id
+        )
     );
-    const removedJointures = currentCarousel.modified.filter(
-      (el) => el.mod === "removed"
+    const removedJointures = currentCarousel.videosArrayRef.filter(
+      (videoRef) =>
+        !currentCarousel.videosArray.some(
+          (video) => video.video_id === videoRef.video_id
+        )
     );
+
     if (addedJointures.length > 0) {
       expressAPI
         .post(`/api/carousels/jointure`, {
@@ -59,15 +52,10 @@ function CarouselManagementAssign({
         .then((res) => {
           if (res.status === 200) {
             setCurrentCarousel({
-              carouselId: currentCarousel.carouselId,
-              title: currentCarousel.title,
-              base: currentCarousel.base,
-              modified: [],
+              ...currentCarousel,
+              videosArrayRef: [...currentCarousel.videosArray],
             });
-            setCarouselErrorMessage({
-              title: "Carousel modified",
-              content: "Video assignment updated.",
-            });
+            setCarouselPopUpMessage(popUpMessages.saveChangesSuccess);
           }
         });
     }
@@ -83,16 +71,13 @@ function CarouselManagementAssign({
           if (res.status === 204) {
             setCurrentCarousel({
               ...currentCarousel,
-              modified: [],
+              videosArrayRef: [...currentCarousel.videosArray],
             });
-            setCarouselErrorMessage({
-              title: "Carousel modified",
-              content: "Video assignment updated.",
-            });
+            setCarouselPopUpMessage(popUpMessages.saveChangesSuccess);
           }
         });
     }
-    return handleCarouselError();
+    return handlePopUpOpen();
   };
 
   return (
@@ -138,16 +123,17 @@ CarouselManagementAssign.propTypes = {
   currentCarousel: PropTypes.shape({
     carouselId: PropTypes.number,
     title: PropTypes.string.isRequired,
-    base: PropTypes.arrayOf(
+    videosArray: PropTypes.arrayOf(
       shape({
         title: PropTypes.string,
         id: PropTypes.number,
         video_id: PropTypes.number.isRequired,
       })
     ).isRequired,
-    modified: PropTypes.arrayOf(
+    videosArrayRef: PropTypes.arrayOf(
       shape({
-        mod: PropTypes.string.isRequired,
+        title: PropTypes.string,
+        id: PropTypes.number,
         video_id: PropTypes.number.isRequired,
       })
     ).isRequired,
@@ -159,6 +145,7 @@ CarouselManagementAssign.propTypes = {
       name: PropTypes.string.isRequired,
     })
   ).isRequired,
-  setCarouselErrorPopUpOpen: PropTypes.func.isRequired,
-  setCarouselErrorMessage: PropTypes.func.isRequired,
+  handlePopUpOpen: PropTypes.func.isRequired,
+  setCarouselPopUpMessage: PropTypes.func.isRequired,
+  hasVideoAssignmentChanged: PropTypes.func.isRequired,
 };
