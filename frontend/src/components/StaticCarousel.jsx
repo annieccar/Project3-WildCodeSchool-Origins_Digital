@@ -96,8 +96,6 @@ export default function StaticCarousel({ videosArray }) {
                       />
                     }
                     className=" mx-2 min-w-[144px] lg:min-w-[180px]"
-                    controls
-                    controlsList="nodownload nofullscreen"
                   />
                 </button>
               ))}

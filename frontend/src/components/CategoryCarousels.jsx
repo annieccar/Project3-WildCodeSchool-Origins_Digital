@@ -13,9 +13,13 @@ export default function CategoryCarousels() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const categoriesResponse = await expressAPI.get("/api/categories");
+        const categoriesResponse = await expressAPI.get("/api/carousels");
         const videoResponse = await expressAPI.get("/api/carousels/videos");
-        setCategories(categoriesResponse.data);
+        setCategories(
+          categoriesResponse.data.filter((elem) => {
+            return elem.title !== "Hero Slider";
+          })
+        );
         setVideoByCategories(videoResponse.data);
       } catch (err) {
         console.error(err);
@@ -28,7 +32,7 @@ export default function CategoryCarousels() {
     if (videoByCategories.length > 0 && categories.length > 0) {
       const categoriesWithVideos = categories.map((category) => {
         const categoryArray = videoByCategories.filter(
-          (video) => video.title === category.name
+          (video) => video.title === category.title
         );
         return categoryArray;
       });
