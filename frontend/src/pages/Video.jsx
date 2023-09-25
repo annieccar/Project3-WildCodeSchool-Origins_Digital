@@ -51,6 +51,7 @@ export default function Video() {
           <video
             className="w-10/12 lg:w-[1000px]"
             controls
+            controlsList="nodownload"
             key={videoInfos.file_name}
           >
             <track default kind="captions" />

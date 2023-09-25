@@ -226,7 +226,7 @@ export default function CarouselManagement() {
             />
           )}
           {carouselManagementDisplay === 0 && isDesktop ? (
-            <h3 className="ml-8 mt-6 text-xl text-orange">
+            <h3 className="ml-8 mt-6 text-xl text-lightBlue dark:text-white">
               Please select "Create new carousel" or select an existing carousel
               in the list.
             </h3>

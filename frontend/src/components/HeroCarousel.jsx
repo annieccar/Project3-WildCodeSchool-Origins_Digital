@@ -91,7 +91,7 @@ export default function HeroCarousel() {
                   <div
                     key={video}
                     className={`rounded-full w-2 h-2 m-0.5 lg:mx-1 lg:w-3 lg:h-3  ${
-                      index === currentImageIndex ? "bg-gray" : "bg-white"
+                      index === currentImageIndex ? "bg-orange" : "bg-white"
                     }`}
                   />
                 );

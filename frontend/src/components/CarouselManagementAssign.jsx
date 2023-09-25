@@ -104,9 +104,9 @@ function CarouselManagementAssign({
         setCurrentCarousel={setCurrentCarousel}
         categoriesList={categoriesList}
       />
-      <div className="flex flex-wrap my-8">
+      <div className="flex my-8">
         <button
-          className="flex flex-col w-48 h-12 mx-5 mb-3 rounded-3xl text-white font-semibold bg-[linear-gradient(90deg,_#FF8200_0%,_#FF2415_100%)]"
+          className="w-48 h-12 mx-5 mb-3 rounded-3xl text-white font-semibold bg-orange-gradient"
           type="button"
           onClick={saveChanges}
         >

@@ -41,7 +41,7 @@ export default function UploadVideo({
             headers: { "Content-Type": "multipart/form-data" },
           }
         );
-        const fileName = videoUploadResponse.data.file_name;
+        const { fileName } = videoUploadResponse.data;
 
         const thumbnailData = new FormData();
         thumbnailData.append("thumbnailfile", data.thumbnailfile[0]);

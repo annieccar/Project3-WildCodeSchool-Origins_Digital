@@ -20,10 +20,11 @@ export default function VideoCardPlaylist({
     return name;
   };
   return (
-    <div className="flex flex-col items-center gap-2" key={video.id}>
+    <div className="flex flex-col items-center gap-2">
       <button
         type="button"
-        className="relative"
+        className="relative hover:scale-[110%] duration-300 ease-in-out
+"
         onClick={() => navigate(`/videos/${video.id}`)}
       >
         <HoverVideoPlayer
@@ -96,7 +97,7 @@ VideoCardPlaylist.propTypes = {
     id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
     user_id: PropTypes.number.isRequired,
-  }).isRequired,
+  }),
   categories: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number.isRequired,
@@ -104,4 +105,8 @@ VideoCardPlaylist.propTypes = {
     }).isRequired
   ).isRequired,
   fetchPlaylistVideos: PropTypes.func.isRequired,
+};
+
+VideoCardPlaylist.defaultProps = {
+  playlist: null,
 };

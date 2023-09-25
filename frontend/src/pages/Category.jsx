@@ -92,7 +92,7 @@ export default function Category() {
               <div key={elem.name} className="flex flex-col items-center">
                 <button
                   type="button"
-                  className="relative"
+                  className="relative hover:scale-[110%] duration-300 ease-in-out"
                   onClick={() => handleClick(elem)}
                 >
                   <HoverVideoPlayer

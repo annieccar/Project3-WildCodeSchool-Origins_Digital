@@ -126,9 +126,9 @@ function CarouselManagementCreate({
           setCurrentCarousel={setCurrentCarousel}
           categoriesList={categoriesList}
         />
-        <div className=" pb-24 bg-dark">
+        <div className=" pb-24 bg-almostWhite dark:bg-dark">
           <button
-            className="w-48 h-14 py-3 mx-20 mt-5 rounded-3xl font-semibold bg-[linear-gradient(90deg,_#FF8200_0%,_#FF2415_100%)]"
+            className="w-48 h-14 py-3 mx-20 mt-5 rounded-3xl text-white font-semibold bg-[linear-gradient(90deg,_#FF8200_0%,_#FF2415_100%)]"
             type="button"
             onClick={handleCreateCarousel}
           >
