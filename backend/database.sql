@@ -92,6 +92,6 @@ CREATE TABLE
         `video_id` INT NOT NULL,
         `carousel_id` INT NOT NULL,
         PRIMARY KEY (`id`),
-        CONSTRAINT `fk_video_has_carousel_video` FOREIGN KEY (`video_id`) REFERENCES `video` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-        CONSTRAINT `fk_video_has_carousel_carousel` FOREIGN KEY (`carousel_id`) REFERENCES `carousel` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+        CONSTRAINT `fk_video_has_carousel_video` FOREIGN KEY (`video_id`) REFERENCES `video` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+        CONSTRAINT `fk_video_has_carousel_carousel` FOREIGN KEY (`carousel_id`) REFERENCES `carousel` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
     ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;

@@ -1,151 +1,234 @@
 import React, { useState, useEffect } from "react";
 import expressAPI from "../services/expressAPI";
+import UpdateVideo from "../components/UpdateVideo";
+import UploadVideo from "../components/UploadVideo";
+import magnifier from "../assets/images/Vector.png";
+import editPencil from "../assets/images/edit.svg";
+import CustomModal from "../components/CustomModal";
 
 export default function VideoManagement() {
   const [videos, setVideos] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [selectedVideo, setSelectedVideo] = useState(null);
-  const [selectedAccess, setSelectedAccess] = useState("Guest");
-  const [videoLocation, setVideoLocation] = useState("");
-  const [videoDescription, setVideoDescription] = useState("");
+  const [formActive, setFormActive] = useState(false);
+  const [addVideo, setAddVideo] = useState(false);
+  const [isMobile, setIsMobile] = useState(true);
 
-  const handleEditClick = (videoName) => {
-    setSelectedVideo(videoName);
-    setVideoLocation(`/backend/public/videos/${videoName}.mp4`);
+  const [category, setCategory] = useState("");
+  const [keyword, setKeyword] = useState("");
+
+  const [modal, setModal] = useState(false);
+  const [modalText, setModalText] = useState("");
+
+  const handleCategory = (e) => {
+    setCategory(e.target.value);
   };
 
-  const stripExtension = (filename) => {
-    return filename.replace(/\.[^/.]+$/, ""); // Remove file extension
+  const handleSearch = (e) => {
+    setKeyword(e.target.value);
   };
 
-  const handleAccessChange = (event) => {
-    setSelectedAccess(event.target.value);
+  const handleEditClick = (video) => {
+    setFormActive(true);
+    setSelectedVideo(video);
+    setAddVideo(false);
   };
 
   useEffect(() => {
-    expressAPI
-      .get(`/api/videos`)
-      .then((response) => setVideos(response.data))
-      .catch((error) =>
-        console.error("Erreur lors de la récupération des vidéos:", error)
-      );
+    const fetchData = async () => {
+      try {
+        const categoriesResponse = await expressAPI.get("/api/categories");
+        const videoResponse = await expressAPI.get("/api/videos");
+        setCategories(categoriesResponse.data);
+        setVideos(videoResponse.data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    fetchData();
+  }, [formActive]);
+
+  const capitalizeFirstLetter = (str) => {
+    return `${str.charAt(0).toUpperCase()}${str.slice(1)}`;
+  };
+
+  const handleResize = () => {
+    if (window.innerWidth <= 1024) {
+      setIsMobile(true);
+    } else {
+      setIsMobile(false);
+    }
+  };
+
+  useEffect(() => {
+    handleResize();
   }, []);
 
+  window.addEventListener("resize", handleResize);
+
   return (
-    <div className="w-screen bg-dark flex flex-col items-center p-2 md:p-0">
-      <h3 className="flex text-orange p-3 md:p-5 text-2xl md:text-3xl">
-        Videos Management
-      </h3>
-      <div className="flex flex-col md:flex-row">
-        <div className="w-full max-w-screen-md mb-5 md:w-1/2 md:pr-5">
-          <h3 className="ml-5">Video List:</h3>
-          <div className="border-solid rounded-2xl border-4 border-orange mb-3 p-3">
-            {videos.map((video) => (
-              <div
-                key={video.id}
-                className="p-2 flex items-center justify-between"
-              >
-                <span>{stripExtension(video.name)}</span>
-                <div
-                  className="h-4 w-4 cursor-pointer"
-                  role="button"
-                  onClick={() => handleEditClick(video.name)}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") {
-                      handleEditClick(video.name);
-                    }
-                  }}
-                  tabIndex="0"
-                >
-                  <img
-                    src="/src/assets/images/edit.svg"
-                    alt="edit-logo"
-                    className="h-full w-full"
-                  />
-                </div>
-              </div>
-            ))}
-          </div>
-          <button
-            className="border-solid rounded-2xl border-4 border-orange
-             text-lg md:text-xl w-full h-10 text-orange"
-            type="button"
+    videos.length && (
+      <>
+        <div className="bg-almostWhite dark:bg-dark flex flex-col items-center">
+          {(!isMobile || (isMobile && !formActive)) && (
+            <h3 className="text-orange font-primary font-bold text-2xl lg:text-3xl mt-7">
+              Videos Management
+            </h3>
+          )}
+          <div
+            className={`lg:flex ${
+              formActive ? "lg:justify-around" : "lg:justify-center"
+            } lg:items-start lg:w-[1200px] mt-5 lg:mt-10`}
           >
-            Add video
-          </button>
-        </div>
-        <div className="w-full max-w-screen-md md:w-1/2 ">
-          <h3 className="text-orange font-bold ">Selected video details</h3>
-          {selectedVideo && (
-            <div>
-              <img
-                className="p-5 max-w-full"
-                src={`/thumbnails/${selectedVideo}.png`}
-                alt={`${selectedVideo}-thumbnail`}
-              />
-              <div className="flex flex-col p-3">
-                <div className="mb-3">
-                  <h4>Video title:</h4>
-                  <input
-                    className="border-solid border-2 border-orange rounded-md bg-blue w-full h-10 pl-1 mb-2"
-                    type="text"
-                    placeholder="Title"
-                  />
+            <div
+              className={`flex flex-col items-center ${
+                formActive && isMobile && "hidden"
+              }`}
+            >
+              <button
+                className="mb-5 mt-5 text-white h-11 w-[330px] focus:outline-none font-primary font-semibold rounded-full px-4 py-0.5 bg-orange-gradient"
+                type="button"
+                onClick={() => {
+                  setFormActive(true);
+                  setAddVideo(true);
+                  setSelectedVideo(false);
+                }}
+              >
+                Upload New Video
+              </button>
+              <div className="flex justify-start w-full ml-5">
+                <h3 className="font-primary font-bold text-orange text-xl mb-5">
+                  Video List:
+                </h3>
+              </div>
+              <div className="flex justify-between p-2 relative mb-4 w-full">
+                <select
+                  className="bg-almostWhite dark:bg-dark w-28 focus:outline-none font-primary text-sm lg:mr-20 lg:w-32 lg:text-xl"
+                  onChange={handleCategory}
+                >
+                  <option className="font-primary text-md" value="">
+                    Select
+                  </option>
+                  {categories.length > 0 &&
+                    categories.map((elem) => (
+                      <option key={elem.name} value={elem.id}>
+                        {elem.name}
+                      </option>
+                    ))}
+                </select>
+                <input
+                  className="bg-almostWhite dark:bg-dark focus:outline-none w-44 lg:w-52 h-9 font-primary text-lg lg:text-xl p-2 border-2 lg:border-2 border-lightBlue dark:border-orange rounded-full"
+                  placeholder="search"
+                  onChange={handleSearch}
+                />
+                <img
+                  src={magnifier}
+                  className="absolute right-5 top-4 h-5 w-5"
+                  alt="search"
+                />
+              </div>
+              {!isMobile && (
+                <div className="px-4 py-1 flex items-center justify-between lg:w-[630px]">
+                  <span className="text-orange font-primary font-bold text-lg lg:w-[150px]">
+                    Video Name
+                  </span>
+                  <div className="text-orange font-primary font-bold text-lg lg:w-[150px]">
+                    Video Duration
+                  </div>
+                  <div className="text-orange font-primary font-bold text-lg lg:w-[150px]">
+                    Category
+                  </div>
+                  <div className="text-orange font-primary font-bold text-lg lg:w-[30px]">
+                    Edit
+                  </div>
                 </div>
-                <div className="mb-3">
-                  <h4>Category:</h4>
-                  <input
-                    className="border-solid border-2 border-orange rounded-md bg-blue w-full h-10 pl-1 mb-2"
-                    type="text"
-                    placeholder="Category"
-                  />
-                </div>
-                <div className="mb-3">
-                  <h4>User access:</h4>
-                  <select
-                    className="border-solid border-2 border-orange rounded-md bg-blue w-full h-10"
-                    value={selectedAccess}
-                    onChange={handleAccessChange}
-                  >
-                    <option value="Guest">Guest</option>
-                    <option value="Free User">Free User</option>
-                    <option value="Premium User">Premium User</option>
-                    <option value="Admin">Admin</option>
-                  </select>
-                </div>
-                <div className="mb-3">
-                  <h4>Video Location:</h4>
-                  <p className="bg-blue text-white border-solid border-2 border-orange rounded-md w-full h-10 overflow-hidden">
-                    {videoLocation}
-                  </p>
-                </div>
-                <div className="mb-3">
-                  <h4>Video description:</h4>
-                  <textarea
-                    className="resize-none border-solid border-2 border-orange rounded-md bg-blue w-full h-32 pl-1 mb-2"
-                    placeholder="Description"
-                    value={videoDescription}
-                    onChange={(e) => setVideoDescription(e.target.value)}
-                  />
-                </div>
-                <div className="flex flex-col md:flex-row">
-                  <button
-                    className="bg-[linear-gradient(90deg,#FF8200_0%,#FF2415_100%)] text-white font-bold px-4 py-2 border-solid rounded-full mt-2 w-full md:w-52 md:ml-4"
-                    type="button"
-                  >
-                    Save Changes
-                  </button>
-                  <button
-                    className="text-orange px-4 py-2 border-2 border-orange rounded-full mt-2 w-full md:w-52 md:ml-4"
-                    type="button"
-                  >
-                    Delete Video
-                  </button>
-                </div>
+              )}
+              <div className="border-solid p-2 rounded-xl border-2 border-orange flex flex-col mb-16 w-[330px] lg:w-[630px] max-h-[500px] min-h-[200px] overflow-y-scroll lg:scrollbar-thumb-lightBlue lg:scrollbar-track-white dark:lg:scrollbar-thumb-gray lg:scrollbar-thin scrollbar-thumb-rounded-md scrollbar-track-rounded-md">
+                {videos.length > 0 &&
+                  videos
+                    .filter(
+                      (video) =>
+                        !category.length ||
+                        video.category_id === parseInt(category, 10)
+                    )
+                    .filter(
+                      (video) =>
+                        !keyword.length ||
+                        video.name.toLowerCase().includes(keyword.toLowerCase())
+                    )
+
+                    .map((video) => (
+                      <div
+                        key={video.id}
+                        className="px-5 py-1 flex items-center justify-between"
+                      >
+                        <span className="font-primary text-lg lg:w-[150px]">
+                          {video.name}
+                        </span>
+                        {!isMobile && (
+                          <div className="font-primary text-lg lg:w-[150px]">
+                            {video.duration}
+                          </div>
+                        )}
+                        {!isMobile &&
+                          categories.map((item) => {
+                            if (item.id === video.category_id) {
+                              return (
+                                <div className="font-primary text-lg lg:w-[150px]">
+                                  {capitalizeFirstLetter(item.name)}
+                                </div>
+                              );
+                            }
+                            return null;
+                          })}
+                        <div
+                          className="h-6 w-6 cursor-pointer"
+                          role="button"
+                          onClick={() => handleEditClick(video)}
+                          onKeyDown={(e) => {
+                            if (e.key === "Enter") {
+                              handleEditClick(video);
+                            }
+                          }}
+                          tabIndex="0"
+                        >
+                          <img
+                            src={editPencil}
+                            alt="edit-logo"
+                            className="h-full w-full"
+                          />
+                        </div>
+                      </div>
+                    ))}
               </div>
             </div>
-          )}
+            <div className="flex flex-col items-center">
+              {formActive && selectedVideo && (
+                <UpdateVideo
+                  selectedVideo={selectedVideo}
+                  setFormActive={setFormActive}
+                  categories={categories}
+                  isMobile={isMobile}
+                  setModal={setModal}
+                  setModalText={setModalText}
+                />
+              )}
+              {formActive && addVideo && (
+                <UploadVideo
+                  setFormActive={setFormActive}
+                  categories={categories}
+                  isMobile={isMobile}
+                  setModal={setModal}
+                  setModalText={setModalText}
+                />
+              )}
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
+        {modal && (
+          <CustomModal msg={modalText} closeModal={() => setModal(false)} />
+        )}
+      </>
+    )
   );
 }
