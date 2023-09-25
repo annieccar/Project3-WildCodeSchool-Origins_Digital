@@ -48,6 +48,20 @@ const edit = async (req, res) => {
   }
 };
 
+const editCategory = async (req, res) => {
+  try {
+    const [result] = await models.videos.updateCategory(req.body);
+    if (result.affectedRows === 0) {
+      res.sendStatus(404);
+    } else {
+      res.sendStatus(204);
+    }
+  } catch (err) {
+    console.error(err);
+    res.sendStatus(500);
+  }
+};
+
 const add = async (req, res) => {
   try {
     const video = req.body;
@@ -96,6 +110,7 @@ module.exports = {
   browse,
   read,
   edit,
+  editCategory,
   add,
   destroy,
   search,

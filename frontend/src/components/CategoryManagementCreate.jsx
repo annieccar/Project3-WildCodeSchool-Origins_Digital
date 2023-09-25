@@ -26,11 +26,11 @@ export default function CategoryManagementCreate({
 
   return (
     isOpen && (
-      <div className="fixed  inset-0 flex items-center justify-center z-50">
+      <div className="fixed inset-0 flex items-center justify-center z-50">
         <div className="relative inset-0 bg-gray-900 opacity-50"> </div>
 
         <div className="fixed left-1/2 top-[250px] transform -translate-x-1/2 -translate-y-1/2 bg-white p-4 w-96 rounded-lg shadow-xl">
-          <h2 className="text-xl font-bold text-black mb-4">
+          <h2 className=" text-xl font-bold text-black mb-4">
             Create New Category:
           </h2>
 

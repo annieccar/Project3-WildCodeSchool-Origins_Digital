@@ -20,6 +20,13 @@ class VideosManager extends AbstractManager {
     );
   }
 
+  updateCategory({ id, categoryId }) {
+    return this.database.query(
+      `UPDATE ${this.table} SET category_id = ? WHERE id = ?`,
+      [categoryId, id]
+    );
+  }
+
   findByQuery(query) {
     const initialSql = `SELECT t.id, t.name, t.file_name, t.duration, t.details, t.category_id, c.name AS category FROM ${this.table} AS t JOIN category AS c ON c.id = t.category_id`;
     const where = [];
