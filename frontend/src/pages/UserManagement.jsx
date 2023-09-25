@@ -4,6 +4,8 @@ import magnifier from "../assets/images/Vector.png";
 import pencil from "../assets/images/Pencil.svg";
 import interceptor from "../hooks/useInstanceWithInterceptor";
 
+import download from "../assets/images/download.svg";
+
 import CreateUserManagement from "./CreateUserManagement";
 import UserProfileManagement from "./UserProfileManagement";
 import useMediaQuery from "../hooks/useMediaQuery";
@@ -21,6 +23,10 @@ export default function UserManagement() {
   useEffect(() => {
     expressAPI.get(`/api/users`).then((res) => setUsers(res.data));
   }, []);
+
+  useEffect(() => {
+    expressAPI.get(`/api/users/csv`);
+  }, [users]);
 
   const handleCreateUser = () => {
     if (isDesktop) {
@@ -51,14 +57,21 @@ export default function UserManagement() {
   return (
     <div className="bg-dark flex flex-col lg:flex-row pt-10">
       <div className="flex flex-col lg:w-1/2">
-        <div className="flex justify-center mb-5">
+        <div className="flex justify-center gap-2 mb-5">
           <button
             type="button"
-            className="bg-orange-gradient rounded-full px-8 py-2 text-lg"
+            className="bg-orange-gradient rounded-full font-semibold px-8 py-2"
             onClick={handleCreateUser}
           >
             New user
           </button>
+          <a
+            href={`${import.meta.env.VITE_BACKEND_URL}/public/csv/users.csv`}
+            className="flex items-center bg-blue-gradient rounded-full px-6 py-2"
+          >
+            <p className="font-semibold">Download CSV</p>
+            <img src={download} alt="download" className="w-6" />
+          </a>
         </div>
         <div className="flex flex-col gap-2 w-10/12 mx-auto">
           <label

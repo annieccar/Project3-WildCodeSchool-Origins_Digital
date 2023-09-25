@@ -11,13 +11,14 @@ import interceptor from "../hooks/useInstanceWithInterceptor";
 
 import magnifier from "../assets/images/Vector.png";
 import ToolboxPopUp from "./ToolboxPopUp";
+import { useLoginContext } from "../contexts/LoginContext";
 
 export default function Navbar() {
   const { user, setUser } = useCurrentUserContext();
+  const { isLoggedIn, setIsLoggedIn } = useLoginContext();
   const navigate = useNavigate();
   const expressAPI = interceptor();
   const [isMobile, setIsMobile] = useState(true);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userMenuSelected, setUserMenuSelected] = useState(false);
   const [categorySelection, setCategorySelection] = useState(false);
   const [keyWord, setKeyWord] = useState("");
@@ -98,8 +99,8 @@ export default function Navbar() {
         <div className="bg-dark h-16 w-1/2 flex justify-between items-center fixed z-50">
           <div>
             <input
-              className="bg-dark w-52 h-10 font-primary text-base lg:text-xl p-2 border-2 lg:border-2 border-orange rounded-md text-gray "
-              placeholder="search"
+              className="bg-dark w-52 h-10 font-primary text-base lg:text-xl py-1 px-2 border-2 lg:border-2 border-orange focus:outline-none rounded-full text-gray "
+              placeholder="Search..."
               onChange={(e) => {
                 setKeyWord(e.target.value);
               }}
@@ -108,7 +109,7 @@ export default function Navbar() {
               <img
                 src={magnifier}
                 alt="search"
-                className="translate-y-1 -translate-x-8 w-6 h-6"
+                className="translate-y-1 -translate-x-9 w-6 h-6"
               />
             </button>
           </div>
@@ -178,7 +179,7 @@ export default function Navbar() {
                   import.meta.env.VITE_BACKEND_URL
                 }/public/profileimages/${user.profileimage}`}
                 alt="user"
-                className="rounded-full h-10 mr-3"
+                className="rounded-full h-10 w-10 object-cover mr-3"
               />
               <p className="font-primary font-">{user.username}</p>
             </div>

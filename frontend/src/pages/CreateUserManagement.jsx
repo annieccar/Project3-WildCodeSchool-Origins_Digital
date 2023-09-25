@@ -6,7 +6,6 @@ import { useForm } from "react-hook-form";
 import CustomModal from "../components/CustomModal";
 import interceptor from "../hooks/useInstanceWithInterceptor";
 
-import visa from "../assets/images/Visa.png";
 import {
   registerOptions,
   giveTodayDate,
@@ -275,28 +274,7 @@ export default function CreateUserManagement({ setUsers }) {
                 </p>
               )}
             </div>
-            <div>
-              <h1 className="text-orange font-primary font-bold text-xl py-3">
-                Payment Info:
-              </h1>
-            </div>
-            <div className="flex flex-col">
-              <label
-                htmlFor="CardNumber"
-                className="font-primary font-bold text-lg mb-2"
-              >
-                Card Number
-              </label>
-              <input
-                className="h-9 focus:outline-none mb-2 px-2 rounded-lg border-2 border-solid border-orange bg-dark text-gray font-primary "
-                type="text"
-                name="cardnumber"
-                defaultValue="**** **** **** 6258"
-              />
-            </div>
-            <div className="flex items-center">
-              <img className="h-[61px]" src={visa} alt="Visa" />
-            </div>
+
             <div className="flex flex-col gap-3 items-center mt-3 mb-5">
               <button
                 type="submit"

@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
-import HoverVideoPlayer from "react-hover-video-player";
 import interceptor from "../hooks/useInstanceWithInterceptor";
 
-import formatTimeFromDb from "../services/formatTimeFromDb";
+import VideoCardPlaylist from "../components/VideoCardPlaylist";
 
 export default function Playlist() {
   const [playlistVideos, setPlaylistVideos] = useState(null);
@@ -13,8 +12,8 @@ export default function Playlist() {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [search, setSearch] = useState("");
   const { id } = useParams();
-  const navigate = useNavigate();
   const expressAPI = interceptor();
+
   const fetchPlaylistVideos = () => {
     expressAPI
       .get(`/api/playlists/${id}/videos`)
@@ -41,13 +40,8 @@ export default function Playlist() {
     fetchPlaylistName();
   }, []);
 
-  const getCategory = (categoryId) => {
-    const { name } = categories.find((elem) => elem.id === categoryId);
-    return name;
-  };
-
   return (
-    <div className="bg-dark flex flex-col gap-3 lg:m-10 pb-20">
+    <div className="bg-dark flex flex-col gap-3 pb-20 lg:py-5">
       {playlist && (
         <h1 className="text-center text-2xl text-orange font-semibold lg:text-3xl">
           {playlist.name}
@@ -55,21 +49,21 @@ export default function Playlist() {
       )}
       {playlistVideos && categories && (
         <>
-          <div className="flex justify-center gap-2 mb-5 mx-3 lg:justify-end lg:mr-5">
+          <div className="flex justify-center gap-3 mb-5 mx-3 lg:justify-end lg:mr-5">
             <input
               type="text"
-              placeholder="Search"
+              placeholder="Search..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-[140px] rounded-lg bg-dark border-2 border-orange focus:outline-none pl-1 mr-5"
+              className="w-[140px] rounded-full bg-dark border-2 border-orange focus:outline-none px-2"
             />
             <select
-              className="bg-dark object-fit rounded-lg border-2"
+              className="bg-dark object-fit rounded-full focus:outline-none border-2 px-3"
               name="filters"
               id="filters"
               onChange={(e) => setSelectedCategory(e.target.value)}
             >
-              <option value="">-- Select a filter --</option>
+              <option value="">Select a filter</option>
               {categories.map((category) => (
                 <option value={category.id} key={category.id}>
                   {category.name}
@@ -84,63 +78,21 @@ export default function Playlist() {
                   !selectedCategory.length ||
                   video.category_id === parseInt(selectedCategory, 10)
               )
-              .filter((video) => !search.length || video.name.includes(search))
+              .filter(
+                (video) =>
+                  !search.length ||
+                  video.name
+                    .toLocaleLowerCase()
+                    .trim()
+                    .includes(search.toLocaleLowerCase().trim())
+              )
               .map((video) => (
-                <div
-                  className="flex flex-col items-center gap-2"
-                  key={video.id}
-                >
-                  <button
-                    type="button"
-                    className="relative"
-                    onClick={() => navigate(`/videos/${video.id}`)}
-                  >
-                    <HoverVideoPlayer
-                      videoSrc={`${
-                        import.meta.env.VITE_BACKEND_URL
-                      }/Public/videos/${video.file_name}.mp4`}
-                      pausedOverlay={
-                        <img
-                          className="w-64 rounded-lg"
-                          src={`${
-                            import.meta.env.VITE_BACKEND_URL
-                          }/public/thumbnails/${video.file_name}.png`}
-                          alt=""
-                        />
-                      }
-                      playbackRangeEnd={5}
-                      loadingStateTimeout={1000}
-                      controls
-                      controlsList="nodownload nofullscreen"
-                      className="w-64 rounded-lg relative"
-                    />
-
-                    <div className="w-12 mr-1 mb-1 bg-white text-dark lg:text-sm font-bold rounded-lg absolute z-10 right-0 bottom-2">
-                      {formatTimeFromDb(video.duration)}
-                    </div>
-                  </button>
-                  <div className="flex flex-col gap-1 w-full">
-                    <div className="flex justify-between">
-                      <h3 className="text-orange font-semibold text-xl">
-                        {video.name}
-                      </h3>
-                      {video.category_id && (
-                        <div>
-                          <button
-                            type="button"
-                            className="px-2 pb-1 rounded-lg font-semibold text-sm bg-orange-gradient"
-                            onClick={() =>
-                              navigate(`/category/${video.category_id}`)
-                            }
-                          >
-                            {getCategory(video.category_id)}
-                          </button>
-                        </div>
-                      )}
-                    </div>
-                    <p>{video.details}</p>
-                  </div>
-                </div>
+                <VideoCardPlaylist
+                  video={video}
+                  categories={categories}
+                  playlist={playlist}
+                  fetchPlaylistVideos={fetchPlaylistVideos}
+                />
               ))}
           </div>
         </>

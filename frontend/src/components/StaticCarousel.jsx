@@ -7,7 +7,7 @@ import {
   BsFillArrowLeftCircleFill,
 } from "react-icons/bs";
 
-export default function StaticCarousel({ videosArray, carousselName }) {
+export default function StaticCarousel({ videosArray }) {
   const videos = videosArray;
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -53,10 +53,7 @@ export default function StaticCarousel({ videosArray, carousselName }) {
   };
 
   return (
-    <div className="flex flex-col items-start w-100 lg:w-1000px py-5">
-      <h1 className="text-orange font-primary font-bold text-xl my-3 mb-6 ml-5">
-        {carousselName}
-      </h1>
+    <div className="flex flex-col items-start w-100 lg:w-1000px">
       {videos.length > 0 && (
         <div className="flex ">
           <button type="button" onClick={previousImage}>
@@ -107,5 +104,4 @@ StaticCarousel.propTypes = {
       name: PropTypes.string.isRequired,
     })
   ).isRequired,
-  carousselName: PropTypes.string.isRequired,
 };
