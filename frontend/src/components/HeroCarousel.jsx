@@ -4,10 +4,12 @@ import {
   BsFillArrowLeftCircleFill,
 } from "react-icons/bs";
 import expressAPI from "../services/expressAPI";
+import useMediaQuery from "../hooks/useMediaQuery";
 
 export default function HeroCarousel() {
   const [videoNames, setVideoNames] = useState([]);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const isDesktop = useMediaQuery("(min-width: 1024px)");
 
   useEffect(() => {
     expressAPI
@@ -60,9 +62,9 @@ export default function HeroCarousel() {
           <button
             type="button"
             onClick={previousImage}
-            className="absolute -left-7 top-[4.5rem] lg:top-1/2 z-10 text-lightBlue dark:text-white lg:mr-5"
+            className="absolute -left-7 lg:-left-16 top-[4.5rem] lg:top-1/2 z-10 text-lightBlue dark:text-white lg:mr-5"
           >
-            <BsFillArrowLeftCircleFill size={50} />
+            <BsFillArrowLeftCircleFill size={isDesktop ? 50 : 35} />
           </button>
           <div className="w-80 lg:w-[900px] overflow-hidden relative">
             <div
@@ -99,9 +101,9 @@ export default function HeroCarousel() {
           <button
             type="button"
             onClick={nextImage}
-            className="absolute -right-7 top-[4.5rem] lg:top-1/2 z-10text-lightBlue dark:text-white lg:ml-5"
+            className="absolute -right-7 lg:-right-16 top-[4.5rem] lg:top-1/2 z-10 text-lightBlue dark:text-white lg:ml-5"
           >
-            <BsFillArrowRightCircleFill size={50} />
+            <BsFillArrowRightCircleFill size={isDesktop ? 50 : 35} />
           </button>
         </div>
       )}

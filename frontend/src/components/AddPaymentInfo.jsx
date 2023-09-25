@@ -1,10 +1,8 @@
 import { useForm } from "react-hook-form";
 import PropTypes from "prop-types";
-
-import visa from "../assets/images/Visa.png";
-import amex from "../assets/images/American_Express.png";
-import master from "../assets/images/MasterCard.png";
-import crypto from "../assets/images/Card_Verification_Value.png";
+import { RiVisaFill, RiMastercardFill } from "react-icons/ri";
+import { LiaCcAmex } from "react-icons/lia";
+import { PiCreditCard } from "react-icons/pi";
 
 export default function AddPaymentInfo({
   setUserTypeId,
@@ -95,9 +93,15 @@ export default function AddPaymentInfo({
         )}
       </div>
       <div className="flex items-center">
-        <img className="h-[61px]" src={visa} alt="Visa" />
-        <img className="h-[55px]" src={amex} alt="Amex" />
-        <img className="h-[53px]" src={master} alt="MasterCard" />
+        <div className="mr-3 text-lightBlue dark:text-white">
+          <RiVisaFill size={40} />
+        </div>
+        <div className="mr-3 text-lightBlue dark:text-white">
+          <RiMastercardFill size={40} />
+        </div>
+        <div className="mr-3 text-lightBlue dark:text-white">
+          <LiaCcAmex size={40} />
+        </div>
       </div>
       <div className="flex flex-col">
         <label
@@ -166,7 +170,9 @@ export default function AddPaymentInfo({
             name="cryptogram"
             defaultValue=""
           />
-          <img src={crypto} alt="cryptogram" />
+          <div className="text-lightBlue dark:text-white">
+            <PiCreditCard size={40} />
+          </div>
         </div>
         {errors.cryptogram && (
           <span className="text-red">A 3 digits cryptogram is required</span>

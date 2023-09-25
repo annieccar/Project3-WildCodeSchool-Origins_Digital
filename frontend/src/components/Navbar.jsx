@@ -25,7 +25,7 @@ export default function Navbar() {
   const [toolboxOpen, setToolboxOpen] = useState(false);
 
   const handleUserMenu = () => {
-    setUserMenuSelected(true);
+    setUserMenuSelected(!userMenuSelected);
     setToolboxOpen(false);
     setCategorySelection(false);
   };
@@ -72,7 +72,7 @@ export default function Navbar() {
   };
 
   const handleToolboxClick = () => {
-    setToolboxOpen(true);
+    setToolboxOpen(!toolboxOpen);
     setCategorySelection(false);
     setUserMenuSelected(false);
   };
@@ -87,7 +87,7 @@ export default function Navbar() {
   window.addEventListener("resize", handleResize);
 
   return (
-    <nav className="bg-lightBlue dark:bg-dark text-white flex justify-center items-center h-16 w-full z-20 fixed ">
+    <nav className="bg-lightBlue dark:bg-dark text-white flex justify-center items-center h-16 w-full z-30 fixed ">
       <Link to="/">
         <img
           className="h-16 mb-1 fixed top-0 left-0"
@@ -96,7 +96,7 @@ export default function Navbar() {
         />
       </Link>
       {!isMobile && (
-        <div className="bg-lightBlue dark:bg-dark h-16 w-1/2 flex justify-between items-center fixed z-50">
+        <div className="bg-lightBlue dark:bg-dark h-16 w-1/2 flex justify-between items-center fixed z-30">
           <div>
             <input
               className="bg-lightBlue dark:bg-dark w-52 h-10 font-primary text-base lg:text-xl py-1 px-2 border-2 lg:border-2 dark:border-orange focus:outline-none rounded-full text-almostWhite "
@@ -166,7 +166,7 @@ export default function Navbar() {
       )}
 
       {isLoggedIn ? (
-        <div className="flex gap-2 items-center fixed top-1 right-4">
+        <div className="flex gap-2 items-center fixed top-1 right-4 z-[31]">
           <button type="button" onClick={handleUserMenu}>
             {user.profileimage ? (
               <div className="flex items-center my-2">
@@ -175,7 +175,7 @@ export default function Navbar() {
                     import.meta.env.VITE_BACKEND_URL
                   }/public/profileimages/${user.profileimage}`}
                   alt="user"
-                  className="rounded-full h-10 mr-3"
+                  className="rounded-full h-10 mr-3 w-10 object-cover"
                 />
                 <p className="font-primary font-">{user.username}</p>
               </div>
@@ -203,7 +203,7 @@ export default function Navbar() {
           <button type="button" onClick={() => setUserMenuSelected(false)}>
             <div className="fixed top-20 bottom-12 left-0 right-0 " />
           </button>
-          <div className="backdrop-blur-md text-lightBlue dark:text-white border-solid border-2 border-orange w-32 px-5 py-3 rounded-md flex flex-col gap-2 items-start fixed z-50 top-14 right-2 ">
+          <div className="bg-lightBlue dark:backdrop-blur-md text-white border-solid border-2 border-orange w-32 px-5 py-3 rounded-md flex flex-col gap-2 items-start fixed z-50 top-14 right-2 ">
             <button type="button" onClick={handleMyProfile}>
               <p className="hover:text-orange font-primary font-bold my-2">
                 My profile
@@ -218,12 +218,7 @@ export default function Navbar() {
         </>
       )}
 
-      {toolboxOpen && (
-        <ToolboxPopUp
-          isOpen={toolboxOpen}
-          onClose={() => setToolboxOpen(!toolboxOpen)}
-        />
-      )}
+      {toolboxOpen && <ToolboxPopUp onClose={() => setToolboxOpen(false)} />}
       <ToastContainer />
     </nav>
   );

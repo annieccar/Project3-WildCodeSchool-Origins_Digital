@@ -14,19 +14,19 @@ export default function Footbar() {
   const [searchMenu, setSearchMenu] = useState(false);
 
   const handleCategory = () => {
-    setCategorySelection(true);
+    setCategorySelection(!categorySelection);
     setToolboxOpen(false);
     setSearchMenu(false);
   };
 
   const handleToolboxClick = () => {
-    setToolboxOpen(true);
+    setToolboxOpen(!toolboxOpen);
     setCategorySelection(false);
     setSearchMenu(false);
   };
 
   const handleSearch = () => {
-    setSearchMenu(true);
+    setSearchMenu(!searchMenu);
     setToolboxOpen(false);
     setCategorySelection(false);
   };
@@ -83,12 +83,7 @@ export default function Footbar() {
       {categorySelection && (
         <CategoryMenu setCategorySelection={setCategorySelection} />
       )}
-      {toolboxOpen && (
-        <ToolboxPopUp
-          isOpen={toolboxOpen}
-          onClose={() => setToolboxOpen(!toolboxOpen)}
-        />
-      )}
+      {toolboxOpen && <ToolboxPopUp onClose={() => setToolboxOpen(false)} />}
       {searchMenu && <SearchMenu setSearchMenu={setSearchMenu} />}
     </>
   );

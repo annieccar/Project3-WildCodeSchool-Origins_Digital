@@ -1,13 +1,9 @@
-import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
-import useOnClickOutside from "../hooks/useOnClickOutside";
 import useMediaQuery from "../hooks/useMediaQuery";
 
-export default function ToolboxPopUp({ isOpen, onClose }) {
-  const [isPopupOpen, setIsPopupOpen] = useState(isOpen);
+export default function ToolboxPopUp({ onClose }) {
   const isDesktop = useMediaQuery("(min-width:1024px)");
-  const popUpRef = useRef(null);
 
   const navigate = useNavigate();
 
@@ -15,10 +11,7 @@ export default function ToolboxPopUp({ isOpen, onClose }) {
     if (onClose) {
       onClose();
     }
-    setIsPopupOpen(!isPopupOpen);
   };
-
-  useOnClickOutside(popUpRef, handleClosePopUp);
 
   const handleClick = (page) => {
     handleClosePopUp();
@@ -26,45 +19,51 @@ export default function ToolboxPopUp({ isOpen, onClose }) {
   };
 
   return (
-    <div
-      ref={popUpRef}
-      className={`backdrop-blur-xl border-solid text-lightBlue dark:text-white border-2 border-orange w-60 h-54 px-5 py-3 rounded-md flex flex-col gap-2 items-start fixed z-50 top-14 right-1/3 translate-x-3/4 ${
-        !isDesktop && "top-auto bottom-14 right-52 "
-      } `}
-    >
+    <>
       <button
         type="button"
-        onClick={() => handleClick("category")}
-        className="hover:text-orange font-primary font-bold text-l my-2"
+        className="fixed inset-0 z-30"
+        aria-label="Close"
+        onClick={onClose}
+      />
+      <div
+        className={`bg-lightBlue dark:backdrop-blur-xl border-solid text-almostWhite dark:text-white border-2 border-orange w-60 h-54 px-5 py-3 rounded-md flex flex-col gap-2 items-start fixed z-30 top-14 right-1/3 translate-x-3/4 ${
+          !isDesktop && "top-auto bottom-14 right-52 "
+        } `}
       >
-        Categories management
-      </button>
-      <button
-        type="button"
-        onClick={() => handleClick("video")}
-        className="hover:text-orange font-primary font-bold text-l my-2"
-      >
-        Videos management
-      </button>
-      <button
-        type="button"
-        onClick={() => handleClick("carousel")}
-        className="hover:text-orange font-primary font-bold text-l my-2"
-      >
-        Carousels management
-      </button>
-      <button
-        type="button"
-        onClick={() => handleClick("users")}
-        className="hover:text-orange font-primary font-bold text-l my-2"
-      >
-        Users management
-      </button>
-    </div>
+        <button
+          type="button"
+          onClick={() => handleClick("category")}
+          className="hover:text-orange font-primary font-bold text-l my-2"
+        >
+          Categories management
+        </button>
+        <button
+          type="button"
+          onClick={() => handleClick("video")}
+          className="hover:text-orange font-primary font-bold text-l my-2"
+        >
+          Videos management
+        </button>
+        <button
+          type="button"
+          onClick={() => handleClick("carousel")}
+          className="hover:text-orange font-primary font-bold text-l my-2"
+        >
+          Carousels management
+        </button>
+        <button
+          type="button"
+          onClick={() => handleClick("users")}
+          className="hover:text-orange font-primary font-bold text-l my-2"
+        >
+          Users management
+        </button>
+      </div>
+    </>
   );
 }
 
 ToolboxPopUp.propTypes = {
-  isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
 };

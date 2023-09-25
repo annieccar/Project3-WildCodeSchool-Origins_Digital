@@ -1,7 +1,7 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
+import { RiVisaFill } from "react-icons/ri";
 
-import visa from "../assets/images/Visa.png";
 import AddPaymentInfo from "./AddPaymentInfo";
 import CancelSubscriptionPopUp from "./CancelSubscriptionPopUp";
 
@@ -57,8 +57,8 @@ export default function ExistingPaymentDetails({
             />
           </div>
 
-          <div className="flex items-center">
-            <img className="h-[61px]" src={visa} alt="Visa" />
+          <div className="flex items-center text-lightBlue dark:text-white">
+            <RiVisaFill size={40} />
           </div>
 
           <div className="flex justify-center my-5">

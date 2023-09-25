@@ -26,12 +26,12 @@ export default function CategoryMenuDesktop({ setCategorySelection }) {
   return (
     <div>
       {categories.length > 0 && (
-        <div className="backdrop-blur-md border-solid border-2 border-orange w-48 px-5 py-3 rounded-md flex flex-col gap-2 items-start absolute z-50 top-14 right-1/2">
+        <div className="bg-lightBlue dark:backdrop-blur-md border-solid border-2 border-orange w-48 px-5 py-3 rounded-md flex flex-col gap-2 items-start absolute z-50 top-14 right-1/2">
           {categories.map((elem) => (
             <button
               key={elem.id}
               type="button"
-              className="text-lightBlue dark:text-white hover:text-orange font-primary font-bold text-l my-2"
+              className="text-almostWhite dark:text-white hover:text-orange font-primary font-bold text-l my-2"
               onClick={() => handleClick(elem.id)}
             >
               {formatStringFromDb(elem.name)}
