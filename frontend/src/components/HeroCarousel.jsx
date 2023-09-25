@@ -3,6 +3,8 @@ import {
   BsFillArrowRightCircleFill,
   BsFillArrowLeftCircleFill,
 } from "react-icons/bs";
+import HoverVideoPlayer from "react-hover-video-player";
+
 import expressAPI from "../services/expressAPI";
 
 export default function HeroCarousel() {
@@ -56,44 +58,52 @@ export default function HeroCarousel() {
         Trending Now
       </h1>
       {videoNames.length > 0 && (
-        <div className="w-80 lg:w-[900px] overflow-hidden relative">
+        <div className="flex backdrop:w-80 lg:w-[900px] relative overflow-hidden">
           <div
-            className="flex w-80 lg:w-[900px] transition ease-out duration-1000"
+            className="flex backdrop:w-80 lg:w-[900px] transition ease-out duration-1000 relative"
             style={{
-              transform: `translateX(-${currentImageIndex * 100}%)`,
+              transform: `translateX(-${currentImageIndex * 900}px)`,
             }}
           >
             {videoNames.map((elem) => (
-              <img
-                src={`${
+              <HoverVideoPlayer
+                videoSrc={`${
                   import.meta.env.VITE_BACKEND_URL
-                }/Public/thumbnails/${elem}.png`}
-                key={elem}
-                alt={elem}
-                className="w-80 lg:w-[900px] object-cover"
+                }/Public/videos/${elem}.mp4`}
+                pausedOverlay={
+                  <img
+                    src={`${
+                      import.meta.env.VITE_BACKEND_URL
+                    }/Public/thumbnails/${elem}.png`}
+                    key={elem}
+                    alt={elem}
+                    className="min-w-[320px] lg:min-w-[900px]"
+                  />
+                }
+                className="min-w-[320px] lg:min-w-[900px]"
               />
             ))}
-          </div>
-          <div className="absolute top-0 h-full w-full flex justify-between items-center text-white px-1.5">
-            <button type="button" onClick={previousImage}>
-              <BsFillArrowLeftCircleFill />
-            </button>
-            <button type="button" onClick={nextImage}>
-              <BsFillArrowRightCircleFill />
-            </button>
-          </div>
+            <div className="absolute top-0 h-full w-full flex justify-between items-center text-white px-1.5 z-50">
+              <button type="button" onClick={previousImage}>
+                <BsFillArrowLeftCircleFill />
+              </button>
+              <button type="button" onClick={nextImage}>
+                <BsFillArrowRightCircleFill />
+              </button>
+            </div>
 
-          <div className="absolute bottom-0 py-1 flex justify-center w-full">
-            {videoNames.map((video, index) => {
-              return (
-                <div
-                  key={video}
-                  className={`rounded-full w-2 h-2 m-0.5 lg:mx-1 lg:w-3 lg:h-3  ${
-                    index === currentImageIndex ? "bg-gray" : "bg-white"
-                  }`}
-                />
-              );
-            })}
+            <div className="absolute bottom-0 py-1 flex justify-center w-full">
+              {videoNames.map((video, index) => {
+                return (
+                  <div
+                    key={video}
+                    className={`rounded-full w-2 h-2 m-0.5 lg:mx-1 lg:w-3 lg:h-3  ${
+                      index === currentImageIndex ? "bg-gray" : "bg-white"
+                    }`}
+                  />
+                );
+              })}
+            </div>
           </div>
         </div>
       )}
