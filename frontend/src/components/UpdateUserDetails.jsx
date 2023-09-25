@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { BiSolidUserRectangle } from "react-icons/bi";
 import expressAPI from "../services/expressAPI";
 
 import { useCurrentUserContext } from "../contexts/CurrentUserContext";
@@ -8,13 +9,25 @@ import trash from "../assets/images/trash.svg";
 
 export default function UpdateUserDetails() {
   const { user, setUser } = useCurrentUserContext();
-  const [displayedImage, setDisplayedImage] = useState(
-    user.profileimage
-      ? `${import.meta.env.VITE_BACKEND_URL}/public/profileimages/${
-          user.profileimage
-        }`
-      : "../../src/assets/images/User.png"
-  );
+  const [displayedImage, setDisplayedImage] = useState(() => {
+    if (user.profileimage) {
+      return (
+        <img
+          src={`${import.meta.env.VITE_BACKEND_URL}/public/profileimages/${
+            user.profileimage
+          }`}
+          alt="User Profile"
+          className="rounded-full h-28 w-28 object-cover"
+        />
+      );
+    }
+    return (
+      <div className="text-white">
+        <BiSolidUserRectangle size={100} />
+      </div>
+    );
+  });
+
   const [updateSuccess, setUpdateSuccess] = useState(false);
   const [uploadPicture, setUploadPicture] = useState(false);
 
@@ -50,6 +63,7 @@ export default function UpdateUserDetails() {
       .then((res) => {
         res.data.usertype_id = parseInt(res.data.usertype_id, 10);
         setUser(res.data);
+        localStorage.setItem("user", JSON.stringify(res.data));
         if (res.status === 201) {
           setUpdateSuccess(true);
         }
@@ -79,16 +93,13 @@ export default function UpdateUserDetails() {
             <img
               src={URL.createObjectURL(file[0])}
               alt="profile"
-              className="rounded-full h-28"
+              className="rounded-full h-28 w-28 object-cover"
             />
           ) : (
-            <img
-              src={displayedImage}
-              alt="profile"
-              className="rounded-full h-28"
-            />
+            <div className="rounded-full h-28 w-28 flex items-center object-cover">
+              {displayedImage}
+            </div>
           )}
-
           {uploadPicture && (
             <label className="flex justify-center items-center font-primary text-white h-8 focus:outline-none font-semibold rounded-full bg-orange-gradient border-none w-28">
               <span>Select file</span>
@@ -111,7 +122,11 @@ export default function UpdateUserDetails() {
               <button
                 type="button"
                 onClick={() => {
-                  setDisplayedImage("../../src/assets/images/User.png");
+                  setDisplayedImage(
+                    <div className="text-white">
+                      <BiSolidUserRectangle size={100} />
+                    </div>
+                  );
                   setFile([]);
                 }}
               >

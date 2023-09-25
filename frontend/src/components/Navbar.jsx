@@ -177,7 +177,7 @@ export default function Navbar() {
                   import.meta.env.VITE_BACKEND_URL
                 }/public/profileimages/${user.profileimage}`}
                 alt="user"
-                className="rounded-full h-10 mr-3"
+                className="rounded-full h-10 w-10 object-cover mr-3"
               />
               <p className="font-primary font-">{user.username}</p>
             </div>
