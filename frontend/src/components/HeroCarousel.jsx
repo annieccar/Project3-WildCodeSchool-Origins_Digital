@@ -5,7 +5,8 @@ import {
   BsFillArrowLeftCircleFill,
 } from "react-icons/bs";
 import HoverVideoPlayer from "react-hover-video-player";
-import expressAPI from "../services/expressAPI";
+
+import interceptor from "../hooks/useInstanceWithInterceptor";
 import useMediaQuery from "../hooks/useMediaQuery";
 
 export default function HeroCarousel() {
@@ -14,6 +15,8 @@ export default function HeroCarousel() {
   const isDesktop = useMediaQuery("(min-width: 1024px)");
 
   const navigate = useNavigate();
+
+  const expressAPI = interceptor();
 
   useEffect(() => {
     expressAPI

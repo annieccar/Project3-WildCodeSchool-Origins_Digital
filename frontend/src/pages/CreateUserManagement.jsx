@@ -4,7 +4,8 @@ import { createPortal } from "react-dom";
 import PropTypes from "prop-types";
 import { useForm } from "react-hook-form";
 import CustomModal from "../components/CustomModal";
-import expressAPI from "../services/expressAPI";
+import interceptor from "../hooks/useInstanceWithInterceptor";
+
 import {
   registerOptions,
   giveTodayDate,
@@ -15,7 +16,7 @@ export default function CreateUserManagement({ setUsers }) {
   const [usertypes, setUsertypes] = useState(null);
   const [modal, setModal] = useState(false);
   const navigate = useNavigate();
-
+  const expressAPI = interceptor();
   const isDesktop = useMediaQuery("(min-width: 1024px)");
 
   useEffect(() => {

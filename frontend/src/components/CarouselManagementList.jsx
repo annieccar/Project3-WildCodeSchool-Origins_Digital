@@ -1,36 +1,24 @@
 import PropTypes, { shape } from "prop-types";
-import { useBlurredBackgroundContext } from "../contexts/BlurredBackgroundContext";
+import popUpMessages from "../json/crslMngmtPopMsg.json";
 
 function CarouselManagementList({
   currentCarousel,
   carouselList,
-  setCarouselErrorPopUpOpen,
-  setCarouselErrorMessage,
+  handlePopUpOpen,
+  setCarouselPopUpMessage,
   fetchNewCarousel,
+  hasVideoAssignmentChanged,
 }) {
-  const { setIsBackgroundBlurred } = useBlurredBackgroundContext();
-
-  const handleCarouselError = () => {
-    setCarouselErrorPopUpOpen(true);
-    setIsBackgroundBlurred(true);
-  };
-
   const handleCarouselSelected = (id) => {
-    if (currentCarousel.modified.length > 0) {
-      setCarouselErrorMessage({
-        title: "Carousel has been modified",
-        content:
-          "You have unsaved modifications on this carousel. Would you like to discard them and proceed ?",
-        button: {
-          onValidation: "changeCarousel",
-          text: "Confirm",
-          value: id,
-        },
+    if (hasVideoAssignmentChanged()) {
+      setCarouselPopUpMessage({
+        ...popUpMessages.carouselSelectedWarning,
+        value: id,
       });
-      handleCarouselError();
-    } else {
-      fetchNewCarousel(id);
+      return handlePopUpOpen();
     }
+
+    return fetchNewCarousel(id);
   };
 
   return (
@@ -64,16 +52,17 @@ CarouselManagementList.propTypes = {
   currentCarousel: PropTypes.shape({
     carouselId: PropTypes.number,
     title: PropTypes.string.isRequired,
-    base: PropTypes.arrayOf(
+    videosArray: PropTypes.arrayOf(
       shape({
         title: PropTypes.string,
         id: PropTypes.number,
         video_id: PropTypes.number.isRequired,
       })
     ).isRequired,
-    modified: PropTypes.arrayOf(
+    videosArrayRef: PropTypes.arrayOf(
       shape({
-        mod: PropTypes.string.isRequired,
+        title: PropTypes.string,
+        id: PropTypes.number,
         video_id: PropTypes.number.isRequired,
       })
     ).isRequired,
@@ -84,7 +73,8 @@ CarouselManagementList.propTypes = {
       title: PropTypes.string.isRequired,
     })
   ).isRequired,
-  setCarouselErrorPopUpOpen: PropTypes.func.isRequired,
-  setCarouselErrorMessage: PropTypes.func.isRequired,
+  handlePopUpOpen: PropTypes.func.isRequired,
+  setCarouselPopUpMessage: PropTypes.func.isRequired,
   fetchNewCarousel: PropTypes.func.isRequired,
+  hasVideoAssignmentChanged: PropTypes.func.isRequired,
 };

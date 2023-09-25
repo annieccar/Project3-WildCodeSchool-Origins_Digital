@@ -7,7 +7,8 @@ import { useCurrentUserContext } from "../contexts/CurrentUserContext";
 
 import logo from "../assets/images/origins-digital.svg";
 import CategoryMenuDesktop from "./CategoryMenuDesktop";
-import expressAPI from "../services/expressAPI";
+import interceptor from "../hooks/useInstanceWithInterceptor";
+
 import magnifier from "../assets/images/Vector.png";
 import ToolboxPopUp from "./ToolboxPopUp";
 import { useLoginContext } from "../contexts/LoginContext";
@@ -16,7 +17,7 @@ export default function Navbar() {
   const { user, setUser } = useCurrentUserContext();
   const { isLoggedIn, setIsLoggedIn } = useLoginContext();
   const navigate = useNavigate();
-
+  const expressAPI = interceptor();
   const [isMobile, setIsMobile] = useState(true);
   const [userMenuSelected, setUserMenuSelected] = useState(false);
   const [categorySelection, setCategorySelection] = useState(false);
@@ -164,7 +165,8 @@ export default function Navbar() {
         </div>
       )}
 
-      {isLoggedIn ? (
+      {/* {isLoggedIn ? ( */}
+      {user ? (
         <button
           type="button"
           onClick={handleUserMenu}

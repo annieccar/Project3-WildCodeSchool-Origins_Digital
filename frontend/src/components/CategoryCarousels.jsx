@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import expressAPI from "../services/expressAPI";
+import interceptor from "../hooks/useInstanceWithInterceptor";
+
 import StaticCarousel from "./StaticCarousel";
 
 export default function CategoryCarousels() {
   const [categories, setCategories] = useState([]);
   const [videoByCategories, setVideoByCategories] = useState([]);
   const [categoryCarousels, setCategoryCarousels] = useState([]);
-
+  const expressAPI = interceptor();
   const navigate = useNavigate();
 
   useEffect(() => {
