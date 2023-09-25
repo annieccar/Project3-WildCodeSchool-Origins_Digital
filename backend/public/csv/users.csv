@@ -1,5 +1,5 @@
 id,username,firstname,lastname,birthdate,gender,email,profileimage,usertype_id,type_name
-2,KillianC,Killian,C.,2000-03-02T23:00:00.000Z,male,killian@toto.com,,2,Premium
+4,ThibautP,Thibaut,Pletz,2000-04-03T22:00:00.000Z,male,thibaut@toto.com,cat-ad000dd8-83f7-472d-a22f-fabc0f056db8.png,1,Free
+2,KillianC,Killian,Chhhhhh,2000-03-02T23:00:00.000Z,male,killian@toto.com,,2,Premium
 3,DamienM,Damien,M.,2000-02-01T23:00:00.000Z,male,damien@toto.com,,2,Premium
-1,AnnieC,Annie,C.,1999-12-31T23:00:00.000Z,female,annie@toto.com,,3,Administrator
-4,ThibautP,Thibaut,P.,2000-04-03T22:00:00.000Z,male,thibaut@toto.com,,3,Administrator
+1,AnnieC,Annie,Carignan,1999-12-31T23:00:00.000Z,female,annie@toto.com,annie-7b4e85c0-45c1-49dd-bb2a-3d5771e483ca.png,3,Administrator

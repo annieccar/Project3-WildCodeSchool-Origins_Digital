@@ -106,8 +106,6 @@ export default function HeroCarousel() {
                       />
                     }
                     className="min-w-[320px] lg:min-w-[900px]"
-                    // controls
-                    // controlsList="nodownload nofullscreen"
                   />
                 </button>
               ))}
