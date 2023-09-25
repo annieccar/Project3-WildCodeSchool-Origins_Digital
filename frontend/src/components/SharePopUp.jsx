@@ -50,9 +50,6 @@ export default function SharePopUp({ videoInfos }) {
           <EmailIcon size={32} round />
         </EmailShareButton>
       </div>
-      <button type="button" className="bg-orange rounded-full py-1 px-3 mt-2">
-        Share video
-      </button>
     </div>
   );
 }
