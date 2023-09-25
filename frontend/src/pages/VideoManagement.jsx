@@ -48,6 +48,10 @@ export default function VideoManagement() {
     fetchData();
   }, [formActive]);
 
+  const capitalizeFirstLetter = (str) => {
+    return `${str.charAt(0).toUpperCase()}${str.slice(1)}`;
+  };
+
   const handleResize = () => {
     if (window.innerWidth <= 1024) {
       setIsMobile(true);
@@ -123,7 +127,23 @@ export default function VideoManagement() {
                   alt="search"
                 />
               </div>
-              <div className="border-solid rounded-2xl border-2 border-orange flex flex-col mb-16 w-[330px] lg:w-[500px] lg:grid lg:grid-cols-2 lg:grid-rows-100px max-h-[400px] min-h-[200px] overflow-y-scroll">
+              {!isMobile && (
+                <div className="px-4 py-1 flex items-center justify-between lg:w-[630px]">
+                  <span className="text-orange font-primary font-bold text-lg lg:w-[150px]">
+                    Video Name
+                  </span>
+                  <div className="text-orange font-primary font-bold text-lg lg:w-[150px]">
+                    Video Duration
+                  </div>
+                  <div className="text-orange font-primary font-bold text-lg lg:w-[150px]">
+                    Category
+                  </div>
+                  <div className="text-orange font-primary font-bold text-lg lg:w-[30px]">
+                    Edit
+                  </div>
+                </div>
+              )}
+              <div className="border-solid rounded-xl border-2 border-orange flex flex-col mb-16 w-[330px] lg:w-[630px] max-h-[500px] min-h-[200px] overflow-y-scroll  lg:scrollbar-track-white lg:scrollbar-thumb-gray lg:scrollbar-thin scrollbar-thumb-rounded-md scrollbar-track-rounded-md">
                 {videos.length > 0 &&
                   videos
                     .filter(
@@ -142,9 +162,25 @@ export default function VideoManagement() {
                         key={video.id}
                         className="px-5 py-1 flex items-center justify-between"
                       >
-                        <span className="font-primary text-xl">
+                        <span className="font-primary text-lg lg:w-[150px]">
                           {video.name}
                         </span>
+                        {!isMobile && (
+                          <div className="font-primary text-lg lg:w-[150px]">
+                            {video.duration}
+                          </div>
+                        )}
+                        {!isMobile &&
+                          categories.map((item) => {
+                            if (item.id === video.category_id) {
+                              return (
+                                <div className="font-primary text-lg lg:w-[150px]">
+                                  {capitalizeFirstLetter(item.name)}
+                                </div>
+                              );
+                            }
+                            return null;
+                          })}
                         <div
                           className="h-6 w-6 cursor-pointer"
                           role="button"
