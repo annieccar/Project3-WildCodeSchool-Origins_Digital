@@ -6,10 +6,10 @@ class VideosManager extends AbstractManager {
     // this.category;
   }
 
-  insert({ name, duration, details, categoryId }) {
+  insert({ name, fileName, duration, details, categoryId }) {
     return this.database.query(
-      `INSERT INTO ${this.table} (name, duration, details, category_id) VALUES (?, ?, ?, ?)`,
-      [name, duration, details, categoryId]
+      `INSERT INTO ${this.table} (name, file_name, duration, details, category_id) VALUES (?, ?, ?, ?, ?)`,
+      [name, fileName, duration, details, categoryId]
     );
   }
 
