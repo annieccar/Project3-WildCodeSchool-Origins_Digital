@@ -5,11 +5,11 @@ import UpdateUserDetails from "../components/UpdateUserDetails";
 import AddPaymentInfo from "../components/AddPaymentInfo";
 import ExistingPaymentDetails from "../components/ExistingPaymentDetails";
 import PaymentDetailsPopUp from "../components/PaymentDetailsPopUp";
-import expressAPI from "../services/expressAPI";
+import interceptor from "../hooks/useInstanceWithInterceptor";
 
 export default function UserProfile() {
   const { user, setUser } = useCurrentUserContext();
-
+  const expressAPI = interceptor();
   const [premium, setPremium] = useState(false);
   const [userTypeId, setUserTypeId] = useState(user.usertype_id);
   const [paymentDetailsModal, setPaymentDetailsModal] = useState(false);

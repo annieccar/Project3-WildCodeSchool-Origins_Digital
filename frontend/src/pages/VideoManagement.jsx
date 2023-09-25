@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import expressAPI from "../services/expressAPI";
+import interceptor from "../hooks/useInstanceWithInterceptor";
 import UpdateVideo from "../components/UpdateVideo";
 import UploadVideo from "../components/UploadVideo";
 import magnifier from "../assets/images/Vector.png";
@@ -10,6 +10,9 @@ export default function VideoManagement() {
   const [videos, setVideos] = useState([]);
   const [categories, setCategories] = useState([]);
   const [selectedVideo, setSelectedVideo] = useState(null);
+
+  const expressAPI = interceptor();
+
   const [formActive, setFormActive] = useState(false);
   const [addVideo, setAddVideo] = useState(false);
   const [isMobile, setIsMobile] = useState(true);

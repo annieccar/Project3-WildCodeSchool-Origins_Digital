@@ -16,47 +16,30 @@ function CarouselManagementVideoList({
     category: "",
   });
 
-  const isChecked = (videoId) => {
-    return currentCarousel.base.some((element) => element.video_id === videoId);
+  const isChecked = (clickedVideoId) => {
+    return currentCarousel.videosArray.some(
+      (video) => video.video_id === clickedVideoId
+    );
   };
 
-  const handleCheckbox = (videoId) => {
-    if (currentCarousel.base.some((element) => element.video_id === videoId)) {
-      if (
-        currentCarousel.modified.some((element) => element.video_id === videoId)
-      ) {
-        return setCurrentCarousel({
-          ...currentCarousel,
-          base: currentCarousel.base.filter((el) => el.video_id !== videoId),
-          modified: currentCarousel.modified.filter(
-            (el) => el.video_id !== videoId
-          ),
-        });
-      }
+  const handleCheckbox = (clickedVideoId) => {
+    if (
+      currentCarousel.videosArray.some(
+        (video) => video.video_id === clickedVideoId
+      )
+    ) {
       return setCurrentCarousel({
         ...currentCarousel,
-        base: currentCarousel.base.filter((el) => el.video_id !== videoId),
-        modified: [
-          ...currentCarousel.modified.filter((el) => el.video_id !== videoId),
-          { mod: "removed", video_id: videoId },
-        ],
-      });
-    }
-    if (currentCarousel.modified.some((el) => el.video_id === videoId)) {
-      return setCurrentCarousel({
-        ...currentCarousel,
-        base: [...currentCarousel.base, { video_id: videoId }],
-        modified: currentCarousel.modified.filter(
-          (el) => el.video_id !== videoId
+        videosArray: currentCarousel.videosArray.filter(
+          (video) => video.video_id !== clickedVideoId
         ),
       });
     }
     return setCurrentCarousel({
       ...currentCarousel,
-      base: [...currentCarousel.base, { video_id: videoId }],
-      modified: [
-        ...currentCarousel.modified.filter((el) => el.video_id !== videoId),
-        { mod: "added", video_id: videoId },
+      videosArray: [
+        ...currentCarousel.videosArray,
+        { video_id: clickedVideoId },
       ],
     });
   };
@@ -180,16 +163,17 @@ CarouselManagementVideoList.propTypes = {
   currentCarousel: PropTypes.shape({
     carouselId: PropTypes.number,
     title: PropTypes.string.isRequired,
-    base: PropTypes.arrayOf(
+    videosArray: PropTypes.arrayOf(
       shape({
         title: PropTypes.string,
         id: PropTypes.number,
         video_id: PropTypes.number.isRequired,
       })
     ).isRequired,
-    modified: PropTypes.arrayOf(
+    videosArrayRef: PropTypes.arrayOf(
       shape({
-        mod: PropTypes.string.isRequired,
+        title: PropTypes.string,
+        id: PropTypes.number,
         video_id: PropTypes.number.isRequired,
       })
     ).isRequired,

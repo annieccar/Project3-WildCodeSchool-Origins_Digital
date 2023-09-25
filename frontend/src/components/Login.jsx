@@ -4,12 +4,12 @@ import { useForm } from "react-hook-form";
 import { useCurrentUserContext } from "../contexts/CurrentUserContext";
 import LoginErrorPopUp from "./LoginErrorPopUp";
 import { useBlurredBackgroundContext } from "../contexts/BlurredBackgroundContext";
-import expressAPI from "../services/expressAPI";
+import interceptor from "../hooks/useInstanceWithInterceptor";
 
 export default function Login() {
   const { setIsBackgroundBlurred } = useBlurredBackgroundContext();
   const { setUser } = useCurrentUserContext();
-
+  const expressAPI = interceptor();
   const navigate = useNavigate();
 
   const [loginErrorPopUpOpen, setloginErrorPopUpOpen] = useState(false);

@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-import expressAPI from "../services/expressAPI";
+import interceptor from "../hooks/useInstanceWithInterceptor";
+
 import VideoCardPlaylist from "../components/VideoCardPlaylist";
 
 export default function Playlist() {
@@ -11,6 +12,7 @@ export default function Playlist() {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [search, setSearch] = useState("");
   const { id } = useParams();
+  const expressAPI = interceptor();
 
   const fetchPlaylistVideos = () => {
     expressAPI
