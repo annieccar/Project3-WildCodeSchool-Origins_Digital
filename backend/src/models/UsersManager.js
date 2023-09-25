@@ -75,6 +75,13 @@ class UsersManager extends AbstractManager {
       [email]
     );
   }
+
+  findOneByUsername(username) {
+    return this.database.query(
+      "select id, username, firstname, lastname, birthdate, gender, email, hashedPassword, profileimage, usertype_id from user where username = ?",
+      [username]
+    );
+  }
 }
 
 module.exports = UsersManager;
