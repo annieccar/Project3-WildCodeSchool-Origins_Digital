@@ -10,6 +10,7 @@ import CategoryMenuDesktop from "./CategoryMenuDesktop";
 import expressAPI from "../services/expressAPI";
 import magnifier from "../assets/images/Vector.png";
 import ToolboxPopUp from "./ToolboxPopUp";
+import ToggleThemeButton from "./ToggleThemeButton";
 import { useLoginContext } from "../contexts/LoginContext";
 
 export default function Navbar() {
@@ -86,19 +87,19 @@ export default function Navbar() {
   window.addEventListener("resize", handleResize);
 
   return (
-    <nav className="bg-dark flex justify-center items-center h-16 w-full z-20 fixed ">
+    <nav className="bg-lightBlue dark:bg-dark text-white flex justify-center items-center h-16 w-full z-20 fixed ">
       <Link to="/">
         <img
-          className="h-16 mb-1 mt-0.5 fixed top-1 left-0"
+          className="h-16 mb-1 fixed top-0 left-0"
           src={logo}
           alt="Origin Digital Logo"
         />
       </Link>
       {!isMobile && (
-        <div className="bg-dark h-16 w-1/2 flex justify-between items-center fixed z-50">
+        <div className="bg-lightBlue dark:bg-dark h-16 w-1/2 flex justify-between items-center fixed z-50">
           <div>
             <input
-              className="bg-dark w-52 h-10 font-primary text-base lg:text-xl py-1 px-2 border-2 lg:border-2 border-orange focus:outline-none rounded-full text-gray "
+              className="bg-lightBlue dark:bg-dark w-52 h-10 font-primary text-base lg:text-xl py-1 px-2 border-2 lg:border-2 dark:border-orange focus:outline-none rounded-full text-almostWhite "
               placeholder="Search..."
               onChange={(e) => {
                 setKeyWord(e.target.value);
@@ -165,29 +166,28 @@ export default function Navbar() {
       )}
 
       {isLoggedIn ? (
-        <button
-          type="button"
-          onClick={handleUserMenu}
-          className="fixed top-1 right-4"
-        >
-          {user.profileimage ? (
-            <div className="flex items-center my-2">
-              <img
-                src={`${
-                  import.meta.env.VITE_BACKEND_URL
-                }/public/profileimages/${user.profileimage}`}
-                alt="user"
-                className="rounded-full h-10 mr-3"
-              />
-              <p className="font-primary font-">{user.username}</p>
-            </div>
-          ) : (
-            <div className="flex items-center my-2">
-              <BiUserCircle className="w-10 h-10 " />
-              <p className="font-primary font-semibold">{user.username}</p>
-            </div>
-          )}
-        </button>
+        <div className="flex gap-2 items-center fixed top-1 right-4">
+          <button type="button" onClick={handleUserMenu}>
+            {user.profileimage ? (
+              <div className="flex items-center my-2">
+                <img
+                  src={`${
+                    import.meta.env.VITE_BACKEND_URL
+                  }/public/profileimages/${user.profileimage}`}
+                  alt="user"
+                  className="rounded-full h-10 mr-3"
+                />
+                <p className="font-primary font-">{user.username}</p>
+              </div>
+            ) : (
+              <div className="flex items-center my-2">
+                <BiUserCircle className="w-10 h-10 " />
+                <p className="font-primary font-semibold">{user.username}</p>
+              </div>
+            )}
+          </button>
+          <ToggleThemeButton />
+        </div>
       ) : (
         <Link to="/login">
           <button
@@ -203,14 +203,14 @@ export default function Navbar() {
           <button type="button" onClick={() => setUserMenuSelected(false)}>
             <div className="fixed top-20 bottom-12 left-0 right-0 " />
           </button>
-          <div className="backdrop-blur-md border-solid border-2 border-orange w-32 px-5 py-3 rounded-md flex flex-col gap-2 items-start fixed z-50 top-14 right-2 ">
+          <div className="backdrop-blur-md text-lightBlue dark:text-white border-solid border-2 border-orange w-32 px-5 py-3 rounded-md flex flex-col gap-2 items-start fixed z-50 top-14 right-2 ">
             <button type="button" onClick={handleMyProfile}>
-              <p className="text-white hover:text-orange font-primary font-bold my-2">
+              <p className="hover:text-orange font-primary font-bold my-2">
                 My profile
               </p>
             </button>
             <button type="button" onClick={handleLogOut}>
-              <p className="text-white hover:text-orange font-primary font-bold my-2">
+              <p className="hover:text-orange font-primary font-bold my-2">
                 Log Out
               </p>
             </button>

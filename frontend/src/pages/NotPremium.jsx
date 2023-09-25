@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 export default function NotPremium() {
   const navigate = useNavigate();
   return (
-    <div className=" bg-dark h-screen flex justify-center items-center">
+    <div className=" bg-almostWhite dark:bg-dark h-screen flex justify-center items-center">
       <div
         role="button"
         onClick={() => navigate("/")}
@@ -12,8 +12,8 @@ export default function NotPremium() {
         onKeyDown={() => navigate("/")}
         aria-label="Navigate to the homepage"
       />
-      <div className="bg-dark border-solid border-2 border-orange w-[330px] px-5 py-3 rounded-md flex flex-col gap-2 items-center bottom-1/2 right-1/2 -translate-y-16 ">
-        <p className="text-white text-center font-primary font-bold text-md my-2">
+      <div className="bg-lightBlue dark:bg-dark border-solid border-2 border-orange w-[330px] px-5 py-3 rounded-md flex flex-col gap-2 items-center bottom-1/2 right-1/2 -translate-y-16 ">
+        <p className="text-almostWhite dark:text-white text-center font-primary font-bold text-md my-2">
           You need a premium membership to access this page
         </p>
         <div>

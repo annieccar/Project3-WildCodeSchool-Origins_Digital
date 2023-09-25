@@ -22,14 +22,14 @@ export default function SearchResults() {
   ];
 
   return (
-    <div className="bg-dark pb-20">
+    <div className="bg-almostWhite dark:bg-dark pb-20">
       <p className="text-center text-orange text-2xl drop-shadow-md font-semibold font-primary pt-8 ">
         Your search results
       </p>
       {currentSearch.length ? (
         categoryArray.map((category) => (
           <CategorySearchResults
-            key={category.id}
+            key={category}
             categoryName={category}
             searchResults={currentSearch}
           />

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import expressAPI from "../services/expressAPI";
 import VideoCardPlaylist from "../components/VideoCardPlaylist";
@@ -11,6 +11,7 @@ export default function Playlist() {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [search, setSearch] = useState("");
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const fetchPlaylistVideos = () => {
     expressAPI
@@ -32,6 +33,14 @@ export default function Playlist() {
       .catch((err) => console.error(err));
   };
 
+  const handleDelete = () => {
+    expressAPI.delete(`/api/playlists/${playlist.id}`).then((res) => {
+      if (res.status === 204) {
+        navigate("/playlists");
+      }
+    });
+  };
+
   useEffect(() => {
     fetchPlaylistVideos();
     fetchCategories();
@@ -39,7 +48,7 @@ export default function Playlist() {
   }, []);
 
   return (
-    <div className="bg-dark flex flex-col gap-3 pb-20 lg:py-5">
+    <div className="bg-almostWhite dark:bg-dark flex flex-col gap-3 pb-20 lg:py-5">
       {playlist && (
         <h1 className="text-center text-2xl text-orange font-semibold lg:text-3xl">
           {playlist.name}
@@ -53,10 +62,10 @@ export default function Playlist() {
               placeholder="Search..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-[140px] rounded-full bg-dark border-2 border-orange focus:outline-none px-2"
+              className="w-[140px] rounded-full bg-almostWhite dark:bg-dark border-2 border-orange focus:outline-none px-2"
             />
             <select
-              className="bg-dark object-fit rounded-full focus:outline-none border-2 px-3"
+              className="bg-almostWhite dark:bg-dark object-fit rounded-full focus:outline-none border-2 px-3"
               name="filters"
               id="filters"
               onChange={(e) => setSelectedCategory(e.target.value)}
@@ -68,6 +77,15 @@ export default function Playlist() {
                 </option>
               ))}
             </select>
+            <button
+              type="button"
+              className="bg-blue-gradient font-semibold rounded-full px-2 py-0.5"
+              onClick={() => handleDelete(playlist.id)}
+            >
+              <p className="text-sm text-white lg:text-md">
+                Delete this playlist
+              </p>
+            </button>
           </div>
           <div className="flex flex-col gap-10 lg:grid lg:grid-cols-4 mx-auto">
             {playlistVideos
@@ -86,6 +104,7 @@ export default function Playlist() {
               )
               .map((video) => (
                 <VideoCardPlaylist
+                  key={video.id}
                   video={video}
                   categories={categories}
                   playlist={playlist}

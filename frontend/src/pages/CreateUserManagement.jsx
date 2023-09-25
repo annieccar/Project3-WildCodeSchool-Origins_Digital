@@ -65,7 +65,7 @@ export default function CreateUserManagement({ setUsers }) {
   };
 
   return (
-    <div className="flex flex-col w-full pt-5 pb-16 lg:pb-10 bg-dark lg:w-1/2 lg:mt-2 lg:items-center">
+    <div className="flex flex-col w-full pt-5 pb-16 lg:pb-10 bg-almostWhite dark:bg-dark lg:w-1/2 lg:mt-2 lg:items-center">
       {usertypes && (
         <div className="flex flex-col lg:w-3/5">
           <h1 className="text-center text-xl text-orange font-bold mb-5">
@@ -88,7 +88,7 @@ export default function CreateUserManagement({ setUsers }) {
                 onChange={usernameRegister.onChange}
                 ref={usernameRegister.ref}
                 aria-invalid={errors.usernameRegister ? "true" : "false"}
-                className="bg-dark border-2 border-orange focus:outline-none rounded-lg pl-2 py-1 w-full"
+                className="bg-almostWhite dark:bg-dark border-2 border-orange focus:outline-none rounded-lg pl-2 py-1 w-full"
               />
               {errors.username && (
                 <p className="text-[#FF2415]"> {errors.username.message}</p>
@@ -107,7 +107,7 @@ export default function CreateUserManagement({ setUsers }) {
                 onChange={firstnameRegister.onChange}
                 ref={firstnameRegister.ref}
                 aria-invalid={errors.firstnameRegister ? "true" : "false"}
-                className="bg-dark border-2 border-orange focus:outline-none rounded-lg pl-2 py-1 w-full"
+                className="bg-almostWhite dark:bg-dark border-2 border-orange focus:outline-none rounded-lg pl-2 py-1 w-full"
               />
               {errors.firstname && (
                 <p className="text-[#FF2415]"> {errors.firstname.message}</p>
@@ -126,7 +126,7 @@ export default function CreateUserManagement({ setUsers }) {
                 onChange={lastnameRegister.onChange}
                 ref={lastnameRegister.ref}
                 aria-invalid={errors.lastnameRegister ? "true" : "false"}
-                className="bg-dark border-2 border-orange focus:outline-none rounded-lg pl-2 py-1 w-full"
+                className="bg-almostWhite dark:bg-dark border-2 border-orange focus:outline-none rounded-lg pl-2 py-1 w-full"
               />
               {errors.lastname && (
                 <p className="text-[#FF2415]"> {errors.lastname.message}</p>
@@ -137,7 +137,7 @@ export default function CreateUserManagement({ setUsers }) {
                 Birthdate :
               </label>
               <input
-                className="bg-dark border-2 border-orange focus:outline-none rounded-lg w-full p-1"
+                className="bg-almostWhite dark:bg-dark border-2 border-orange focus:outline-none rounded-lg w-full p-1"
                 type="date"
                 max={giveTodayDate()}
                 placeholder="Enter your birthdate"
@@ -209,7 +209,7 @@ export default function CreateUserManagement({ setUsers }) {
                 onChange={emailRegister.onChange}
                 ref={emailRegister.ref}
                 aria-invalid={errors.emailRegister ? "true" : "false"}
-                className="bg-dark border-2 border-orange focus:outline-none rounded-lg pl-2 py-1 w-full"
+                className="bg-almostWhite dark:bg-dark border-2 border-orange focus:outline-none rounded-lg pl-2 py-1 w-full"
               />
               {errors.email && (
                 <p className="text-[#FF2415]"> {errors.email.message}</p>
@@ -223,7 +223,7 @@ export default function CreateUserManagement({ setUsers }) {
                 name={usertypeRegister.name}
                 onChange={usertypeRegister.onChange}
                 ref={usertypeRegister.ref}
-                className="bg-dark border-2 border-orange focus:outline-none rounded-lg w-full py-2"
+                className="bg-almostWhite dark:bg-dark border-2 border-orange focus:outline-none rounded-lg w-full py-2"
               >
                 {usertypes.map((usertype) => (
                   <option key={usertype.id} value={usertype.id}>
@@ -245,7 +245,7 @@ export default function CreateUserManagement({ setUsers }) {
                 onChange={passwordRegister.onChange}
                 ref={passwordRegister.ref}
                 aria-invalid={errors.passwordRegister ? "true" : "false"}
-                className="bg-dark border-2 border-orange focus:outline-none rounded-lg pl-2 py-1 w-full"
+                className="bg-almostWhite dark:bg-dark border-2 border-orange focus:outline-none rounded-lg pl-2 py-1 w-full"
               />
               {errors.password && (
                 <p className="text-[#FF2415]"> {errors.password.message}</p>
@@ -259,7 +259,7 @@ export default function CreateUserManagement({ setUsers }) {
                 Confirm password:
               </label>
               <input
-                className="bg-dark border-2 border-orange focus:outline-none rounded-lg w-full pl-1 py-1"
+                className="bg-almostWhite dark:bg-dark border-2 border-orange focus:outline-none rounded-lg w-full pl-1 py-1"
                 type="password"
                 placeholder="Confirm your password"
                 onChange={passwordConfirmationRegister.onChange}
@@ -277,7 +277,7 @@ export default function CreateUserManagement({ setUsers }) {
             <div className="flex flex-col gap-3 items-center mt-3 mb-5">
               <button
                 type="submit"
-                className="bg-orange-gradient rounded-full px-8 py-2 text-lg"
+                className="bg-orange-gradient text-white font-bold rounded-full px-8 py-2 text-lg"
               >
                 Create user
               </button>

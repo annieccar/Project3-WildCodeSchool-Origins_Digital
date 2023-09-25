@@ -28,35 +28,35 @@ export default function ToolboxPopUp({ isOpen, onClose }) {
   return (
     <div
       ref={popUpRef}
-      className={`backdrop-blur-xl border-solid border-2 border-orange w-60 h-54 px-5 py-3 rounded-md flex flex-col gap-2 items-start fixed z-50 top-14 right-1/3 translate-x-3/4 ${
+      className={`backdrop-blur-xl border-solid text-lightBlue dark:text-white border-2 border-orange w-60 h-54 px-5 py-3 rounded-md flex flex-col gap-2 items-start fixed z-50 top-14 right-1/3 translate-x-3/4 ${
         !isDesktop && "top-auto bottom-14 right-52 "
       } `}
     >
       <button
         type="button"
         onClick={() => handleClick("category")}
-        className="text-white hover:text-orange font-primary font-bold text-l my-2"
+        className="hover:text-orange font-primary font-bold text-l my-2"
       >
         Categories management
       </button>
       <button
         type="button"
         onClick={() => handleClick("video")}
-        className="text-white hover:text-orange font-primary font-bold text-l my-2"
+        className="hover:text-orange font-primary font-bold text-l my-2"
       >
         Videos management
       </button>
       <button
         type="button"
         onClick={() => handleClick("carousel")}
-        className="text-white hover:text-orange font-primary font-bold text-l my-2"
+        className="hover:text-orange font-primary font-bold text-l my-2"
       >
         Carousels management
       </button>
       <button
         type="button"
         onClick={() => handleClick("users")}
-        className="text-white hover:text-orange font-primary font-bold text-l my-2"
+        className="hover:text-orange font-primary font-bold text-l my-2"
       >
         Users management
       </button>

@@ -42,7 +42,7 @@ export default function Video() {
   const navigate = useNavigate();
 
   return (
-    <div className="flex flex-col items-center bg-dark lg:pb-16">
+    <div className="flex flex-col items-center bg-almostWhite dark:bg-dark lg:pb-16">
       {videoInfos && (
         <div className="mt-8 flex flex-col items-center">
           <h1 className="mb-5 text-orange text-center font-primary text-2xl lg:text-3xl font-bold">
@@ -122,7 +122,7 @@ export default function Video() {
       {categoryVideos && (
         <div className="relative mt-10">
           <div className="flex justify-between items-center">
-            <h1 className="text-orange font-primary font-bold text-xl my-3 ml-5">
+            <h1 className="text-lightBlue dark:text-orange font-primary font-bold text-xl my-3 ml-5">
               More videos like this
             </h1>
             <button
@@ -130,7 +130,7 @@ export default function Video() {
               onClick={() => {
                 navigate(`/category/${videoInfos.category_id}`);
               }}
-              className="bg-orange-gradient font-semibold rounded-full h-8 px-4 py-0.5 mr-5"
+              className="text-white bg-orange-gradient font-semibold rounded-full h-8 px-4 py-0.5 mr-5"
             >
               See all
             </button>

@@ -43,16 +43,14 @@ export default function UserProfile() {
 
   return (
     <>
-      <div className="bg-dark flex justify-center">
+      <div className="bg-almostWhite dark:bg-dark text-lightBlue dark:text-white flex justify-center">
         <div className="flex flex-col items-center mb-10 lg:flex-row lg:justify-center  lg:items-start lg:w-4/6 h-5/6 lg:mt-10">
           <UpdateUserDetails />
           <div className="w-80 flex flex-col justify-start lg:ml-28">
             <h1 className="text-orange font-primary font-bold text-xl py-3">
               Your account status
             </h1>
-            <h2 className="text-white font-primary font-bold text-l mb-2 ">
-              {status}
-            </h2>
+            <h2 className="font-primary font-bold text-l mb-2 ">{status}</h2>
             {userTypeId === 1 && !premium && (
               <div className="w-full flex justify-center">
                 <button

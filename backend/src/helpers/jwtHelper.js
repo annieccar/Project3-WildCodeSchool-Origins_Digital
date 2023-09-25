@@ -7,7 +7,7 @@ const encodeJWT = (payload) => {
 };
 
 const decodeJWT = (token) => {
-  return jwt.decode(token, JWT_SECRET);
+  return jwt.verify(token, JWT_SECRET);
 };
 
 module.exports = { encodeJWT, decodeJWT };

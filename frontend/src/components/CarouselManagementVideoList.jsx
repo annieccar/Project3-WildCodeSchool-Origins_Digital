@@ -76,11 +76,11 @@ function CarouselManagementVideoList({
 
   return (
     videosList.length > 0 && (
-      <div className="bg-dark">
+      <div className="bg-almostWhite dark:bg-dark">
         <h3 className="mx-8 my-4 font-semibold  text-orange">Assign videos</h3>
         <div className="flex flex-col w-full max-w-[1200px] border-solid border-2 border-orange px-5 py-3 rounded-md">
           <div className="flex self-end flex-grow max-w-[530px] m-2 rounded-md color:[#010D18] bg-[linear-gradient(90deg,#181001_0%,_#FF680A_50%,#181001_100%)]">
-            <div className=" bg-dark m-0.5 rounded-md w-full">
+            <div className=" bg-almostWhite dark:bg-dark m-0.5 rounded-md w-full">
               <label htmlFor="categories" className="m-2">
                 Video list filters:
               </label>
@@ -95,7 +95,7 @@ function CarouselManagementVideoList({
                       category: parseInt(e.target.value, 10),
                     })
                   }
-                  className=" bg-dark xs:w-[136px] w-full font-primary text-sm lg:text-md  m-2 my-1 p-1 border-2 border-orange rounded-md text-gray "
+                  className="bg-almostWhite dark:bg-dark xs:w-[136px] w-full font-primary text-sm lg:text-md  m-2 my-1 p-1 border-2 border-orange rounded-md text-gray "
                 >
                   <option value={0}>--By category-- </option>
                   {categoriesList.map((category) => (
@@ -107,7 +107,7 @@ function CarouselManagementVideoList({
                 <div className="flex justify-between items-center m-2 my-1 p-1 xs:w-[136px] w-full border-2 border-orange rounded-md placeholder:text-gray ">
                   <input
                     type="text"
-                    className="w-24 mx-1  bg-dark font-primary text-sm lg:text-md "
+                    className="w-24 mx-1  bg-almostWhite dark:bg-dark font-primary text-sm lg:text-md "
                     placeholder="By video name"
                     value={videoListFilters.videoName}
                     onChange={(e) =>
@@ -141,7 +141,7 @@ function CarouselManagementVideoList({
           >
             {applyFiltersToVideosList().map((video) => (
               <li key={video.name} className="">
-                <div className="flex items-center justify-between ">
+                <div className="flex items-center justify-between gap-2">
                   <label htmlFor={`${video.name}`}>
                     {formatStringFromDb(video.name)}
                   </label>

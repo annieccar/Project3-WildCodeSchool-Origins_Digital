@@ -83,7 +83,7 @@ export default function Login() {
             Email:
           </label>
           <input
-            className="rounded-md border-[3px] p-1 h-9 border-orange bg-dark"
+            className="rounded-md border-[3px] p-1 h-9 border-orange bg-almostWhite dark:bg-dark focus:outline-none"
             type="text"
             placeholder="Enter your email address"
             onChange={emailRegister.onChange}
@@ -97,7 +97,7 @@ export default function Login() {
             Password:
           </label>
           <input
-            className="rounded-md border-[3px] p-1  border-orange bg-dark"
+            className="rounded-md border-[3px] p-1  border-orange bg-almostWhite dark:bg-dark focus:outline-none"
             type="password"
             placeholder="Enter your password"
             onChange={passwordRegister.onChange}
@@ -107,7 +107,7 @@ export default function Login() {
           />
         </div>
         <input
-          className="w-36 h-9 m-5 mt-8  rounded-3xl font-primary font-semibold  bg-[linear-gradient(90deg,#FF8200_0%,_#FF2415_100%)]"
+          className="w-36 h-9 m-5 mt-8 rounded-3xl text-white font-primary font-semibold  bg-[linear-gradient(90deg,#FF8200_0%,_#FF2415_100%)]"
           type="submit"
           value="Log In"
         />

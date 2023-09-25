@@ -34,7 +34,7 @@ export default function Footbar() {
   return (
     <>
       <div className="fixed bottom-0 w-full">
-        <div className="bg-dark w-full h-12 flex justify-around lg:hidden">
+        <div className="bg-lightBlue dark:bg-dark text-lightBlue dark:text-white w-full h-12 flex justify-around lg:hidden">
           <Link to="/" className="h-full  p-1">
             <img
               className="w-full h-full"

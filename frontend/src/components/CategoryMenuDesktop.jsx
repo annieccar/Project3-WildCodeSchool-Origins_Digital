@@ -31,7 +31,7 @@ export default function CategoryMenuDesktop({ setCategorySelection }) {
             <button
               key={elem.id}
               type="button"
-              className="text-white hover:text-orange font-primary font-bold text-l my-2"
+              className="text-lightBlue dark:text-white hover:text-orange font-primary font-bold text-l my-2"
               onClick={() => handleClick(elem.id)}
             >
               {formatStringFromDb(elem.name)}

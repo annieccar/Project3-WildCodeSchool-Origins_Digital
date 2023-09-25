@@ -101,7 +101,7 @@ function CarouselManagementCreate({
   };
 
   return (
-    <div className="flex w-full h-full flex-col flex-grow px-2 pb-4 bg-dark">
+    <div className="flex w-full h-full flex-col flex-grow px-2 pb-4 bg-almostWhite dark:bg-dark">
       <h2 className="font-bold text-xl text-orange self-center pb-4">
         Create new carousel
       </h2>
@@ -109,7 +109,7 @@ function CarouselManagementCreate({
         <div className="flex flex-wrap items-center m-2">
           <p className="px-3 py-1">New carousel name : </p>
           <input
-            className="max-h-9 w-52 font-primary text-base p-2 border-2 bg-dark lg:border-2 border-orange rounded-md focus:outline-none "
+            className="max-h-9 w-52 font-primary text-base p-2 border-2 bg-almostWhite dark:bg-dark lg:border-2 border-orange rounded-md focus:outline-none "
             type="text"
             name="newCarouselName"
             id="newCarouselName"

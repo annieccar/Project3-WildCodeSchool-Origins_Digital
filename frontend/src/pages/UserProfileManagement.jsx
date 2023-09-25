@@ -116,7 +116,7 @@ export default function UserProfileManagement({
   };
 
   return (
-    <div className="bg-dark flex flex-col w-full pb-16 lg:w-1/2 lg:items-center">
+    <div className="bg-almostWhite dark:bg-dark flex flex-col w-full pb-16 lg:w-1/2 lg:items-center">
       {userProfile && usertypes && (
         <div className="flex flex-col mt-5 lg:w-3/5 lg:mt-0">
           <h1 className="text-center text-xl text-orange font-bold mb-5">
@@ -140,7 +140,7 @@ export default function UserProfileManagement({
                 ref={usernameRegister.ref}
                 defaultValue={userProfile.username}
                 aria-invalid={errors.usernameRegister ? "true" : "false"}
-                className="bg-dark border-2 border-orange focus:outline-none rounded-lg pl-2 py-1 w-full"
+                className="bg-almostWhite dark:bg-dark border-2 border-orange focus:outline-none rounded-lg pl-2 py-1 w-full"
               />
               {errors.username && (
                 <p className="text-[#FF2415]"> {errors.username.message}</p>
@@ -160,7 +160,7 @@ export default function UserProfileManagement({
                 ref={firstnameRegister.ref}
                 defaultValue={userProfile.firstname}
                 aria-invalid={errors.firstnameRegister ? "true" : "false"}
-                className="bg-dark border-2 border-orange focus:outline-none rounded-lg pl-2 py-1 w-full"
+                className="bg-almostWhite dark:bg-dark border-2 border-orange focus:outline-none rounded-lg pl-2 py-1 w-full"
               />
               {errors.firstname && (
                 <p className="text-[#FF2415]"> {errors.firstname.message}</p>
@@ -180,7 +180,7 @@ export default function UserProfileManagement({
                 ref={lastnameRegister.ref}
                 defaultValue={userProfile.lastname}
                 aria-invalid={errors.lastnameRegister ? "true" : "false"}
-                className="bg-dark border-2 border-orange focus:outline-none rounded-lg pl-2 py-1 w-full"
+                className="bg-almostWhite dark:bg-dark border-2 border-orange focus:outline-none rounded-lg pl-2 py-1 w-full"
               />
               {errors.lastname && (
                 <p className="text-[#FF2415]"> {errors.lastname.message}</p>
@@ -200,7 +200,7 @@ export default function UserProfileManagement({
                 ref={emailRegister.ref}
                 defaultValue={userProfile.email}
                 aria-invalid={errors.emailRegister ? "true" : "false"}
-                className="bg-dark border-2 border-orange focus:outline-none rounded-lg pl-2 py-1 w-full"
+                className="bg-almostWhite dark:bg-dark border-2 border-orange focus:outline-none rounded-lg pl-2 py-1 w-full"
               />
               {errors.email && (
                 <p className="text-[#FF2415]"> {errors.email.message}</p>
@@ -215,7 +215,7 @@ export default function UserProfileManagement({
                 onChange={usertypeRegister.onChange}
                 ref={usertypeRegister.ref}
                 defaultValue={userProfile.usertype_id}
-                className="bg-dark border-2 border-orange focus:outline-none rounded-lg pl-2 py-2 w-full"
+                className="bg-almostWhite dark:bg-dark border-2 border-orange focus:outline-none rounded-lg pl-2 py-2 w-full"
               >
                 {usertypes.map((usertype) => (
                   <option key={usertype.id} value={usertype.id}>
@@ -227,14 +227,14 @@ export default function UserProfileManagement({
             <div className="flex flex-col gap-3 items-center my-5">
               <button
                 type="submit"
-                className="w-40 bg-orange-gradient font-bold rounded-full px-3 py-2"
+                className="w-40 bg-orange-gradient text-white font-bold rounded-full px-3 py-2"
               >
                 Save changes
               </button>
               <button
                 type="button"
                 onClick={() => setDeleteModal(true)}
-                className="w-40 bg-blue-gradient font-bold rounded-full px-3 py-2"
+                className="w-40 bg-blue-gradient text-white font-bold rounded-full px-3 py-2"
               >
                 Delete this user
               </button>

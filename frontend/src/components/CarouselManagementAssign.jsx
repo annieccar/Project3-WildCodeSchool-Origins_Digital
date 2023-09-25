@@ -96,7 +96,7 @@ function CarouselManagementAssign({
   };
 
   return (
-    <div className="flex w-full flex-col px-2 py-4 bg-dark">
+    <div className="flex w-full flex-col px-2 py-4 bg-almostWhite dark:bg-dark">
       <h3 className="font-bold text-xl text-orange self-center pb-4">{`Carousel selected: ${currentCarousel.title}`}</h3>
       <CarouselManagementVideoList
         videosList={videosList}
@@ -106,12 +106,14 @@ function CarouselManagementAssign({
       />
       <div className="flex flex-wrap my-8">
         <button
-          className="w-48 h-12 mx-5 mb-3 rounded-3xl font-semibold bg-[linear-gradient(90deg,_#FF8200_0%,_#FF2415_100%)]"
+          className="flex flex-col w-48 h-12 mx-5 mb-3 rounded-3xl text-white font-semibold bg-[linear-gradient(90deg,_#FF8200_0%,_#FF2415_100%)]"
           type="button"
           onClick={saveChanges}
-        >{`Save changes on ${currentCarousel.title}`}</button>
+        >
+          {`Save changes on ${currentCarousel.title}`}
+        </button>
         <button
-          className="w-48 h-12 mx-5  rounded-3xl font-semibold border-2 border-orange"
+          className="w-48 h-12 mx-5 rounded-3xl text-orange font-semibold border-2 border-orange"
           type="button"
           onClick={() => handleCarouselDeletion(currentCarousel.carouselId)}
         >

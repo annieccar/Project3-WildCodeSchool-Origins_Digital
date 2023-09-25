@@ -68,7 +68,7 @@ export default function UpdateUserDetails() {
   return (
     <>
       <form
-        className="w-80 flex flex-col justify-start"
+        className="text-lightBlue dark:text-white w-80 flex flex-col justify-start"
         onSubmit={handleSubmit(onSubmit)}
       >
         <h1 className="text-orange font-primary font-bold text-xl py-3">
@@ -123,13 +123,13 @@ export default function UpdateUserDetails() {
         <div className="flex flex-col">
           <label
             htmlFor="username"
-            className="text-white font-primary font-bold text-l mb-2 "
+            className="font-primary font-bold text-l mb-2 "
           >
             User Name
           </label>
           {/* eslint-disable react/jsx-props-no-spreading */}
           <input
-            className="h-9 focus:outline-none mb-2 px-2 rounded-lg border-2 border-solid border-orange bg-dark text-gray font-primary "
+            className="h-9 focus:outline-none mb-2 px-2 rounded-lg border-2 border-solid border-orange bg-almostWhite dark:bg-dark font-primary "
             type="text"
             {...register("username", {
               required: true,
@@ -148,12 +148,12 @@ export default function UpdateUserDetails() {
         <div className="flex flex-col">
           <label
             htmlFor="Firstname"
-            className="text-white font-primary font-bold text-l mb-2 "
+            className="font-primary font-bold text-l mb-2 "
           >
             First Name
           </label>
           <input
-            className="h-9 focus:outline-none mb-2 px-2 rounded-lg border-2 border-solid border-orange bg-dark text-gray font-primary "
+            className="h-9 focus:outline-none mb-2 px-2 rounded-lg border-2 border-solid border-orange bg-almostWhite dark:bg-dark font-primary "
             type="text"
             {...register("firstname", {
               required: true,
@@ -172,12 +172,12 @@ export default function UpdateUserDetails() {
         <div className="flex flex-col">
           <label
             htmlFor="Lastname"
-            className="text-white font-primary font-bold text-l mb-2 "
+            className="font-primary font-bold text-l mb-2 "
           >
             Last Name
           </label>
           <input
-            className="h-9 focus:outline-none mb-2 px-2 rounded-lg border-2 border-solid border-orange bg-dark text-gray font-primary "
+            className="h-9 focus:outline-none mb-2 px-2 rounded-lg border-2 border-solid border-orange bg-almostWhite dark:bg-dark font-primary "
             type="text"
             {...register("lastname", {
               required: true,
@@ -196,12 +196,12 @@ export default function UpdateUserDetails() {
         <div className="flex flex-col">
           <label
             htmlFor="email"
-            className="text-white font-primary font-bold text-l mb-2 "
+            className="font-primary font-bold text-l mb-2 "
           >
             Email Address
           </label>
           <input
-            className="h-9 focus:outline-none mb-2 px-2 rounded-lg border-2 border-solid border-orange bg-dark text-gray font-primary "
+            className="h-9 focus:outline-none mb-2 px-2 rounded-lg border-2 border-solid border-orange bg-almostWhite dark:bg-dark font-primary "
             type="text"
             {...register("email", {
               required: true,
@@ -220,12 +220,12 @@ export default function UpdateUserDetails() {
         <div className="flex flex-col">
           <label
             htmlFor="password"
-            className="text-white font-primary font-bold text-l mb-2 "
+            className="font-primary font-bold text-l mb-2 "
           >
             Password
           </label>
           <input
-            className="h-9 focus:outline-none mb-2 px-2 rounded-lg border-2 border-solid border-orange bg-dark text-gray font-primary "
+            className="h-9 focus:outline-none mb-2 px-2 rounded-lg border-2 border-solid border-orange bg-almostWhite dark:bg-dark font-primary "
             type="password"
             {...register("password", {
               required: true,
@@ -243,12 +243,12 @@ export default function UpdateUserDetails() {
         <div className="flex flex-col">
           <label
             htmlFor="confirmPassword"
-            className="text-white font-primary font-bold text-l mb-2 "
+            className="font-primary font-bold text-l mb-2 "
           >
             Confirm password
           </label>
           <input
-            className="h-9 focus:outline-none mb-2 px-2 rounded-lg border-2 border-solid border-orange bg-dark text-gray font-primary "
+            className="h-9 focus:outline-none mb-2 px-2 rounded-lg border-2 border-solid border-orange bg-almostWhite dark:bg-dark font-primary "
             type="password"
             {...register("confirmpassword", {
               required: true,
@@ -274,8 +274,8 @@ export default function UpdateUserDetails() {
           <button type="button" onClick={handleBlur}>
             <div className="fixed z-10 top-0 bottom-0 left-0 right-0 backdrop-blur-lg" />
           </button>
-          <div className="bg-dark border-solid border-2 border-orange w-80 px-5 py-3 rounded-md flex flex-col gap-2 items-center absolute z-50 top-1/3 x-center ">
-            <p className="text-white text-center my-2">
+          <div className="bg-lightBlue dark:bg-dark border-solid border-2 border-orange w-80 px-5 py-3 rounded-md flex flex-col gap-2 items-center absolute z-50 top-1/3 x-center ">
+            <p className="text-almostWhite dark:text-white font-bold text-center my-2">
               Your account details have been successfully updated
             </p>
             <button

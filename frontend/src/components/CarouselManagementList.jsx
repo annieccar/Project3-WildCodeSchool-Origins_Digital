@@ -34,7 +34,7 @@ function CarouselManagementList({
   };
 
   return (
-    <div className="m-2 mr-6 pt-[61px] bg-dark">
+    <div className="m-2 mr-6 pt-[61px] bg-almostWhite dark:bg-dark ">
       <p className="mx-4 my-2 pb-2 font-semibold  text-orange">
         Carousels list
       </p>
@@ -42,9 +42,9 @@ function CarouselManagementList({
         {carouselList.length > 0 &&
           carouselList.map((carousel) => (
             <button
-              className={`m-2 p-1 border-solid border-2 border-orange rounded-3xl ${
+              className={`m-2 p-1 text-orange dark:text-white font-bold border-solid border-2 border-orange rounded-3xl ${
                 carousel.id === currentCarousel.carouselId &&
-                "bg-[linear-gradient(90deg,_#FF8200_0%,_#FF2415_100%)]"
+                "bg-[linear-gradient(90deg,_#FF8200_0%,_#FF2415_100%)] text-white"
               }`}
               type="button"
               key={carousel.id}

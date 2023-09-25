@@ -19,6 +19,7 @@ export default function CategorySearchResults({ categoryName, searchResults }) {
               (video) =>
                 video.category === categoryName && (
                   <Link
+                    key={video.id}
                     className="relative drop-shadow-3xl"
                     to={`/videos/${video.id}`}
                   >
@@ -49,7 +50,7 @@ export default function CategorySearchResults({ categoryName, searchResults }) {
                       <p className="ml-1 mt-1 font-primary font-bold text-lg">
                         {formatStringFromDb(video.name)}
                       </p>
-                      <div className="bg-white text-black font-bold absolute rounded-lg right-2 lg:right-3 bottom-11 lg:bottom-11 text-sm px-1 font-primary z-10">
+                      <div className="bg-lightBlue dark:bg-white text-almostWhite dark:text-black font-bold absolute rounded-lg right-2 lg:right-3 bottom-11 lg:bottom-11 text-sm px-1 font-primary z-10">
                         {formatTimeFromDb(video.duration)}
                       </div>
                     </div>
