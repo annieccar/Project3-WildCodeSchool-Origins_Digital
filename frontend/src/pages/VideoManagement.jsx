@@ -99,7 +99,7 @@ export default function VideoManagement() {
               </div>
               <div className="flex justify-between p-2 relative mb-4 w-full">
                 <select
-                  className="bg-dark w-28 font-primary text-sm lg:mr-20 lg:w-32 lg:text-xl"
+                  className="bg-dark w-28 focus:outline-none font-primary text-sm lg:mr-20 lg:w-32 lg:text-xl"
                   onChange={handleCategory}
                 >
                   <option className="font-primary text-md" value="">
@@ -113,13 +113,13 @@ export default function VideoManagement() {
                     ))}
                 </select>
                 <input
-                  className="bg-dark w-40 lg:w-48 h-8 lg:h-8 font-primary text-lg lg:text-xl p-2 border-2 lg:border-2 border-orange rounded-md text-gray "
+                  className="bg-dark focus:outline-none w-44 lg:w-52 h-9 font-primary text-lg lg:text-xl p-2 border-2 lg:border-2 border-orange rounded-full text-gray "
                   placeholder="search"
                   onChange={handleSearch}
                 />
                 <img
                   src={magnifier}
-                  className="absolute right-4 top-3.5 h-5 w-5"
+                  className="absolute right-5 top-4 h-5 w-5"
                   alt="search"
                 />
               </div>
