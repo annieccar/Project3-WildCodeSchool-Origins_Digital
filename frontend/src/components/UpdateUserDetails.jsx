@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import expressAPI from "../services/expressAPI";
+import interceptor from "../hooks/useInstanceWithInterceptor";
 
 import { useCurrentUserContext } from "../contexts/CurrentUserContext";
 import pencil from "../assets/images/Pencil.svg";
@@ -17,7 +17,7 @@ export default function UpdateUserDetails() {
   );
   const [updateSuccess, setUpdateSuccess] = useState(false);
   const [uploadPicture, setUploadPicture] = useState(false);
-
+  const expressAPI = interceptor();
   const [file, setFile] = useState([]);
 
   const {

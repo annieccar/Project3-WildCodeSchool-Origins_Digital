@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import AddFavoritesPopUp from "../components/AddFavoritesPopUp";
 import SharePopUp from "../components/SharePopUp";
-import expressApi from "../services/expressAPI";
+import interceptor from "../hooks/useInstanceWithInterceptor";
+
 import StaticCarousel from "../components/StaticCarousel";
 
 export default function Video() {
@@ -12,13 +13,14 @@ export default function Video() {
   const [addPlaylist, setAddPlaylist] = useState(false);
   const [shareVideo, setShareVideo] = useState(false);
   const [categoryVideos, setCategoryVideos] = useState([]);
+  const expressAPI = interceptor();
 
   useEffect(() => {
-    expressApi
+    expressAPI
       .get(`/api/videos/${id}`)
       .then((res) => {
         setVideoInfos(res.data);
-        expressApi
+        expressAPI
           .get(`/api/categories/${res.data.category_id}/videos`)
           .then((response) => {
             setCategoryVideos(response.data.filter((video) => video.id !== id));

@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
 import HoverVideoPlayer from "react-hover-video-player";
-import expressAPI from "../services/expressAPI";
+import interceptor from "../hooks/useInstanceWithInterceptor";
+
 import formatTimeFromDb from "../services/formatTimeFromDb";
 
 export default function Playlist() {
@@ -13,7 +14,7 @@ export default function Playlist() {
   const [search, setSearch] = useState("");
   const { id } = useParams();
   const navigate = useNavigate();
-
+  const expressAPI = interceptor();
   const fetchPlaylistVideos = () => {
     expressAPI
       .get(`/api/playlists/${id}/videos`)

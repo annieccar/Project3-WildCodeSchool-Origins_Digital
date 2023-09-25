@@ -1,5 +1,6 @@
 import PropTypes, { shape } from "prop-types";
-import expressAPI from "../services/expressAPI";
+import interceptor from "../hooks/useInstanceWithInterceptor";
+
 import CarouselManagementVideoList from "./CarouselManagementVideoList";
 import popUpMessages from "../json/crslMngmtPopMsg.json";
 
@@ -14,6 +15,8 @@ function CarouselManagementCreate({
   setCarouselPopUpMessage,
   setCarouselManagementDisplay,
 }) {
+  const expressAPI = interceptor();
+
   const assignVideos = (createdCarouselId) => {
     expressAPI
       .post(`/api/carousels/jointure`, {

@@ -3,11 +3,14 @@ import {
   BsFillArrowRightCircleFill,
   BsFillArrowLeftCircleFill,
 } from "react-icons/bs";
-import expressAPI from "../services/expressAPI";
+
+import interceptor from "../hooks/useInstanceWithInterceptor";
 
 export default function HeroCarousel() {
   const [videoNames, setVideoNames] = useState([]);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  const expressAPI = interceptor();
 
   useEffect(() => {
     expressAPI

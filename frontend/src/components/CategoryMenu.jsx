@@ -2,11 +2,11 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import formatStringFromDb from "../services/formatStringFromDb";
-import expressAPI from "../services/expressAPI";
+import interceptor from "../hooks/useInstanceWithInterceptor";
 
 export default function CategoryMenu({ setCategorySelection }) {
   const [categories, setCategories] = useState([]);
-
+  const expressAPI = interceptor();
   const navigate = useNavigate();
 
   useEffect(() => {

@@ -2,13 +2,13 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCurrentUserContext } from "../contexts/CurrentUserContext";
 import FavoritesCarousel from "../components/FavoritesCarousel";
-import expressAPI from "../services/expressAPI";
+import interceptor from "../hooks/useInstanceWithInterceptor";
 
 export default function Favorites() {
   const [playlists, setPlaylists] = useState(null);
   const { user } = useCurrentUserContext();
   const navigate = useNavigate();
-
+  const expressAPI = interceptor();
   useEffect(() => {
     expressAPI
       .get(`/api/playlists/user/${user.id}/videos`)

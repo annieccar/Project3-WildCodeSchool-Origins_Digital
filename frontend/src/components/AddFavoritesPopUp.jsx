@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useCurrentUserContext } from "../contexts/CurrentUserContext";
-import expressAPI from "../services/expressAPI";
+import interceptor from "../hooks/useInstanceWithInterceptor";
 
 export default function AddFavoritesPopUp({ videoInfos, setAddPlaylist }) {
   const [userPlaylists, setUserPlaylists] = useState(null);
@@ -10,7 +10,7 @@ export default function AddFavoritesPopUp({ videoInfos, setAddPlaylist }) {
   const [selectedPlaylist, setSelectedPlaylist] = useState(
     "--Select a playlist--"
   );
-
+  const expressAPI = interceptor();
   const { user } = useCurrentUserContext();
 
   const getPlaylistsByUser = () => {

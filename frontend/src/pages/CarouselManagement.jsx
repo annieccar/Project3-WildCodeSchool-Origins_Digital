@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { useBlurredBackgroundContext } from "../contexts/BlurredBackgroundContext";
 import useMediaQuery from "../hooks/useMediaQuery";
-import expressAPI from "../services/expressAPI";
+import interceptor from "../hooks/useInstanceWithInterceptor";
+
 import CarouselManagementPopUp from "../components/CarouselManagementPopUp";
 import CarouselManagementList from "../components/CarouselManagementList";
 import CarouselManagementCreate from "../components/CarouselManagementCreate";
@@ -12,7 +13,7 @@ import popUpMessages from "../json/crslMngmtPopMsg.json";
 export default function CarouselManagement() {
   const { isBackgroundBlurred, setIsBackgroundBlurred } =
     useBlurredBackgroundContext();
-
+  const expressAPI = interceptor();
   const [carouselPopUpOpen, setCarouselPopUpOpen] = useState(false);
   const [carouselPopUpMessage, setCarouselPopUpMessage] = useState({});
   const [carouselList, setCarouselList] = useState([]);

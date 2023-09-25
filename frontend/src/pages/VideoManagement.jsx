@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import expressAPI from "../services/expressAPI";
+import interceptor from "../hooks/useInstanceWithInterceptor";
 
 export default function VideoManagement() {
   const [videos, setVideos] = useState([]);
@@ -7,7 +7,7 @@ export default function VideoManagement() {
   const [selectedAccess, setSelectedAccess] = useState("Guest");
   const [videoLocation, setVideoLocation] = useState("");
   const [videoDescription, setVideoDescription] = useState("");
-
+  const expressAPI = interceptor();
   const handleEditClick = (videoName) => {
     setSelectedVideo(videoName);
     setVideoLocation(`/backend/public/videos/${videoName}.mp4`);

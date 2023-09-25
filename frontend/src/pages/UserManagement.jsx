@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import magnifier from "../assets/images/Vector.png";
 import pencil from "../assets/images/Pencil.svg";
-import expressAPI from "../services/expressAPI";
+import interceptor from "../hooks/useInstanceWithInterceptor";
+
 import CreateUserManagement from "./CreateUserManagement";
 import UserProfileManagement from "./UserProfileManagement";
 import useMediaQuery from "../hooks/useMediaQuery";
@@ -13,7 +14,7 @@ export default function UserManagement() {
   const [userProps, setUserProps] = useState(null);
   const [update, setUpdate] = useState(false);
   const [create, setCreate] = useState(true);
-
+  const expressAPI = interceptor();
   const navigate = useNavigate();
   const isDesktop = useMediaQuery("(min-width: 1024px)");
 

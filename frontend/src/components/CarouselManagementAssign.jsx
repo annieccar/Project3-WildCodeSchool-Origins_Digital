@@ -1,5 +1,6 @@
 import PropTypes, { shape } from "prop-types";
-import expressAPI from "../services/expressAPI";
+import interceptor from "../hooks/useInstanceWithInterceptor";
+
 import CarouselManagementVideoList from "./CarouselManagementVideoList";
 import popUpMessages from "../json/crslMngmtPopMsg.json";
 
@@ -12,6 +13,8 @@ function CarouselManagementAssign({
   setCarouselPopUpMessage,
   hasVideoAssignmentChanged,
 }) {
+  const expressAPI = interceptor();
+
   const handleCarouselDeletion = (id) => {
     setCarouselPopUpMessage({
       ...popUpMessages.handleDeletionWarning,
