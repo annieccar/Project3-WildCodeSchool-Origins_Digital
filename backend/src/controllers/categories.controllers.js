@@ -56,7 +56,10 @@ const add = async (req, res) => {
 
     const [result] = await models.categories.insert(category);
     if (result) {
-      res.location(`/categories/${result.insertId}`).sendStatus(201);
+      res
+        .status(201)
+        .location(`/categories/${result.insertId}`)
+        .send({ id: result.insertId, ...category });
     }
   } catch (err) {
     console.error(err);

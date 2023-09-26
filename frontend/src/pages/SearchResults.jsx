@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import CategorySearchResults from "../components/CategorySearchResult";
-import expressAPI from "../services/expressAPI";
+import interceptor from "../hooks/useInstanceWithInterceptor";
 
 export default function SearchResults() {
   const { query } = useParams();
-
+  const expressAPI = interceptor();
   const [currentSearch, setCurrentSearch] = useState([]);
 
   useEffect(() => {

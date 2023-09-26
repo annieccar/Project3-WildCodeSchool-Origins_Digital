@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
-import expressAPI from "../services/expressAPI";
+import interceptor from "../hooks/useInstanceWithInterceptor";
+
 import VideoCardPlaylist from "../components/VideoCardPlaylist";
 
 export default function Playlist() {
@@ -12,6 +13,7 @@ export default function Playlist() {
   const [search, setSearch] = useState("");
   const { id } = useParams();
   const navigate = useNavigate();
+  const expressAPI = interceptor();
 
   const fetchPlaylistVideos = () => {
     expressAPI
@@ -70,7 +72,7 @@ export default function Playlist() {
               id="filters"
               onChange={(e) => setSelectedCategory(e.target.value)}
             >
-              <option value="">Select a filter</option>
+              <option value="">Select a category</option>
               {categories.map((category) => (
                 <option value={category.id} key={category.id}>
                   {category.name}

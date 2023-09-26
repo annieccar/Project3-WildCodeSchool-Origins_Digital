@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useCurrentUserContext } from "../contexts/CurrentUserContext";
+import interceptor from "../hooks/useInstanceWithInterceptor";
 import create from "../assets/images/create.svg";
-import expressAPI from "../services/expressAPI";
 import PlaylistCheckbox from "./PlaylistCheckbox";
 
 export default function AddFavoritesPopUp({ videoInfos, close }) {
@@ -10,6 +10,7 @@ export default function AddFavoritesPopUp({ videoInfos, close }) {
   const [createPlaylist, setCreatePlaylist] = useState(false);
   const [playlistName, setPlaylistName] = useState("");
 
+  const expressAPI = interceptor();
   const { user } = useCurrentUserContext();
 
   const getPlaylistsByUser = () => {

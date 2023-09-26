@@ -1,55 +1,58 @@
 import { useEffect, useState } from "react";
 import { useBlurredBackgroundContext } from "../contexts/BlurredBackgroundContext";
 import useMediaQuery from "../hooks/useMediaQuery";
-import expressAPI from "../services/expressAPI";
-import CarouselErrorPopUp from "../components/CarouselErrorPopUp";
+import interceptor from "../hooks/useInstanceWithInterceptor";
+
+import CarouselManagementPopUp from "../components/CarouselManagementPopUp";
 import CarouselManagementList from "../components/CarouselManagementList";
 import CarouselManagementCreate from "../components/CarouselManagementCreate";
 import CarouselManagementAssign from "../components/CarouselManagementAssign";
 import arrowLeft from "../assets/images/arrow-left.svg";
+import popUpMessages from "../json/crslMngmtPopMsg.json";
 
 export default function CarouselManagement() {
   const { isBackgroundBlurred, setIsBackgroundBlurred } =
     useBlurredBackgroundContext();
-
-  const [carouselErrorPopUpOpen, setCarouselErrorPopUpOpen] = useState(false);
-  const [carouselErrorMessage, setCarouselErrorMessage] = useState({});
+  const expressAPI = interceptor();
+  const [carouselPopUpOpen, setCarouselPopUpOpen] = useState(false);
+  const [carouselPopUpMessage, setCarouselPopUpMessage] = useState({});
   const [carouselList, setCarouselList] = useState([]);
   const [videosList, setVideosList] = useState([]);
   const [categoriesList, setCategoriesList] = useState([]);
   const [currentCarousel, setCurrentCarousel] = useState({
     carouselId: null,
     title: "",
-    base: [],
-    modified: [],
+    videosArray: [],
+    videosArrayRef: [],
   });
   const [carouselManagementDisplay, setCarouselManagementDisplay] = useState(0);
 
   const isDesktop = useMediaQuery("(min-width: 1024px)");
 
-  const handleCarouselError = () => {
-    setCarouselErrorPopUpOpen(true);
+  const handlePopUpOpen = () => {
+    setCarouselPopUpOpen(true);
     setIsBackgroundBlurred(true);
   };
 
   const fetchNewCarousel = (id) => {
-    expressAPI.get(`/api/carousels/${id}`).then((res) => {
-      if (res.status === 200) {
-        setCurrentCarousel({
-          carouselId: id,
-          title: res.data[0].title,
-          base: res.data[0].video_id ? res.data : [],
-          modified: [],
-        });
-      } else {
-        setCarouselErrorMessage({
-          title: "Database error",
-          content:
-            "Chosen carousel informations can't be found in the database.",
-        }).catch((err) => console.error(err));
-        handleCarouselError();
-      }
-    });
+    expressAPI
+      .get(`/api/carousels/${id}`)
+      .then((res) => {
+        if (res.status === 200) {
+          const fetchedVideosArray = res.data[0].video_id ? res.data : [];
+          setCurrentCarousel({
+            carouselId: id,
+            title: res.data[0].title,
+            videosArray: fetchedVideosArray,
+            videosArrayRef: fetchedVideosArray,
+          });
+        } else {
+          setCarouselPopUpMessage(popUpMessages.fetchCarouselFail);
+          handlePopUpOpen();
+        }
+      })
+      .catch((err) => console.error(err));
+
     setCarouselManagementDisplay(2);
   };
 
@@ -72,43 +75,43 @@ export default function CarouselManagement() {
     setCurrentCarousel({
       carouselId: null,
       title: "",
-      base: [],
-      modified: [],
+      videosArray: [],
+      videosArrayRef: [],
     });
     setCarouselManagementDisplay(displayNumber);
   };
 
+  const hasVideoAssignmentChanged = () => {
+    return (
+      currentCarousel.videosArray.some(
+        (video) =>
+          !currentCarousel.videosArrayRef.some(
+            (videoRef) => videoRef.video_id === video.video_id
+          )
+      ) ||
+      currentCarousel.videosArrayRef.some(
+        (videoRef) =>
+          !currentCarousel.videosArray.some(
+            (video) => video.video_id === videoRef.video_id
+          )
+      )
+    );
+  };
+
   const handleNewCarouselClick = () => {
-    if (currentCarousel.modified.length > 0) {
-      setCarouselErrorMessage({
-        title: "Carousel has been modified",
-        content:
-          "You have unsaved modifications on this carousel. Would you like to discard them and proceed ?",
-        button: {
-          onValidation: "carouselCreation",
-          text: "Confirm",
-        },
-      });
-      return handleCarouselError();
+    if (hasVideoAssignmentChanged()) {
+      setCarouselPopUpMessage(popUpMessages.newCarouselClickWarning);
+      return handlePopUpOpen();
     }
     return resetCurrentCarouselThenDisplay(1);
   };
 
   const handleBackToSelectionClick = () => {
-    if (currentCarousel.modified.length > 0) {
-      setCarouselErrorMessage({
-        title: "Carousel has been modified",
-        content:
-          "You have unsaved modifications on this carousel. Would you like to discard them and proceed ?",
-        button: {
-          onValidation: "backToSelection",
-          text: "Confirm",
-        },
-      });
-      handleCarouselError();
-    } else {
-      resetCurrentCarouselThenDisplay(0);
+    if (hasVideoAssignmentChanged()) {
+      setCarouselPopUpMessage(popUpMessages.backToSelectionClickWarning);
+      return handlePopUpOpen();
     }
+    return resetCurrentCarouselThenDisplay(0);
   };
 
   const deleteCarousel = (id) => {
@@ -116,37 +119,34 @@ export default function CarouselManagement() {
       if (res.status === 204) {
         setCarouselList([...carouselList.filter((el) => el.id !== id)]);
         resetCurrentCarouselThenDisplay(0);
-        setCarouselErrorMessage({
-          title: "Deletion successful",
-          content: "The carousel has been deleted from the database.",
-        });
-        handleCarouselError();
+        setCarouselPopUpMessage(popUpMessages.deleteSuccess);
+        handlePopUpOpen();
       }
     });
   };
 
   const handleCloseModal = (status) => {
-    setCarouselErrorPopUpOpen(false);
+    setCarouselPopUpOpen(false);
     setIsBackgroundBlurred(false);
     if (status === "changeCarousel") {
-      fetchNewCarousel(carouselErrorMessage.button.value);
+      fetchNewCarousel(carouselPopUpMessage.value);
     }
     if (status === "deleteCarousel") {
-      deleteCarousel(carouselErrorMessage.button.value);
+      deleteCarousel(carouselPopUpMessage.value);
     }
     if (status === "backToSelection") {
       setCurrentCarousel({
         carouselId: null,
         title: "",
-        base: [],
-        modified: [],
+        videosArray: [],
+        videosArrayRef: [],
       });
       setCarouselManagementDisplay(0);
     }
     if (status === "carouselCreation") {
       resetCurrentCarouselThenDisplay(1);
     }
-    setCarouselErrorMessage({});
+    setCarouselPopUpMessage({});
   };
 
   return (
@@ -162,7 +162,7 @@ export default function CarouselManagement() {
             <button
               type="button"
               onClick={handleBackToSelectionClick}
-              className="w-44 h-10 m-2 rounded-3xl font-primary leading-none border-2 border-orange"
+              className="flex items-center w-44 h-10 m-2 rounded-3xl font-primary leading-none border-2 border-orange  bg-dark "
             >
               <div className="flex bg-almostWhite dark:bg-dark">
                 <img
@@ -179,7 +179,7 @@ export default function CarouselManagement() {
           <button
             type="button"
             onClick={handleNewCarouselClick}
-            className={`w-44 h-10 m-2 rounded-3xl lg:absolute lg:top-5 lg:left-5 text-white font-primary bg-[linear-gradient(90deg,_#FF8200_0%,_#FF2415_100%)] ${
+            className={`w-44 h-10 m-2 font-bold rounded-3xl lg:absolute lg:top-5 lg:left-5 text-white font-primary bg-[linear-gradient(90deg,_#FF8200_0%,_#FF2415_100%)] ${
               carouselManagementDisplay === 1 && "invisible"
             }`}
           >
@@ -193,9 +193,10 @@ export default function CarouselManagement() {
             <CarouselManagementList
               carouselList={carouselList}
               currentCarousel={currentCarousel}
-              setCarouselErrorPopUpOpen={setCarouselErrorPopUpOpen}
-              setCarouselErrorMessage={setCarouselErrorMessage}
+              handlePopUpOpen={handlePopUpOpen}
+              setCarouselPopUpMessage={setCarouselPopUpMessage}
               fetchNewCarousel={fetchNewCarousel}
+              hasVideoAssignmentChanged={hasVideoAssignmentChanged}
             />
           ) : (
             ""
@@ -210,8 +211,8 @@ export default function CarouselManagement() {
               carouselList={carouselList}
               setCarouselList={setCarouselList}
               categoriesList={categoriesList}
-              setCarouselErrorPopUpOpen={setCarouselErrorPopUpOpen}
-              setCarouselErrorMessage={setCarouselErrorMessage}
+              handlePopUpOpen={handlePopUpOpen}
+              setCarouselPopUpMessage={setCarouselPopUpMessage}
               setCarouselManagementDisplay={setCarouselManagementDisplay}
             />
           )}
@@ -221,8 +222,9 @@ export default function CarouselManagement() {
               currentCarousel={currentCarousel}
               setCurrentCarousel={setCurrentCarousel}
               categoriesList={categoriesList}
-              setCarouselErrorPopUpOpen={setCarouselErrorPopUpOpen}
-              setCarouselErrorMessage={setCarouselErrorMessage}
+              handlePopUpOpen={handlePopUpOpen}
+              setCarouselPopUpMessage={setCarouselPopUpMessage}
+              hasVideoAssignmentChanged={hasVideoAssignmentChanged}
             />
           )}
           {carouselManagementDisplay === 0 && isDesktop ? (
@@ -236,10 +238,10 @@ export default function CarouselManagement() {
         </div>
       </div>
 
-      <CarouselErrorPopUp
-        isOpen={carouselErrorPopUpOpen}
+      <CarouselManagementPopUp
+        isOpen={carouselPopUpOpen}
         onClose={handleCloseModal}
-        message={carouselErrorMessage}
+        message={carouselPopUpMessage}
       />
     </div>
   );

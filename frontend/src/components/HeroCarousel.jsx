@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   BsFillArrowRightCircleFill,
   BsFillArrowLeftCircleFill,
 } from "react-icons/bs";
-import expressAPI from "../services/expressAPI";
+import HoverVideoPlayer from "react-hover-video-player";
+
+import interceptor from "../hooks/useInstanceWithInterceptor";
 import useMediaQuery from "../hooks/useMediaQuery";
 
 export default function HeroCarousel() {
@@ -11,13 +14,15 @@ export default function HeroCarousel() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const isDesktop = useMediaQuery("(min-width: 1024px)");
 
+  const navigate = useNavigate();
+
+  const expressAPI = interceptor();
+
   useEffect(() => {
     expressAPI
       .get(`/api/carousels/1/videos`)
       .then((response) => {
-        const names = [];
-        response.data.map((elem) => names.push(elem.file_name));
-        setVideoNames(names);
+        setVideoNames(response.data);
       })
       .catch((err) => console.error(err));
   }, []);
@@ -29,7 +34,7 @@ export default function HeroCarousel() {
       } else {
         setCurrentImageIndex(currentImageIndex + 1);
       }
-    }, 3000);
+    }, 4000);
 
     return () => {
       clearInterval(interval);
@@ -74,25 +79,48 @@ export default function HeroCarousel() {
               }}
             >
               {videoNames.map((elem) => (
-                <img
-                  src={`${
-                    import.meta.env.VITE_BACKEND_URL
-                  }/Public/thumbnails/${elem}.png`}
-                  key={elem}
-                  alt={elem}
-                  className="w-80 lg:w-[900px] object-cover"
-                />
+                <button
+                  type="button"
+                  onClick={() => {
+                    navigate(`/videos/${elem.id}`);
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      navigate(`/videos/${elem.id}`);
+                    }
+                  }}
+                  key={elem.id}
+                >
+                  <HoverVideoPlayer
+                    videoSrc={`${
+                      import.meta.env.VITE_BACKEND_URL
+                    }/Public/videos/${elem.file_name}.mp4`}
+                    pausedOverlay={
+                      <img
+                        src={`${
+                          import.meta.env.VITE_BACKEND_URL
+                        }/Public/thumbnails/${elem.file_name}.png`}
+                        alt={elem.id}
+                        className="min-w-[320px] lg:min-w-[900px]"
+                      />
+                    }
+                    className="min-w-[320px] lg:min-w-[900px]"
+                  />
+                </button>
               ))}
             </div>
 
-            <div className="absolute bottom-0 py-1 flex justify-center w-full">
+            <div className="absolute bottom-2 py-1 flex justify-center w-full">
               {videoNames.map((video, index) => {
                 return (
-                  <div
-                    key={video}
+                  <button
+                    type="button"
+                    aria-label="carousel-index"
+                    key={video.id}
                     className={`rounded-full w-2 h-2 m-0.5 lg:mx-1 lg:w-3 lg:h-3  ${
                       index === currentImageIndex ? "bg-orange" : "bg-white"
                     }`}
+                    onClick={() => setCurrentImageIndex(index)}
                   />
                 );
               })}

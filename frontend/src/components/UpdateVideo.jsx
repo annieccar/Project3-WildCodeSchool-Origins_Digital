@@ -338,7 +338,7 @@ export default function UpdateVideo({
             <button
               type="button"
               onClick={() => deleteVideo()}
-              className="text-orange h-10 font-primary font-semibold rounded-full w-36 px-4 py-0.5 border-solid border-2 border-orange"
+              className="text-white h-10 font-primary font-semibold rounded-full w-36 px-4 py-0.5 bg-blue-gradient"
             >
               Delete Video
             </button>

@@ -1,21 +1,26 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import expressAPI from "../services/expressAPI";
+import interceptor from "../hooks/useInstanceWithInterceptor";
+
 import StaticCarousel from "./StaticCarousel";
 
 export default function CategoryCarousels() {
   const [categories, setCategories] = useState([]);
   const [videoByCategories, setVideoByCategories] = useState([]);
   const [categoryCarousels, setCategoryCarousels] = useState([]);
-
+  const expressAPI = interceptor();
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const categoriesResponse = await expressAPI.get("/api/categories");
+        const categoriesResponse = await expressAPI.get("/api/carousels");
         const videoResponse = await expressAPI.get("/api/carousels/videos");
-        setCategories(categoriesResponse.data);
+        setCategories(
+          categoriesResponse.data.filter((elem) => {
+            return elem.title !== "Hero Slider";
+          })
+        );
         setVideoByCategories(videoResponse.data);
       } catch (err) {
         console.error(err);
@@ -28,7 +33,7 @@ export default function CategoryCarousels() {
     if (videoByCategories.length > 0 && categories.length > 0) {
       const categoriesWithVideos = categories.map((category) => {
         const categoryArray = videoByCategories.filter(
-          (video) => video.title === category.name
+          (video) => video.title === category.title
         );
         return categoryArray;
       });

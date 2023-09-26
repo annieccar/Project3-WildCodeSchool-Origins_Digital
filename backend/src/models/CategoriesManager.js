@@ -6,15 +6,15 @@ class CategoriesManager extends AbstractManager {
   }
 
   insert(category) {
-    return this.database.query(`INSERT INTO ${this.table} (title) VALUES (?)`, [
-      category.title,
+    return this.database.query(`INSERT INTO ${this.table} (name) VALUES (?)`, [
+      category.name,
     ]);
   }
 
   update(category) {
     return this.database.query(
-      `UPDATE ${this.table} SET title = ? WHERE id = ?`,
-      [category.title, category.id]
+      `UPDATE ${this.table} SET name = ? WHERE id = ?`,
+      [category.name, category.id]
     );
   }
 

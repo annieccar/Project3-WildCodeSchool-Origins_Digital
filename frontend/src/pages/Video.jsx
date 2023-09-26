@@ -3,7 +3,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import { createPortal } from "react-dom";
 import AddFavoritesPopUp from "../components/AddFavoritesPopUp";
 import SharePopUp from "../components/SharePopUp";
-import expressApi from "../services/expressAPI";
+import interceptor from "../hooks/useInstanceWithInterceptor";
+
 import StaticCarousel from "../components/StaticCarousel";
 import add from "../assets/images/addPlaylist.svg";
 import share from "../assets/images/share.svg";
@@ -15,13 +16,14 @@ export default function Video() {
   const [addPlaylist, setAddPlaylist] = useState(false);
   const [shareVideo, setShareVideo] = useState(false);
   const [categoryVideos, setCategoryVideos] = useState([]);
+  const expressAPI = interceptor();
 
   useEffect(() => {
-    expressApi
+    expressAPI
       .get(`/api/videos/${id}`)
       .then((res) => {
         setVideoInfos(res.data);
-        expressApi
+        expressAPI
           .get(`/api/categories/${res.data.category_id}/videos`)
           .then((response) => {
             setCategoryVideos(response.data.filter((video) => video.id !== id));
@@ -117,7 +119,13 @@ export default function Video() {
               document.body
             )}
           {shareVideo &&
-            createPortal(<SharePopUp videoInfos={videoInfos} />, document.body)}
+            createPortal(
+              <SharePopUp
+                videoInfos={videoInfos}
+                close={() => setShareVideo(false)}
+              />,
+              document.body
+            )}
         </div>
       )}
       {categoryVideos && (

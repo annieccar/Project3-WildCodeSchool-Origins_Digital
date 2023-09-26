@@ -4,13 +4,14 @@ import { useState } from "react";
 import { useCurrentUserContext } from "../contexts/CurrentUserContext";
 import { useBlurredBackgroundContext } from "../contexts/BlurredBackgroundContext";
 import SignupErrorPopUp from "./SignupErrorPopUp";
-import expressAPI from "../services/expressAPI";
+import interceptor from "../hooks/useInstanceWithInterceptor";
 
 export default function Signup() {
   const { setUser } = useCurrentUserContext();
   const { setIsBackgroundBlurred } = useBlurredBackgroundContext();
-
+  const expressAPI = interceptor();
   const [signupErrorPopUpOpen, setSignupErrorPopUpOpen] = useState(false);
+  const [popUpMessage, setPopUpMessage] = useState("");
 
   const handleSignupError = () => {
     setSignupErrorPopUpOpen(true);
@@ -47,6 +48,7 @@ export default function Signup() {
       })
       .catch((err) => {
         console.error(err);
+        setPopUpMessage(err.response.data.message);
         handleSignupError();
       });
   };
@@ -339,6 +341,7 @@ export default function Signup() {
       <SignupErrorPopUp
         isOpen={signupErrorPopUpOpen}
         onClose={handleCloseModal}
+        message={popUpMessage}
       />
     </div>
     // Todo : user profile image upload

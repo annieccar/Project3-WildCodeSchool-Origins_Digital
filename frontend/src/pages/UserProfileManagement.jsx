@@ -3,7 +3,9 @@ import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import PropTypes from "prop-types";
 import { useForm } from "react-hook-form";
-import expressAPI from "../services/expressAPI";
+
+import interceptor from "../hooks/useInstanceWithInterceptor";
+
 import CustomModal from "../components/CustomModal";
 import DeleteUserModal from "../components/DeleteUserModal";
 import registerOptions from "../validators/userProfileManagement.validator";
@@ -25,6 +27,7 @@ export default function UserProfileManagement({
   const [msg, setMsg] = useState("");
   const navigate = useNavigate();
   const isDesktop = useMediaQuery("(min-width: 1024px)");
+  const expressAPI = interceptor();
   const { user } = useCurrentUserContext();
   const { setIsLoggedIn } = useLoginContext();
 

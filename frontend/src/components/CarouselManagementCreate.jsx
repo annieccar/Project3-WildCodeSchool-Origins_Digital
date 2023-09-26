@@ -1,7 +1,8 @@
 import PropTypes, { shape } from "prop-types";
-import { useBlurredBackgroundContext } from "../contexts/BlurredBackgroundContext";
-import expressAPI from "../services/expressAPI";
+import interceptor from "../hooks/useInstanceWithInterceptor";
+
 import CarouselManagementVideoList from "./CarouselManagementVideoList";
+import popUpMessages from "../json/crslMngmtPopMsg.json";
 
 function CarouselManagementCreate({
   videosList,
@@ -10,36 +11,24 @@ function CarouselManagementCreate({
   carouselList,
   setCarouselList,
   categoriesList,
-  setCarouselErrorPopUpOpen,
-  setCarouselErrorMessage,
+  handlePopUpOpen,
+  setCarouselPopUpMessage,
   setCarouselManagementDisplay,
 }) {
-  const { setIsBackgroundBlurred } = useBlurredBackgroundContext();
-
-  const handleCarouselError = () => {
-    setCarouselErrorPopUpOpen(true);
-    setIsBackgroundBlurred(true);
-  };
+  const expressAPI = interceptor();
 
   const assignVideos = (createdCarouselId) => {
-    if (currentCarousel.base.length > 10) {
-      setCarouselErrorMessage({
-        title: "Too much videos",
-        content:
-          "Number of videos assigned to a carousel can't exceed 10. Please modify video assignment.",
-      });
-      return handleCarouselError();
-    }
-    return expressAPI
+    expressAPI
       .post(`/api/carousels/jointure`, {
         carouselId: createdCarouselId,
-        idAdded: currentCarousel.base,
+        idAdded: currentCarousel.videosArray,
       })
       .then((res) => {
         if (res.status === 200) {
           setCurrentCarousel({
             ...currentCarousel,
-            modified: [],
+            carouselId: createdCarouselId,
+            videosArrayRef: [...currentCarousel.videosArray],
           });
         }
       })
@@ -51,7 +40,7 @@ function CarouselManagementCreate({
       .post(`/api/carousels/`, currentCarousel)
       .then((res) => {
         if (res.status === 200) {
-          if (currentCarousel.base.length > 0) {
+          if (currentCarousel.videosArray.length > 0) {
             assignVideos(res.data.insertId);
           }
           setCarouselList([
@@ -62,39 +51,32 @@ function CarouselManagementCreate({
             ...currentCarousel,
             carouselId: res.data.insertId,
           });
-          setCarouselErrorMessage({
-            title: "Carousel created",
-            content: `Carousel ${currentCarousel.title} has been created in the database.`,
+          setCarouselPopUpMessage({
+            title: popUpMessages.createCarouselSuccess.title,
+            content: `Carousel ${currentCarousel.title} ${popUpMessages.createCarouselSuccess.content}`,
           });
-          handleCarouselError();
+          handlePopUpOpen();
           setCarouselManagementDisplay(2);
         }
       })
       .catch((err) => {
         if (err.response.status === 400) {
-          setCarouselErrorMessage({
-            title: "Duplicate carousel",
-            content:
-              "A carousel with this name is already present in the database.",
-          });
+          setCarouselPopUpMessage(popUpMessages.createCarouselDuplicate);
         } else {
-          setCarouselErrorMessage({
-            title: "Database error",
-            content:
-              "Error during database writing: the new carousel could not be saved.",
-          });
+          setCarouselPopUpMessage(popUpMessages.createCarouselDbFail);
         }
-        return handleCarouselError();
+        return handlePopUpOpen();
       });
   };
 
   const handleCreateCarousel = () => {
     if (!currentCarousel.title) {
-      setCarouselErrorMessage({
-        title: "Creation error",
-        content: "You must choose a name for the new carousel.",
-      });
-      return handleCarouselError();
+      setCarouselPopUpMessage(popUpMessages.handleCreateCarouselNoTitle);
+      return handlePopUpOpen();
+    }
+    if (currentCarousel.videosArray.length > 10) {
+      setCarouselPopUpMessage(popUpMessages.handleCreateCarouselTooMuchVideos);
+      return handlePopUpOpen();
     }
 
     return createCarousel();
@@ -156,16 +138,17 @@ CarouselManagementCreate.propTypes = {
   currentCarousel: PropTypes.shape({
     carouselId: PropTypes.number,
     title: PropTypes.string.isRequired,
-    base: PropTypes.arrayOf(
+    videosArray: PropTypes.arrayOf(
       shape({
         title: PropTypes.string,
         id: PropTypes.number,
         video_id: PropTypes.number.isRequired,
       })
     ).isRequired,
-    modified: PropTypes.arrayOf(
+    videosArrayRef: PropTypes.arrayOf(
       shape({
-        mod: PropTypes.string.isRequired,
+        title: PropTypes.string,
+        id: PropTypes.number,
         video_id: PropTypes.number.isRequired,
       })
     ).isRequired,
@@ -184,7 +167,7 @@ CarouselManagementCreate.propTypes = {
       name: PropTypes.string.isRequired,
     })
   ).isRequired,
-  setCarouselErrorPopUpOpen: PropTypes.func.isRequired,
-  setCarouselErrorMessage: PropTypes.func.isRequired,
+  handlePopUpOpen: PropTypes.func.isRequired,
+  setCarouselPopUpMessage: PropTypes.func.isRequired,
   setCarouselManagementDisplay: PropTypes.func.isRequired,
 };

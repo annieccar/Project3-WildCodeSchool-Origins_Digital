@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import HoverVideoPlayer from "react-hover-video-player";
 
 import { useNavigate } from "react-router-dom";
 import {
@@ -60,7 +61,7 @@ export default function StaticCarousel({ videosArray }) {
             <BsFillArrowLeftCircleFill />
           </button>
 
-          <div className="w-80 lg:w-[980px] overflow-hidden relative">
+          <div className="flex w-80 h-32 lg:w-[980px] overflow-x-hidden overflow-y-hidden relative">
             <div
               className="flex w-40 lg:w-[200px] transition ease-out duration-1000"
               style={{
@@ -68,8 +69,8 @@ export default function StaticCarousel({ videosArray }) {
               }}
             >
               {videos.map((elem) => (
-                // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
-                <img
+                <button
+                  type="button"
                   onClick={() => {
                     navigate(`/videos/${elem.id}`);
                   }}
@@ -78,13 +79,26 @@ export default function StaticCarousel({ videosArray }) {
                       navigate(`/videos/${elem.id}`);
                     }
                   }}
-                  src={`${import.meta.env.VITE_BACKEND_URL}/public/thumbnails/${
-                    elem.file_name
-                  }.png`}
-                  key={elem.file_name}
-                  alt={elem.name}
-                  className="mx-2 w-36 lg:w-[180px]"
-                />
+                  key={elem.id}
+                  className="hover:scale-[115%] duration-300 ease-in-out
+"
+                >
+                  <HoverVideoPlayer
+                    videoSrc={`${
+                      import.meta.env.VITE_BACKEND_URL
+                    }/Public/videos/${elem.file_name}.mp4`}
+                    pausedOverlay={
+                      <img
+                        src={`${
+                          import.meta.env.VITE_BACKEND_URL
+                        }/Public/thumbnails/${elem.file_name}.png`}
+                        alt={elem.id}
+                        className="min-w-[144px] lg:min-w-[180px]"
+                      />
+                    }
+                    className=" mx-2 min-w-[144px] lg:min-w-[180px]"
+                  />
+                </button>
               ))}
             </div>
           </div>

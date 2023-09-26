@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import HoverVideoPlayer from "react-hover-video-player";
-import expressAPI from "../services/expressAPI";
+import interceptor from "../hooks/useInstanceWithInterceptor";
 
 import magnifier from "../assets/images/Vector.png";
 import formatTimeFromDb from "../services/formatTimeFromDb";
@@ -11,6 +11,7 @@ export default function Category() {
 
   const [categoryDetails, setCategoryDetails] = useState("");
   const [categoryVideos, setCategoryVideos] = useState([]);
+  const expressAPI = interceptor();
 
   const navigate = useNavigate();
 

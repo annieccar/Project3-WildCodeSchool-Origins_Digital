@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import Modal from "./Modal";
 
-export default function CarouselErrorPopUp({ isOpen, onClose, message }) {
+export default function CarouselManagementPopUp({ isOpen, onClose, message }) {
   return (
     <Modal hasCloseBtn isOpen={isOpen} onClose={onClose}>
       <p className="text-xl">{message.title}</p>
@@ -19,7 +19,7 @@ export default function CarouselErrorPopUp({ isOpen, onClose, message }) {
   );
 }
 
-CarouselErrorPopUp.propTypes = {
+CarouselManagementPopUp.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   message: PropTypes.shape({
