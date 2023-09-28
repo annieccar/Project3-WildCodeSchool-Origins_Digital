@@ -1,2 +1,6 @@
 node_modules
 .env
+public/videos
+public/thumbnails
+public/profileimages
+.DS_Store

@@ -7,18 +7,21 @@ const path = require("node:path");
 
 const express = require("express");
 
+const cookieParser = require("cookie-parser");
+const cors = require("cors");
+
 const app = express();
 
 // use some application-level middlewares
 
 app.use(express.json());
-
-const cors = require("cors");
+app.use(cookieParser());
 
 app.use(
   cors({
     origin: process.env.FRONTEND_URL ?? "http://localhost:3000",
     optionsSuccessStatus: 200,
+    credentials: true,
   })
 );
 
@@ -26,11 +29,15 @@ app.use(
 
 const router = require("./router");
 
-app.use(router);
+app.use("/api", router);
 
 // serve the `backend/public` folder for public resources
 
-app.use(express.static(path.join(__dirname, "../public")));
+app.use("/public", express.static(path.join(__dirname, "../public")));
+app.use(
+  "/profileimages",
+  express.static(path.join(__dirname, "../public/profileimages"))
+);
 
 // serve REACT APP
 
