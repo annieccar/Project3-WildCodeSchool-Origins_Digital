@@ -24,6 +24,12 @@ export default function CategoryManagementCreate({
       .catch((err) => console.error(err));
   };
 
+  const handleKeyDown = (e, func) => {
+    if (e.key === "Enter") {
+      func();
+    }
+  };
+
   return (
     isOpen && (
       <div className="fixed inset-0 flex items-center justify-center z-50">
@@ -40,6 +46,7 @@ export default function CategoryManagementCreate({
             className="border-2 rounded-full focus:outline-none p-2 w-full mb-2 text-white bg-lightBlue dark:bg-dark"
             value={newCategoryName}
             onChange={(e) => setNewCategoryName(e.target.value)}
+            onKeyDown={(e) => handleKeyDown(e, handleCreateCategory)}
           />
 
           <div className="flex justify-end">

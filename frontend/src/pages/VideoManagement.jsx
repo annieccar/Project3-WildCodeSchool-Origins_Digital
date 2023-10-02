@@ -206,6 +206,21 @@ export default function VideoManagement() {
                         </div>
                       </div>
                     ))}
+                {!videos
+                  .filter(
+                    (video) =>
+                      !category.length ||
+                      video.category_id === parseInt(category, 10)
+                  )
+                  .filter(
+                    (video) =>
+                      !keyword.length ||
+                      video.name.toLowerCase().includes(keyword.toLowerCase())
+                  ).length ? (
+                  <p className="px-5 py-1 text-lg">
+                    No results matched your research.
+                  </p>
+                ) : null}
               </div>
             </div>
             <div className="flex flex-col items-center">
