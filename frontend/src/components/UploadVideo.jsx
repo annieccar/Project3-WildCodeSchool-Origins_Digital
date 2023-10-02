@@ -41,8 +41,8 @@ export default function UploadVideo({
             headers: { "Content-Type": "multipart/form-data" },
           }
         );
-        const fileName = videoUploadResponse.data.file_name;
 
+        const { fileName } = videoUploadResponse.data;
         const thumbnailData = new FormData();
         thumbnailData.append("thumbnailfile", data.thumbnailfile[0]);
 
@@ -77,7 +77,7 @@ export default function UploadVideo({
           <button
             type="button"
             onClick={() => setFormActive(false)}
-            className="text-white flex items-center font-bold font-primary text-lg text-start w-full mb-5"
+            className="text-lightBlue dark:text-white flex items-center font-bold font-primary text-lg text-start w-full mb-5"
           >
             <BiLeftArrowAlt size={35} /> Back
           </button>
@@ -111,13 +111,13 @@ export default function UploadVideo({
           <div className="flex flex-col">
             <label
               htmlFor="name"
-              className="text-white font-primary font-bold text-l mb-2 "
+              className="text-lightBlue dark:text-white font-primary font-bold text-l mb-2 "
             >
               Video name
             </label>
             {/* eslint-disable react/jsx-props-no-spreading */}
             <input
-              className="h-9 focus:outline-none mb-2 px-2 rounded-lg border-2 border-solid border-orange bg-dark text-gray font-primary "
+              className="h-9 focus:outline-none mb-2 px-2 rounded-lg border-2 border-solid border-orange bg-almostWhite dark:bg-dark font-primary "
               type="text"
               {...register("name", {
                 required: true,
@@ -135,13 +135,13 @@ export default function UploadVideo({
           <div className="flex flex-col">
             <label
               htmlFor="videofile"
-              className="text-white font-primary font-bold text-l mb-2 "
+              className="text-lightBlue dark:text-white font-primary font-bold text-l mb-2 "
             >
               Video file:
             </label>
 
             <input
-              className="file:font-primary file:text-white file:font-semibold file:rounded-full file:bg-orange-gradient file:border-none file:h-7 file:mt-1 file:px-2 h-10 focus:outline-none mb-2 px-2 rounded-lg border-2 border-solid border-orange bg-dark text-gray font-primary "
+              className="file:font-primary file:text-white file:font-semibold file:rounded-full file:bg-orange-gradient file:border-none file:h-7 file:mt-1 file:px-2 h-10 focus:outline-none mb-2 px-2 rounded-lg border-2 border-solid border-orange bg-almostWhite dark:bg-dark font-primary "
               type="file"
               {...register("videofile", {
                 required: true,
@@ -160,12 +160,12 @@ export default function UploadVideo({
           <div className="flex flex-col">
             <label
               htmlFor="thumbnailfile"
-              className="text-white font-primary font-bold text-l mb-2 "
+              className="text-lightBlue dark:text-white font-primary font-bold text-l mb-2 "
             >
               Thumbnail file:
             </label>
             <input
-              className="file:font-primary file:text-white file:font-semibold file:rounded-full file:bg-orange-gradient file:border-none file:h-7 file:mt-1 file:px-2 h-10 focus:outline-none mb-2 px-2 rounded-lg border-2 border-solid border-orange bg-dark text-gray font-primary "
+              className="file:font-primary file:text-white file:font-semibold file:rounded-full file:bg-orange-gradient file:border-none file:h-7 file:mt-1 file:px-2 h-10 focus:outline-none mb-2 px-2 rounded-lg border-2 border-solid border-orange bg-almostWhite dark:bg-dark font-primary "
               type="file"
               {...register("thumbnailfile", {
                 required: true,
@@ -185,12 +185,12 @@ export default function UploadVideo({
           <div className="flex flex-col">
             <label
               htmlFor="details"
-              className="text-white font-primary font-bold text-l mb-2 "
+              className="text-lightBlue dark:text-white font-primary font-bold text-l mb-2 "
             >
               Video details:
             </label>
             <input
-              className="h-9 focus:outline-none mb-2 px-2 rounded-lg border-2 border-solid border-orange bg-dark text-gray font-primary "
+              className="h-9 focus:outline-none mb-2 px-2 rounded-lg border-2 border-solid border-orange bg-almostWhite dark:bg-dark font-primary "
               type="text"
               {...register("details", {
                 required: true,
@@ -208,13 +208,13 @@ export default function UploadVideo({
           <div className="flex flex-col">
             <label
               htmlFor="duration"
-              className="text-white font-primary font-bold text-l mb-2 "
+              className="text-lightBlue dark:text-white font-primary font-bold text-l mb-2 "
             >
               Video duration:
             </label>
             <div className="flex justify-between items-center mb-2">
               <input
-                className="h-9 focus:outline-none w-20 px-2 rounded-lg border-2 border-solid border-orange bg-dark text-gray font-primary "
+                className="h-9 focus:outline-none w-20 px-2 rounded-lg border-2 border-solid border-orange bg-almostWhite dark:bg-dark font-primary "
                 type="text"
                 {...register("hours", {
                   required: true,
@@ -226,7 +226,7 @@ export default function UploadVideo({
               />
               <p className="font-primary">:</p>
               <input
-                className="h-9 focus:outline-none w-20 px-2 rounded-lg border-2 border-solid border-orange bg-dark text-gray font-primary "
+                className="h-9 focus:outline-none w-20 px-2 rounded-lg border-2 border-solid border-orange bg-almostWhite dark:bg-dark font-primary "
                 type="text"
                 {...register("minutes", {
                   required: true,
@@ -238,7 +238,7 @@ export default function UploadVideo({
               />
               <p className="font-primary">:</p>
               <input
-                className="h-9 focus:outline-none w-20 px-2 rounded-lg border-2 border-solid border-orange bg-dark text-gray font-primary "
+                className="h-9 focus:outline-none w-20 px-2 rounded-lg border-2 border-solid border-orange bg-almostWhite dark:bg-dark font-primary "
                 type="text"
                 {...register("seconds", {
                   required: true,
@@ -258,12 +258,12 @@ export default function UploadVideo({
           <div className="flex flex-col">
             <label
               htmlFor="category"
-              className="text-white font-primary font-bold text-l mb-2 "
+              className="text-lightBlue dark:text-white font-primary font-bold text-l mb-2 "
             >
               Category:
             </label>
             <select
-              className="h-9 focus:outline-none mb-2 px-2 rounded-lg border-2 border-solid border-orange bg-dark text-gray font-primary "
+              className="h-9 focus:outline-none mb-2 px-2 rounded-lg border-2 border-solid border-orange bg-almostWhite dark:bg-dark font-primary "
               {...register("category", {
                 required: true,
               })}
@@ -284,12 +284,12 @@ export default function UploadVideo({
           <div className="flex flex-col">
             <label
               htmlFor="access"
-              className="text-white font-primary font-bold text-l mb-2 "
+              className="text-lightBlue dark:text-white font-primary font-bold text-l mb-2 "
             >
               User access:
             </label>
             <select
-              className="h-9 focus:outline-none mb-2 px-2 rounded-lg border-2 border-solid border-orange bg-dark text-gray font-primary "
+              className="h-9 focus:outline-none mb-2 px-2 rounded-lg border-2 border-solid border-orange bg-almostWhite dark:bg-dark font-primary "
               {...register("access", {
                 required: true,
               })}

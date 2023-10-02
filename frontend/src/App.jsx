@@ -5,20 +5,23 @@ import Footbar from "./components/Footbar";
 import { CurrentUserContextProvider } from "./contexts/CurrentUserContext";
 import { BlurredBackgroundContextProvider } from "./contexts/BlurredBackgroundContext";
 import { LoginContextProvider } from "./contexts/LoginContext";
+import { ThemeContextProvider } from "./contexts/ThemeContext";
 
 function App() {
   return (
-    <div className=" bg-dark min-h-screen text-white font-primary">
-      <CurrentUserContextProvider>
-        <LoginContextProvider>
-          <Navbar />
-          <BlurredBackgroundContextProvider>
-            <Router />
-          </BlurredBackgroundContextProvider>
-          <Footbar />
-        </LoginContextProvider>
-      </CurrentUserContextProvider>
-    </div>
+    <CurrentUserContextProvider>
+      <LoginContextProvider>
+        <ThemeContextProvider>
+          <div className="min-h-screen h-full bg-almostWhite dark:bg-dark text-lightBlue dark:text-white font-primary">
+            <Navbar />
+            <BlurredBackgroundContextProvider>
+              <Router />
+            </BlurredBackgroundContextProvider>
+            <Footbar />
+          </div>
+        </ThemeContextProvider>
+      </LoginContextProvider>
+    </CurrentUserContextProvider>
   );
 }
 

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import HoverVideoPlayer from "react-hover-video-player";
-import expressAPI from "../services/expressAPI";
+import interceptor from "../hooks/useInstanceWithInterceptor";
 
 import magnifier from "../assets/images/Vector.png";
 import formatTimeFromDb from "../services/formatTimeFromDb";
@@ -11,6 +11,7 @@ export default function Category() {
 
   const [categoryDetails, setCategoryDetails] = useState("");
   const [categoryVideos, setCategoryVideos] = useState([]);
+  const expressAPI = interceptor();
 
   const navigate = useNavigate();
 
@@ -52,7 +53,7 @@ export default function Category() {
   };
 
   return (
-    <div className="flex flex-col items-center bg-dark">
+    <div className="flex flex-col items-center bg-almostWhite dark:bg-dark">
       {categoryDetails && (
         <h1 className="text-orange font-primary font-bold text-2xl lg:text-3xl m-6 w-[340px] lg:w-[700px]">
           {capitalizeFirstLetter(categoryDetails.name)}
@@ -60,7 +61,7 @@ export default function Category() {
       )}
       <div className="w-[340px] flex justify-between mb-4 relative h-8 lg:w-[700px] lg:justify-start">
         <select
-          className="bg-dark w-36 font-primary text-lg lg:mr-20 lg:w-32 lg:text-xl"
+          className="bg-almostWhite dark:bg-dark w-36 focus:outline-none font-primary font-bold text-lg lg:mr-20 lg:w-32 lg:text-xl"
           onChange={handleFilter}
         >
           <option value="">Order by </option>
@@ -68,7 +69,7 @@ export default function Category() {
           <option value="duration">Duration</option>
         </select>
         <input
-          className="bg-dark w-36 lg:w-48 h-8 lg:h-8 font-primary text-lg lg:text-xl p-2 border-2 lg:border-2 border-orange rounded-full text-gray "
+          className="bg-almostWhite dark:bg-dark w-36 lg:w-48 h-8 lg:h-8 font-primary text-lg lg:text-xl p-2 border-2 lg:border-2 border-lightBlue dark:border-orange rounded-full"
           placeholder="Search..."
           onChange={handleSearch}
         />
@@ -92,7 +93,7 @@ export default function Category() {
               <div key={elem.name} className="flex flex-col items-center">
                 <button
                   type="button"
-                  className="relative"
+                  className="relative hover:scale-[110%] duration-300 ease-in-out"
                   onClick={() => handleClick(elem)}
                 >
                   <HoverVideoPlayer
@@ -108,7 +109,7 @@ export default function Category() {
                           alt={elem.name}
                           className="rounded-md"
                         />
-                        <div className="bg-white text-black font-bold absolute rounded-lg right-1 bottom-1 text-sm px-1 font-primary z-10">
+                        <div className="bg-lightBlue dark:bg-white text-almostWhite dark:text-black font-bold absolute rounded-lg right-1 bottom-1 text-sm px-1 font-primary z-10">
                           {formatTimeFromDb(elem.duration)}
                         </div>
                       </>
@@ -120,7 +121,7 @@ export default function Category() {
                     className="w-40 lg:w-80 mx-3.5 my-1 lg:mx-10 lg:mt-6 rounded-md"
                   />
                 </button>
-                <p className="mb-3 font-primary text-orange text-md lg:text-xl font-bold">
+                <p className="mb-3 font-primary text-lightBlue dark:text-orange text-md lg:text-xl font-bold">
                   {elem.name}
                 </p>
               </div>

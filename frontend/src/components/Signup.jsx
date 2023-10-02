@@ -4,13 +4,14 @@ import { useState } from "react";
 import { useCurrentUserContext } from "../contexts/CurrentUserContext";
 import { useBlurredBackgroundContext } from "../contexts/BlurredBackgroundContext";
 import SignupErrorPopUp from "./SignupErrorPopUp";
-import expressAPI from "../services/expressAPI";
+import interceptor from "../hooks/useInstanceWithInterceptor";
 
 export default function Signup() {
   const { setUser } = useCurrentUserContext();
   const { setIsBackgroundBlurred } = useBlurredBackgroundContext();
-
+  const expressAPI = interceptor();
   const [signupErrorPopUpOpen, setSignupErrorPopUpOpen] = useState(false);
+  const [popUpMessage, setPopUpMessage] = useState("");
 
   const handleSignupError = () => {
     setSignupErrorPopUpOpen(true);
@@ -47,6 +48,7 @@ export default function Signup() {
       })
       .catch((err) => {
         console.error(err);
+        setPopUpMessage(err.response.data.message);
         handleSignupError();
       });
   };
@@ -163,7 +165,7 @@ export default function Signup() {
             Username:
           </label>
           <input
-            className=" rounded-md border-[3px] p-1  border-orange bg-dark"
+            className=" rounded-md border-[3px] p-1  border-orange bg-almostWhite dark:bg-dark focus:outline-none"
             type="text"
             placeholder="Enter your username"
             onChange={usernameRegister.onChange}
@@ -178,7 +180,7 @@ export default function Signup() {
             Firstname :
           </label>
           <input
-            className=" rounded-md border-[3px] p-1  border-orange bg-dark"
+            className=" rounded-md border-[3px] p-1  border-orange bg-almostWhite dark:bg-dark focus:outline-none"
             type="text"
             placeholder="Enter your firstname"
             onChange={firstnameRegister.onChange}
@@ -193,7 +195,7 @@ export default function Signup() {
             Lastname:
           </label>
           <input
-            className=" rounded-md border-[3px] p-1  border-orange bg-dark "
+            className=" rounded-md border-[3px] p-1  border-orange bg-almostWhite dark:bg-dark focus:outline-none"
             type="text"
             placeholder="Enter your lastname"
             onChange={lastnameRegister.onChange}
@@ -208,7 +210,7 @@ export default function Signup() {
             Birthdate :
           </label>
           <input
-            className="min-w-[190px] rounded-md border-[3px] p-0.5  border-orange bg-dark "
+            className="min-w-[190px] rounded-md border-[3px] p-0.5  border-orange bg-almostWhite dark:bg-dark focus:outline-none"
             type="date"
             max={giveTodayDate()}
             placeholder="Enter your birthdate"
@@ -272,7 +274,7 @@ export default function Signup() {
             Email:
           </label>
           <input
-            className="rounded-md border-[3px] p-1  border-orange bg-dark"
+            className="rounded-md border-[3px] p-1  border-orange bg-almostWhite dark:bg-dark focus:outline-none"
             type="text"
             placeholder="Enter your email address"
             onChange={emailRegister.onChange}
@@ -287,7 +289,7 @@ export default function Signup() {
             Password:
           </label>
           <input
-            className="rounded-md border-[3px] p-1  border-orange bg-dark"
+            className="rounded-md border-[3px] p-1  border-orange bg-almostWhite dark:bg-dark focus:outline-none"
             type="password"
             placeholder="Choose your password"
             onChange={passwordRegister.onChange}
@@ -305,7 +307,7 @@ export default function Signup() {
             Confirm password:
           </label>
           <input
-            className="rounded-md border-[3px] p-1   border-orange bg-dark"
+            className="rounded-md border-[3px] p-1   border-orange bg-almostWhite dark:bg-dark focus:outline-none"
             type="password"
             placeholder="Confirm your password"
             onChange={passwordConfirmationRegister.onChange}
@@ -316,7 +318,7 @@ export default function Signup() {
         </div>
 
         <input
-          className="w-36 h-9 m-5 my-8  rounded-3xl font-primary font-semibold bg-[linear-gradient(90deg,#FF8200_0%,_#FF2415_100%)]"
+          className="w-36 h-9 m-5 my-8 rounded-3xl text-white font-primary font-semibold bg-[linear-gradient(90deg,#FF8200_0%,_#FF2415_100%)]"
           type="submit"
           value="Sign up"
         />
@@ -339,6 +341,7 @@ export default function Signup() {
       <SignupErrorPopUp
         isOpen={signupErrorPopUpOpen}
         onClose={handleCloseModal}
+        message={popUpMessage}
       />
     </div>
     // Todo : user profile image upload

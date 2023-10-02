@@ -18,9 +18,9 @@ export default function SearchMenu({ setSearchMenu }) {
       <button type="button" onClick={() => setSearchMenu(false)}>
         <div className="fixed z-10 top-0 bottom-12 left-0 right-0 " />
       </button>
-      <div className=" h-20 bg-dark flex justify-center items-center w-full fixed z-50 bottom-12">
+      <div className=" h-20 bg-lightBlue dark:bg-dark flex justify-center items-center w-full fixed z-50 bottom-12">
         <input
-          className=" bg-dark backdrop-blur-sm w-52 h-10 font-primary translate-x-4 text-base lg:text-xl p-2 border-2 lg:border-2 border-orange rounded-md text-gray "
+          className=" bg-lightBlue dark:bg-dark text-almostWhite focus:outline-none backdrop-blur-sm w-52 h-10 font-primary translate-x-4 text-base lg:text-xl p-2 border-2 lg:border-2 border-orange rounded-md"
           placeholder="search"
           onChange={(e) => {
             setKeyWord(e.target.value);

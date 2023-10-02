@@ -20,10 +20,11 @@ export default function VideoCardPlaylist({
     return name;
   };
   return (
-    <div className="flex flex-col items-center gap-2" key={video.id}>
+    <div className="flex flex-col items-center gap-2">
       <button
         type="button"
-        className="relative"
+        className="relative hover:scale-[110%] duration-300 ease-in-out
+"
         onClick={() => navigate(`/videos/${video.id}`)}
       >
         <HoverVideoPlayer
@@ -39,7 +40,7 @@ export default function VideoCardPlaylist({
                 }.png`}
                 alt=""
               />
-              <div className="w-12 bg-white text-dark lg:text-sm font-bold rounded-lg absolute z-10 right-1 bottom-1">
+              <div className="w-12 bg-lightBlue dark:bg-white text-almostWhite dark:text-dark lg:text-sm font-bold rounded-lg absolute z-10 right-1 bottom-1">
                 {formatTimeFromDb(video.duration)}
               </div>
             </>
@@ -58,7 +59,7 @@ export default function VideoCardPlaylist({
             {video.category_id && (
               <button
                 type="button"
-                className="px-2 pb-1 rounded-lg font-semibold text-sm bg-orange-gradient"
+                className="px-2 py-0.5 rounded-lg font-semibold text-white text-sm bg-orange-gradient"
                 onClick={() => navigate(`/category/${video.category_id}`)}
               >
                 {getCategory(video.category_id)}
@@ -96,7 +97,7 @@ VideoCardPlaylist.propTypes = {
     id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
     user_id: PropTypes.number.isRequired,
-  }).isRequired,
+  }),
   categories: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number.isRequired,
@@ -104,4 +105,8 @@ VideoCardPlaylist.propTypes = {
     }).isRequired
   ).isRequired,
   fetchPlaylistVideos: PropTypes.func.isRequired,
+};
+
+VideoCardPlaylist.defaultProps = {
+  playlist: null,
 };

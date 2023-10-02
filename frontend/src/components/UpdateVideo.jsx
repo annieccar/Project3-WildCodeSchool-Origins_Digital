@@ -103,7 +103,7 @@ export default function UpdateVideo({
           <button
             type="button"
             onClick={() => setFormActive(false)}
-            className="text-white flex items-center font-bold font-primary text-lg text-start w-full mb-5"
+            className="text-lightBlue dark:text-white flex items-center font-bold font-primary text-lg text-start w-full mb-5"
           >
             <BiLeftArrowAlt size={35} /> Back
           </button>
@@ -140,13 +140,13 @@ export default function UpdateVideo({
           <div className="flex flex-col">
             <label
               htmlFor="name"
-              className="text-white font-primary font-bold text-l mb-2 "
+              className="text-lightBlue dark:text-white text-lg font-primary font-bold text-l mb-2 "
             >
               Video name
             </label>
             {/* eslint-disable react/jsx-props-no-spreading */}
             <input
-              className="h-9 focus:outline-none mb-2 px-2 rounded-lg border-2 border-solid border-orange bg-dark text-gray font-primary "
+              className="h-9 focus:outline-none mb-2 px-2 text-lg rounded-lg border-2 border-solid border-orange bg-almostWhite dark:bg-dark font-primary "
               type="text"
               {...register("name", {
                 required: true,
@@ -165,23 +165,23 @@ export default function UpdateVideo({
           </div>
           <label
             htmlFor="videofile"
-            className="text-white font-primary font-bold text-l mb-2 "
+            className="text-lightBlue dark:text-white text-lg font-primary font-bold text-l mb-2 "
           >
             Video file:
           </label>
-          <h2 className="text-white font-primary text-xl mb-3">
+          <h2 className="text-orange font-bold font-primary text-xl mb-3">
             {`${selectedVideo.file_name}`}
           </h2>
 
           <div className="flex flex-col">
             <label
               htmlFor="details"
-              className="text-white font-primary font-bold text-l mb-2 "
+              className="text-lightBlue dark:text-white font-primary font-bold text-lg mb-2 "
             >
               Video details:
             </label>
             <input
-              className="h-9 focus:outline-none mb-2 px-2 rounded-lg border-2 border-solid border-orange bg-dark text-gray font-primary "
+              className="h-9 focus:outline-none mb-2 px-2 text-lg rounded-lg border-2 border-solid border-orange bg-almostWhite dark:bg-dark font-primary"
               type="text"
               {...register("details", {
                 required: true,
@@ -201,13 +201,13 @@ export default function UpdateVideo({
           <div className="flex flex-col">
             <label
               htmlFor="duration"
-              className="text-white font-primary font-bold text-l mb-2 "
+              className="text-lightBlue dark:text-white tex-lg font-primary font-bold text-l mb-2 "
             >
               Video duration:
             </label>
             <div className="flex justify-between items-center mb-2">
               <input
-                className="h-9 focus:outline-none w-20 px-2 rounded-lg border-2 border-solid border-orange bg-dark text-gray font-primary "
+                className="h-9 focus:outline-none w-20 px-2 rounded-lg border-2 border-solid border-orange bg-almostWhite dark:bg-dark font-primary "
                 type="text"
                 {...register("hours", {
                   required: true,
@@ -220,7 +220,7 @@ export default function UpdateVideo({
               />
               <p className="font-primary">:</p>
               <input
-                className="h-9 focus:outline-none w-20 px-2 rounded-lg border-2 border-solid border-orange bg-dark text-gray font-primary "
+                className="h-9 focus:outline-none w-20 px-2 rounded-lg border-2 border-solid border-orange bg-almostWhite dark:bg-dark font-primary"
                 type="text"
                 {...register("minutes", {
                   required: true,
@@ -233,7 +233,7 @@ export default function UpdateVideo({
               />
               <p className="font-primary">:</p>
               <input
-                className="h-9 focus:outline-none w-20 px-2 rounded-lg border-2 border-solid border-orange bg-dark text-gray font-primary "
+                className="h-9 focus:outline-none w-20 px-2 rounded-lg border-2 border-solid border-orange bg-almostWhite dark:bg-dark font-primary "
                 type="text"
                 {...register("seconds", {
                   required: true,
@@ -254,24 +254,24 @@ export default function UpdateVideo({
           <div className="flex flex-col">
             <label
               htmlFor="category"
-              className="text-white font-primary font-bold text-l mb-2 "
+              className="text-lightBlue dark:text-white font-primary font-bold text-lg mb-2 "
             >
               Category:
             </label>
             {!editCategory && (
-              <div className="flex justify-between pr-2 mb-5">
-                <h2 className="text-white font-primary text-xl mb-1">
+              <div className="flex justify-between pr-2 mb-5 border-2 border-orange rounded-lg px-1">
+                <h2 className="text-lightBlue dark:text-white font-primary text-lg my-1">
                   {findCategory()}
                 </h2>
                 <button type="button" onClick={() => setEditCategory(true)}>
-                  <img src={editPencil} alt="edit pencil" />
+                  <img src={editPencil} alt="edit pencil" className="w-5" />
                 </button>
               </div>
             )}
             {editCategory && (
               <>
                 <select
-                  className="h-9 focus:outline-none mb-2 px-2 rounded-lg border-2 border-solid border-orange bg-dark text-gray font-primary "
+                  className="h-9 focus:outline-none mb-2 px-1 rounded-lg border-2 border-solid border-orange bg-almostWhite dark:bg-dark font-primary"
                   {...register("category", {
                     required: false,
                   })}
@@ -294,24 +294,24 @@ export default function UpdateVideo({
           <div className="flex flex-col">
             <label
               htmlFor="access"
-              className="text-white font-primary font-bold text-l mb-2 "
+              className="text-lightBlue dark:text-white font-primary font-bold text-lg mb-2 "
             >
               User access:
             </label>
             {!editUser && (
-              <div className="flex justify-between pr-2 mb-5">
-                <h2 className="text-white font-primary text-xl mb-1">
+              <div className="flex justify-between pr-2 mb-5 border-2 border-orange rounded-lg px-1">
+                <h2 className="text-lightBlue dark:text-white font-primary text-lg my-1">
                   Premium User
                 </h2>
                 <button type="button" onClick={() => setEditUser(true)}>
-                  <img src={editPencil} alt="edit pencil" />
+                  <img src={editPencil} alt="edit pencil" className="w-5" />
                 </button>
               </div>
             )}
             {editUser && (
               <>
                 <select
-                  className="h-9 focus:outline-none mb-2 px-2 rounded-lg border-2 border-solid border-orange bg-dark text-gray font-primary "
+                  className="h-9 focus:outline-none mb-2 px-1 rounded-lg border-2 border-solid border-orange bg-almostWhite dark:bg-dark font-primary "
                   {...register("access", {
                     required: true,
                   })}
@@ -338,7 +338,7 @@ export default function UpdateVideo({
             <button
               type="button"
               onClick={() => deleteVideo()}
-              className="text-orange h-10 font-primary font-semibold rounded-full w-36 px-4 py-0.5 border-solid border-2 border-orange"
+              className="text-white h-10 font-primary font-semibold rounded-full w-36 px-4 py-0.5 bg-blue-gradient"
             >
               Delete Video
             </button>

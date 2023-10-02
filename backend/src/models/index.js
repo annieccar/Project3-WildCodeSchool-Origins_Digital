@@ -2,14 +2,12 @@
 
 const models = {};
 
-const ItemsManager = require("./ItemsManager");
 const UsersManager = require("./UsersManager");
 const VideosManager = require("./VideosManager");
 const PlaylistsManager = require("./PlaylistsManager");
 const CategoriesManager = require("./CategoriesManager");
 const CarouselsManager = require("./CarouselsManager");
 
-models.items = new ItemsManager();
 models.users = new UsersManager();
 models.videos = new VideosManager();
 models.playlists = new PlaylistsManager();
