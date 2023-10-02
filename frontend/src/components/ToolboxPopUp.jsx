@@ -27,7 +27,7 @@ export default function ToolboxPopUp({ onClose }) {
         onClick={onClose}
       />
       <div
-        className={`bg-lightBlue dark:bg-opacity-0 dark:backdrop-blur-md border-solid text-almostWhite dark:text-white border-2 border-orange w-60 h-54 px-5 py-3 rounded-md flex flex-col gap-2 items-start fixed z-30 top-14 right-1/3 translate-x-3/4 ${
+        className={`bg-lightBlue dark:bg-opacity-0 dark:backdrop-blur-xl border-solid text-almostWhite dark:text-white border-2 border-orange w-60 h-54 px-5 py-3 rounded-md flex flex-col gap-2 items-start fixed z-30 top-14 right-1/3 translate-x-3/4 ${
           !isDesktop && "top-auto bottom-14 right-52 "
         } `}
       >

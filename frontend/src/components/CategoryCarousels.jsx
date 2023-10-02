@@ -48,28 +48,37 @@ export default function CategoryCarousels() {
   return (
     categoryCarousels.length > 0 && (
       <div className="flex flex-col items-center pb-16">
-        {categoryCarousels.map((array) => (
-          <div
-            className="relative w-100 lg:w-[980px] mb-5"
-            key={`${array[0].carousel_id}`}
-          >
-            <div className="flex justify-between items-center">
-              <h1 className="text-orange font-primary font-bold text-xl my-3 mb-6 ml-5">
-                {capitalizeFirstLetter(array[0].title)}
-              </h1>
-              <button
-                type="button"
-                onClick={() => {
-                  navigate(`/category/${array[0].category_id}`);
-                }}
-                className="text-white bg-orange-gradient font-primary font-semibold rounded-full w-auto h-8 px-4 py-0.5"
-              >
-                View more
-              </button>
+        {categoryCarousels.map((array) =>
+          array.length > 0 ? (
+            <div
+              className="relative w-100 lg:w-[980px] mb-5"
+              key={`${array[0].carousel_id}`}
+            >
+              <div className="flex justify-between items-center my-3">
+                <button
+                  type="button"
+                  onClick={() => {
+                    navigate(`/category/${array[0].category_id}`);
+                  }}
+                >
+                  <h1 className="text-orange font-primary font-bold text-xl ml-5">
+                    {capitalizeFirstLetter(array[0].title)}
+                  </h1>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    navigate(`/category/${array[0].category_id}`);
+                  }}
+                  className="text-white bg-orange-gradient font-primary font-semibold rounded-full w-auto h-8 px-4 py-0.5"
+                >
+                  View more
+                </button>
+              </div>
+              <StaticCarousel videosArray={array} />
             </div>
-            <StaticCarousel videosArray={array} />
-          </div>
-        ))}
+          ) : null
+        )}
       </div>
     )
   );

@@ -95,10 +95,13 @@ export default function Category() {
                   parseInt(b.duration.split(":")[2], 10)
             )
             .map((elem) => (
-              <div key={elem.name} className="flex flex-col items-center">
+              <div
+                key={elem.name}
+                className="flex flex-col items-center justify-center"
+              >
                 <button
                   type="button"
-                  className="relative "
+                  className="relative"
                   onClick={() => handleClick(elem)}
                 >
                   <HoverVideoPlayer

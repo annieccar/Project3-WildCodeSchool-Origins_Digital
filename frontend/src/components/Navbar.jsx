@@ -72,6 +72,12 @@ export default function Navbar() {
     navigate(`/search/name=${keyWord}`);
   };
 
+  const handleKeyDown = (e, func) => {
+    if (e.key === "Enter") {
+      func();
+    }
+  };
+
   const handleToolboxClick = () => {
     setToolboxOpen(!toolboxOpen);
     setCategorySelection(false);
@@ -105,6 +111,7 @@ export default function Navbar() {
               onChange={(e) => {
                 setKeyWord(e.target.value);
               }}
+              onKeyDown={(e) => handleKeyDown(e, handleSearch)}
             />
             <button type="button" onClick={handleSearch}>
               <img
