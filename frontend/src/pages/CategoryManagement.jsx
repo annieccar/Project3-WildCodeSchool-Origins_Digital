@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import expressAPI from "../services/expressAPI";
 import CategoryManagementCreate from "../components/CategoryManagementCreate";
 import CategoryManagementList from "../components/CategoryManagementList";
 import CategoryManagementVideoList from "../components/CategoryManagementVideoList";
+import useInstanceWithInterceptor from "../hooks/useInstanceWithInterceptor";
 
 export default function CategoryManagement() {
   const [categories, setCategories] = useState([]);
@@ -13,6 +13,8 @@ export default function CategoryManagement() {
   const [selectedCategoryVideos, setSelectedCategoryVideos] = useState([]);
   const [isNewCategoryModalOpen, setIsNewCategoryModalOpen] = useState(false);
   const [selectedCategoryVideoIds, setSelectedCategoryVideoIds] = useState([]);
+
+  const expressAPI = useInstanceWithInterceptor();
 
   useEffect(() => {
     expressAPI
