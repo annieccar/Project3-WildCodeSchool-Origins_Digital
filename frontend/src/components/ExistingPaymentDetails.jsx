@@ -24,12 +24,10 @@ export default function ExistingPaymentDetails({
       {!modUpdate && (
         <form className="w-80 pb-10">
           <div>
-            <h2 className="text-white font-primary font-bold text-l my-2 ">
+            <h2 className="text-orange font-primary font-bold text-l my-2 ">
               Renewal date:
             </h2>
-            <h2 className="text-white font-primary font-bold text-l my-2 ">
-              25/01/2024
-            </h2>
+            <h2 className="font-primary font-bold text-l my-2 ">25/01/2024</h2>
           </div>
 
           <div className="flex justify-center my-10">
@@ -47,19 +45,19 @@ export default function ExistingPaymentDetails({
           <div className="flex flex-col">
             <label
               htmlFor="CardNumber"
-              className="text-white font-primary font-bold text-l mb-2 "
+              className="font-primary font-bold text-l mb-2 "
             >
               Card Number
             </label>
             <input
-              className="h-9 focus:outline-none mb-2 px-2 rounded-lg border-2 border-solid border-orange bg-dark text-gray font-primary "
+              className="h-9 focus:outline-none mb-2 px-2 rounded-lg border-2 border-solid border-orange bg-almostWhite dark:bg-dark font-primary "
               type="text"
               name="cardnumber"
               defaultValue="**** **** **** 6258"
             />
           </div>
 
-          <div className="flex items-center text-white">
+          <div className="flex items-center text-lightBlue dark:text-white">
             <RiVisaFill size={40} />
           </div>
 

@@ -1,50 +1,38 @@
 import PropTypes, { shape } from "prop-types";
-import { useBlurredBackgroundContext } from "../contexts/BlurredBackgroundContext";
+import popUpMessages from "../json/crslMngmtPopMsg.json";
 
 function CarouselManagementList({
   currentCarousel,
   carouselList,
-  setCarouselErrorPopUpOpen,
-  setCarouselErrorMessage,
+  handlePopUpOpen,
+  setCarouselPopUpMessage,
   fetchNewCarousel,
+  hasVideoAssignmentChanged,
 }) {
-  const { setIsBackgroundBlurred } = useBlurredBackgroundContext();
-
-  const handleCarouselError = () => {
-    setCarouselErrorPopUpOpen(true);
-    setIsBackgroundBlurred(true);
-  };
-
   const handleCarouselSelected = (id) => {
-    if (currentCarousel.modified.length > 0) {
-      setCarouselErrorMessage({
-        title: "Carousel has been modified",
-        content:
-          "You have unsaved modifications on this carousel. Would you like to discard them and proceed ?",
-        button: {
-          onValidation: "changeCarousel",
-          text: "Confirm",
-          value: id,
-        },
+    if (hasVideoAssignmentChanged()) {
+      setCarouselPopUpMessage({
+        ...popUpMessages.carouselSelectedWarning,
+        value: id,
       });
-      handleCarouselError();
-    } else {
-      fetchNewCarousel(id);
+      return handlePopUpOpen();
     }
+
+    return fetchNewCarousel(id);
   };
 
   return (
-    <div className="m-2 mr-6 pt-[61px] bg-dark">
+    <div className="m-2 mr-6 pt-[61px] bg-almostWhite dark:bg-dark">
       <p className="mx-4 my-2 pb-2 font-semibold  text-orange">
         Carousels list
       </p>
-      <div className="flex flex-col border-solid border-2 border-orange w-48 px-5 py-3 rounded-md">
+      <div className="flex flex-col border-solid border-2 border-lightBlue dark:border-orange w-48 px-5 py-3 rounded-md">
         {carouselList.length > 0 &&
           carouselList.map((carousel) => (
             <button
-              className={`m-2 p-1 border-solid border-2 border-orange rounded-3xl ${
+              className={`m-2 p-1 font-bold border-solid border-2 border-lightBlue dark:border-orange rounded-3xl ${
                 carousel.id === currentCarousel.carouselId &&
-                "bg-[linear-gradient(90deg,_#FF8200_0%,_#FF2415_100%)]"
+                "bg-[linear-gradient(90deg,_#FF8200_0%,_#FF2415_100%)] border-orange text-white"
               }`}
               type="button"
               key={carousel.id}
@@ -64,16 +52,17 @@ CarouselManagementList.propTypes = {
   currentCarousel: PropTypes.shape({
     carouselId: PropTypes.number,
     title: PropTypes.string.isRequired,
-    base: PropTypes.arrayOf(
+    videosArray: PropTypes.arrayOf(
       shape({
         title: PropTypes.string,
         id: PropTypes.number,
         video_id: PropTypes.number.isRequired,
       })
     ).isRequired,
-    modified: PropTypes.arrayOf(
+    videosArrayRef: PropTypes.arrayOf(
       shape({
-        mod: PropTypes.string.isRequired,
+        title: PropTypes.string,
+        id: PropTypes.number,
         video_id: PropTypes.number.isRequired,
       })
     ).isRequired,
@@ -84,7 +73,8 @@ CarouselManagementList.propTypes = {
       title: PropTypes.string.isRequired,
     })
   ).isRequired,
-  setCarouselErrorPopUpOpen: PropTypes.func.isRequired,
-  setCarouselErrorMessage: PropTypes.func.isRequired,
+  handlePopUpOpen: PropTypes.func.isRequired,
+  setCarouselPopUpMessage: PropTypes.func.isRequired,
   fetchNewCarousel: PropTypes.func.isRequired,
+  hasVideoAssignmentChanged: PropTypes.func.isRequired,
 };

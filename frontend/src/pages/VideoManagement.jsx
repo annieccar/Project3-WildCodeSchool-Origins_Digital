@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import expressAPI from "../services/expressAPI";
+import interceptor from "../hooks/useInstanceWithInterceptor";
 import UpdateVideo from "../components/UpdateVideo";
 import UploadVideo from "../components/UploadVideo";
 import magnifier from "../assets/images/Vector.png";
@@ -10,6 +10,9 @@ export default function VideoManagement() {
   const [videos, setVideos] = useState([]);
   const [categories, setCategories] = useState([]);
   const [selectedVideo, setSelectedVideo] = useState(null);
+
+  const expressAPI = interceptor();
+
   const [formActive, setFormActive] = useState(false);
   const [addVideo, setAddVideo] = useState(false);
   const [isMobile, setIsMobile] = useState(true);
@@ -69,7 +72,7 @@ export default function VideoManagement() {
   return (
     videos.length && (
       <>
-        <div className="w-screen bg-dark flex flex-col items-center">
+        <div className="bg-almostWhite dark:bg-dark flex flex-col items-center">
           {(!isMobile || (isMobile && !formActive)) && (
             <h3 className="text-orange font-primary font-bold text-2xl lg:text-3xl mt-7">
               Videos Management
@@ -103,7 +106,7 @@ export default function VideoManagement() {
               </div>
               <div className="flex justify-between p-2 relative mb-4 w-full">
                 <select
-                  className="bg-dark w-28 focus:outline-none font-primary text-sm lg:mr-20 lg:w-32 lg:text-xl"
+                  className="bg-almostWhite dark:bg-dark w-28 focus:outline-none font-primary text-sm lg:mr-20 lg:w-32 lg:text-xl"
                   onChange={handleCategory}
                 >
                   <option className="font-primary text-md" value="">
@@ -117,7 +120,7 @@ export default function VideoManagement() {
                     ))}
                 </select>
                 <input
-                  className="bg-dark focus:outline-none w-44 lg:w-52 h-9 font-primary text-lg lg:text-xl p-2 border-2 lg:border-2 border-orange rounded-full text-gray "
+                  className="bg-almostWhite dark:bg-dark focus:outline-none w-44 lg:w-52 h-9 font-primary text-lg lg:text-xl p-2 border-2 lg:border-2 border-lightBlue dark:border-orange rounded-full"
                   placeholder="search"
                   onChange={handleSearch}
                 />
@@ -143,7 +146,7 @@ export default function VideoManagement() {
                   </div>
                 </div>
               )}
-              <div className="border-solid rounded-xl border-2 border-orange flex flex-col mb-16 w-[330px] lg:w-[630px] max-h-[500px] min-h-[200px] overflow-y-scroll  lg:scrollbar-track-white lg:scrollbar-thumb-gray lg:scrollbar-thin scrollbar-thumb-rounded-md scrollbar-track-rounded-md">
+              <div className="border-solid p-2 rounded-xl border-2 border-orange flex flex-col mb-16 w-[330px] lg:w-[630px] max-h-[500px] min-h-[200px] overflow-y-scroll lg:scrollbar-thumb-lightBlue lg:scrollbar-track-white dark:lg:scrollbar-thumb-gray lg:scrollbar-thin scrollbar-thumb-rounded-md scrollbar-track-rounded-md">
                 {videos.length > 0 &&
                   videos
                     .filter(
@@ -174,7 +177,10 @@ export default function VideoManagement() {
                           categories.map((item) => {
                             if (item.id === video.category_id) {
                               return (
-                                <div className="font-primary text-lg lg:w-[150px]">
+                                <div
+                                  className="font-primary text-lg lg:w-[150px]"
+                                  key={item.id}
+                                >
                                   {capitalizeFirstLetter(item.name)}
                                 </div>
                               );

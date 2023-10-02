@@ -12,7 +12,7 @@ export default function SignUpLogin() {
   };
   return (
     <div
-      className={` flex flex-col items-center bg-dark text-white ${
+      className={` flex flex-col items-center bg-almostWhite dark:bg-dark text-lightBlue dark:text-white ${
         isBackgroundBlurred && "blur-sm"
       }`}
     >
@@ -20,8 +20,8 @@ export default function SignUpLogin() {
         <button
           className={
             loginSelected
-              ? `w-36 h-9 m-5 rounded-3xl font-primary font-semibold bg-[linear-gradient(90deg,_#FF8200_0%,_#FF2415_100%)]`
-              : `w-36 h-9 m-5 rounded-3xl font-primary font-semibold border-2 border-orange`
+              ? `w-36 h-9 m-5 rounded-3xl text-white font-primary font-semibold bg-[linear-gradient(90deg,_#FF8200_0%,_#FF2415_100%)]`
+              : `w-36 h-9 m-5 rounded-3xl text-orange font-primary font-semibold border-2 border-orange`
           }
           type="button"
           onClick={changeSelected}
@@ -33,8 +33,8 @@ export default function SignUpLogin() {
         <button
           className={
             !loginSelected
-              ? `w-36 h-9 m-5 rounded-3xl font-primary font-semibold bg-[linear-gradient(90deg,_#FF8200_0%,_#FF2415_100%)]`
-              : `w-36 h-9 m-5 rounded-3xl font-primary font-semibold border-2 border-orange`
+              ? `w-36 h-9 m-5 rounded-3xl text-white font-primary font-semibold bg-[linear-gradient(90deg,_#FF8200_0%,_#FF2415_100%)]`
+              : `w-36 h-9 m-5 rounded-3xl text-orange font-primary font-semibold border-2 border-orange`
           }
           type="button"
           onClick={changeSelected}

@@ -14,19 +14,19 @@ export default function Footbar() {
   const [searchMenu, setSearchMenu] = useState(false);
 
   const handleCategory = () => {
-    setCategorySelection(true);
+    setCategorySelection(!categorySelection);
     setToolboxOpen(false);
     setSearchMenu(false);
   };
 
   const handleToolboxClick = () => {
-    setToolboxOpen(true);
+    setToolboxOpen(!toolboxOpen);
     setCategorySelection(false);
     setSearchMenu(false);
   };
 
   const handleSearch = () => {
-    setSearchMenu(true);
+    setSearchMenu(!searchMenu);
     setToolboxOpen(false);
     setCategorySelection(false);
   };
@@ -34,7 +34,7 @@ export default function Footbar() {
   return (
     <>
       <div className="fixed bottom-0 w-full">
-        <div className="bg-dark w-full h-12 flex justify-around lg:hidden">
+        <div className="bg-lightBlue dark:bg-dark text-lightBlue dark:text-white w-full h-12 flex justify-around lg:hidden">
           <Link to="/" className="h-full  p-1">
             <img
               className="w-full h-full"
@@ -83,12 +83,7 @@ export default function Footbar() {
       {categorySelection && (
         <CategoryMenu setCategorySelection={setCategorySelection} />
       )}
-      {toolboxOpen && (
-        <ToolboxPopUp
-          isOpen={toolboxOpen}
-          onClose={() => setToolboxOpen(!toolboxOpen)}
-        />
-      )}
+      {toolboxOpen && <ToolboxPopUp onClose={() => setToolboxOpen(false)} />}
       {searchMenu && <SearchMenu setSearchMenu={setSearchMenu} />}
     </>
   );

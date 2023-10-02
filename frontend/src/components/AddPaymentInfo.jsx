@@ -33,7 +33,7 @@ export default function AddPaymentInfo({
 
   return (
     <form
-      className="w-80 pb-10 z-50 "
+      className="text-lightBlue dark:text-white w-80 pb-10 z-50 "
       onSubmit={
         userTypeId === 1
           ? handleSubmit(upgradePremium)
@@ -46,13 +46,13 @@ export default function AddPaymentInfo({
       <div className="flex flex-col">
         <label
           htmlFor="CardholderName"
-          className="text-white font-primary font-bold text-l mb-2 "
+          className="font-primary font-bold text-l mb-2 "
         >
           Cardholder Name
         </label>
         {/* eslint-disable react/jsx-props-no-spreading */}
         <input
-          className="h-9 focus:outline-none mb-2 px-2 rounded-lg border-2 border-solid border-orange bg-dark text-gray font-primary "
+          className="h-9 focus:outline-none mb-2 px-2 rounded-lg border-2 border-solid border-orange bg-almostWhite dark:bg-dark font-primary "
           type="text"
           {...register("cardholdername", {
             required: true,
@@ -71,12 +71,12 @@ export default function AddPaymentInfo({
       <div className="flex flex-col">
         <label
           htmlFor="CardNumber"
-          className="text-white font-primary font-bold text-l mb-2 "
+          className="font-primary font-bold text-l mb-2 "
         >
           Card Number
         </label>
         <input
-          className="h-9 focus:outline-none mb-2 px-2 rounded-lg border-2 border-solid border-orange bg-dark text-gray font-primary "
+          className="h-9 focus:outline-none mb-2 px-2 rounded-lg border-2 border-solid border-orange bg-almostWhite dark:bg-dark font-primary "
           type="password"
           {...register("cardnumber", {
             required: true,
@@ -93,26 +93,26 @@ export default function AddPaymentInfo({
         )}
       </div>
       <div className="flex items-center">
-        <div className="mr-3 text-white">
+        <div className="mr-3 text-lightBlue dark:text-white">
           <RiVisaFill size={40} />
         </div>
-        <div className="mr-3 text-white">
+        <div className="mr-3 text-lightBlue dark:text-white">
           <RiMastercardFill size={40} />
         </div>
-        <div className="mr-3 text-white">
+        <div className="mr-3 text-lightBlue dark:text-white">
           <LiaCcAmex size={40} />
         </div>
       </div>
       <div className="flex flex-col">
         <label
           htmlFor="expiryDate"
-          className="text-white font-primary font-bold text-l mb-2 "
+          className="font-primary font-bold text-l mb-2 "
         >
           Expiry Date
         </label>
         <div className="flex w-full">
           <select
-            className="h-9 w-36 mb-2 mr-6 px-2 rounded-lg border-2 border-solid border-orange bg-dark text-gray font-primary "
+            className="h-9 w-36 mb-2 mr-6 px-2 rounded-lg border-2 border-solid border-orange bg-almostWhite dark:bg-dark font-primary "
             name="month"
             id="month"
           >
@@ -131,7 +131,7 @@ export default function AddPaymentInfo({
             <option value="dec">December</option>
           </select>
           <select
-            className="h-9 w-36 mb-2 px-2 rounded-lg border-2 border-solid border-orange bg-dark text-gray font-primary "
+            className="h-9 w-36 mb-2 px-2 rounded-lg border-2 border-solid border-orange bg-almostWhite dark:bg-dark font-primary "
             name="year"
             id="year"
           >
@@ -154,13 +154,13 @@ export default function AddPaymentInfo({
       <div className="flex flex-col">
         <label
           htmlFor="cryptogram"
-          className="text-white font-primary font-bold text-l mb-2 "
+          className="font-primary font-bold text-l mb-2 "
         >
           Cryptogram
         </label>
         <div className="flex items-center">
           <input
-            className="h-9 focus:outline-none w-32 mr-2 px-2 rounded-lg border-2 border-solid border-orange bg-dark text-gray font-primary "
+            className="h-9 focus:outline-none w-32 mr-2 px-2 rounded-lg border-2 border-solid border-orange bg-almostWhite dark:bg-dark font-primary "
             type="text"
             {...register("cryptogram", {
               required: true,
@@ -170,7 +170,7 @@ export default function AddPaymentInfo({
             name="cryptogram"
             defaultValue=""
           />
-          <div className="text-white">
+          <div className="text-lightBlue dark:text-white">
             <PiCreditCard size={40} />
           </div>
         </div>

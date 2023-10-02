@@ -26,7 +26,11 @@ export default function PlaylistMenuModal({
         className="fixed inset-0"
       />
       <div className="absolute z-10 flex flex-col right-0 translate-y-[2rem] border-2 border-orange backdrop-blur-lg rounded-lg whitespace-nowrap py-1 px-2">
-        <button type="button" className="text-sm" onClick={handleDelete}>
+        <button
+          type="button"
+          className="text-sm font-bold"
+          onClick={handleDelete}
+        >
           Delete from playlist
         </button>
       </div>

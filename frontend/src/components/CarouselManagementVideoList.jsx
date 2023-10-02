@@ -16,54 +16,41 @@ function CarouselManagementVideoList({
     category: "",
   });
 
-  const isChecked = (videoId) => {
-    return currentCarousel.base.some((element) => element.video_id === videoId);
+  const isChecked = (clickedVideoId) => {
+    return currentCarousel.videosArray.some(
+      (video) => video.video_id === clickedVideoId
+    );
   };
 
-  const handleCheckbox = (videoId) => {
-    if (currentCarousel.base.some((element) => element.video_id === videoId)) {
-      if (
-        currentCarousel.modified.some((element) => element.video_id === videoId)
-      ) {
-        return setCurrentCarousel({
-          ...currentCarousel,
-          base: currentCarousel.base.filter((el) => el.video_id !== videoId),
-          modified: currentCarousel.modified.filter(
-            (el) => el.video_id !== videoId
-          ),
-        });
-      }
+  const handleCheckbox = (clickedVideoId) => {
+    if (
+      currentCarousel.videosArray.some(
+        (video) => video.video_id === clickedVideoId
+      )
+    ) {
       return setCurrentCarousel({
         ...currentCarousel,
-        base: currentCarousel.base.filter((el) => el.video_id !== videoId),
-        modified: [
-          ...currentCarousel.modified.filter((el) => el.video_id !== videoId),
-          { mod: "removed", video_id: videoId },
-        ],
-      });
-    }
-    if (currentCarousel.modified.some((el) => el.video_id === videoId)) {
-      return setCurrentCarousel({
-        ...currentCarousel,
-        base: [...currentCarousel.base, { video_id: videoId }],
-        modified: currentCarousel.modified.filter(
-          (el) => el.video_id !== videoId
+        videosArray: currentCarousel.videosArray.filter(
+          (video) => video.video_id !== clickedVideoId
         ),
       });
     }
     return setCurrentCarousel({
       ...currentCarousel,
-      base: [...currentCarousel.base, { video_id: videoId }],
-      modified: [
-        ...currentCarousel.modified.filter((el) => el.video_id !== videoId),
-        { mod: "added", video_id: videoId },
+      videosArray: [
+        ...currentCarousel.videosArray,
+        { video_id: clickedVideoId },
       ],
     });
   };
 
   const applyFiltersToVideosList = () => {
     return videosList
-      .filter((video) => video.name.includes(videoListFilters.videoName))
+      .filter((video) =>
+        video.name
+          .toLocaleLowerCase()
+          .includes(videoListFilters.videoName.toLocaleLowerCase())
+      )
       .filter((video) =>
         videoListFilters.category
           ? video.category_id === videoListFilters.category
@@ -76,11 +63,11 @@ function CarouselManagementVideoList({
 
   return (
     videosList.length > 0 && (
-      <div className="bg-dark">
+      <div className="bg-almostWhite dark:bg-dark">
         <h3 className="mx-8 my-4 font-semibold  text-orange">Assign videos</h3>
-        <div className="flex flex-col w-full max-w-[1200px] border-solid border-2 border-orange px-5 py-3 rounded-md">
-          <div className="flex self-end flex-grow max-w-[530px] m-2 rounded-md color:[#010D18] bg-[linear-gradient(90deg,#181001_0%,_#FF680A_50%,#181001_100%)]">
-            <div className=" bg-dark m-0.5 rounded-md w-full">
+        <div className="flex flex-col w-full lg:w-[1200px] border-solid border-2 border-lightBlue dark:border-orange px-5 py-3 rounded-md">
+          <div className="flex self-end flex-grow max-w-[530px] m-2 rounded-md color:[#010D18] bg-[linear-gradient(90deg,#F3F3F3_0%,_#FF680A_50%,#F3F3F3_100%)] dark:bg-[linear-gradient(90deg,#181001_0%,_#FF680A_50%,#181001_100%)]">
+            <div className=" bg-almostWhite dark:bg-dark m-0.5 rounded-md w-full">
               <label htmlFor="categories" className="m-2">
                 Video list filters:
               </label>
@@ -95,7 +82,7 @@ function CarouselManagementVideoList({
                       category: parseInt(e.target.value, 10),
                     })
                   }
-                  className=" bg-dark xs:w-[136px] w-full font-primary text-sm lg:text-md  m-2 my-1 p-1 border-2 border-orange rounded-md text-gray "
+                  className="bg-almostWhite dark:bg-dark xs:w-[136px] w-full font-primary text-sm lg:text-md  m-2 my-1 p-1 border-2 border-orange rounded-full text-gray "
                 >
                   <option value={0}>--By category-- </option>
                   {categoriesList.map((category) => (
@@ -104,10 +91,10 @@ function CarouselManagementVideoList({
                     </option>
                   ))}
                 </select>
-                <div className="flex justify-between items-center m-2 my-1 p-1 xs:w-[136px] w-full border-2 border-orange rounded-md placeholder:text-gray ">
+                <div className="flex justify-between items-center m-2 my-1 p-1 xs:w-[136px] w-full border-2 border-orange rounded-full placeholder:text-gray ">
                   <input
                     type="text"
-                    className="w-24 mx-1  bg-dark font-primary text-sm lg:text-md "
+                    className="w-24 mx-1  bg-almostWhite dark:bg-dark focus:outline-none font-primary text-sm lg:text-md "
                     placeholder="By video name"
                     value={videoListFilters.videoName}
                     onChange={(e) =>
@@ -136,12 +123,12 @@ function CarouselManagementVideoList({
             </div>
           </div>
           <ul
-            className=" grid auto-rows-fr grid-flow-row xs:grid-cols-2 gap-x-14 gap-y sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 w-full border-solid border-2 border-orange  
+            className=" grid auto-rows-fr grid-flow-row xs:grid-cols-2 gap-x-14 gap-y sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 w-full border-solid border-2 border-lightBlue dark:border-orange  
           px-5 py-3 rounded-md "
           >
             {applyFiltersToVideosList().map((video) => (
               <li key={video.name} className="">
-                <div className="flex items-center justify-between ">
+                <div className="flex items-center justify-between gap-2">
                   <label htmlFor={`${video.name}`}>
                     {formatStringFromDb(video.name)}
                   </label>
@@ -151,12 +138,15 @@ function CarouselManagementVideoList({
                     onChange={() => handleCheckbox(video.id)}
                     name={`${video.name}`}
                     id={`${video.name}`}
-                    className="accent-orange rounded-md focus:ring-orange  focus:ring-2 "
+                    className="accent-orange rounded-md"
                   />
                 </div>
-                <hr className="my-3 w-full h-px border-t-0  bg-[linear-gradient(90deg,#010D18_0%,_#FF680A_50%,#010D18_100%)]  " />
+                <hr className="my-3 w-full h-px border-t-0  bg-[linear-gradient(90deg,#F3F3F3_0%,_#FF680A_50%,#F3F3F3_100%)] dark:bg-[linear-gradient(90deg,#010D18_0%,_#FF680A_50%,#010D18_100%)]  " />
               </li>
             ))}
+            {!applyFiltersToVideosList().length && (
+              <p className="col-span-full">No videos matches your research.</p>
+            )}
           </ul>
         </div>
       </div>
@@ -180,16 +170,17 @@ CarouselManagementVideoList.propTypes = {
   currentCarousel: PropTypes.shape({
     carouselId: PropTypes.number,
     title: PropTypes.string.isRequired,
-    base: PropTypes.arrayOf(
+    videosArray: PropTypes.arrayOf(
       shape({
         title: PropTypes.string,
         id: PropTypes.number,
         video_id: PropTypes.number.isRequired,
       })
     ).isRequired,
-    modified: PropTypes.arrayOf(
+    videosArrayRef: PropTypes.arrayOf(
       shape({
-        mod: PropTypes.string.isRequired,
+        title: PropTypes.string,
+        id: PropTypes.number,
         video_id: PropTypes.number.isRequired,
       })
     ).isRequired,

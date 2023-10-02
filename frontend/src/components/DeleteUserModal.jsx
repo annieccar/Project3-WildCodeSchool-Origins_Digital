@@ -6,10 +6,10 @@ function DeleteUserModal({ username, closeModal, handleUserDelete }) {
       <button
         type="button"
         aria-label="closeModal"
-        className="fixed inset-0 backdrop-blur"
+        className="fixed inset-0 z-30 backdrop-blur"
         onClick={closeModal}
       />
-      <div className="bg-dark min-w-[15rem] w-fit flex flex-col gap-1 items-center font-primary font-semibold text-white fixed z-10 top-1/3 left-1/2 -translate-y-1/2 -translate-x-1/2 p-10 rounded-lg border-2 border-orange">
+      <div className="bg-lightBlue dark:bg-dark min-w-[15rem] w-fit flex flex-col gap-1 items-center font-primary font-semibold text-white fixed z-30 top-1/3 left-1/2 -translate-y-1/2 -translate-x-1/2 p-10 rounded-lg border-2 border-orange">
         <p className="text-center">
           Are you sure you want to delete this user ?
         </p>

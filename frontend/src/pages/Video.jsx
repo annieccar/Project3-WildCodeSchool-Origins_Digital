@@ -3,7 +3,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import { createPortal } from "react-dom";
 import AddFavoritesPopUp from "../components/AddFavoritesPopUp";
 import SharePopUp from "../components/SharePopUp";
-import expressApi from "../services/expressAPI";
+import interceptor from "../hooks/useInstanceWithInterceptor";
+
 import StaticCarousel from "../components/StaticCarousel";
 import add from "../assets/images/addPlaylist.svg";
 import share from "../assets/images/share.svg";
@@ -15,13 +16,14 @@ export default function Video() {
   const [addPlaylist, setAddPlaylist] = useState(false);
   const [shareVideo, setShareVideo] = useState(false);
   const [categoryVideos, setCategoryVideos] = useState([]);
+  const expressAPI = interceptor();
 
   useEffect(() => {
-    expressApi
+    expressAPI
       .get(`/api/videos/${id}`)
       .then((res) => {
         setVideoInfos(res.data);
-        expressApi
+        expressAPI
           .get(`/api/categories/${res.data.category_id}/videos`)
           .then((response) => {
             setCategoryVideos(response.data.filter((video) => video.id !== id));
@@ -42,7 +44,7 @@ export default function Video() {
   const navigate = useNavigate();
 
   return (
-    <div className="flex flex-col items-center bg-dark lg:pb-16">
+    <div className="flex flex-col items-center bg-almostWhite dark:bg-dark lg:pb-16">
       {videoInfos && (
         <div className="mt-8 flex flex-col items-center">
           <h1 className="mb-5 text-orange text-center font-primary text-2xl lg:text-3xl font-bold">
@@ -51,6 +53,7 @@ export default function Video() {
           <video
             className="w-10/12 lg:w-[1000px]"
             controls
+            controlsList="nodownload"
             key={videoInfos.file_name}
           >
             <track default kind="captions" />
@@ -116,13 +119,19 @@ export default function Video() {
               document.body
             )}
           {shareVideo &&
-            createPortal(<SharePopUp videoInfos={videoInfos} />, document.body)}
+            createPortal(
+              <SharePopUp
+                videoInfos={videoInfos}
+                close={() => setShareVideo(false)}
+              />,
+              document.body
+            )}
         </div>
       )}
       {categoryVideos && (
         <div className="relative mt-10">
           <div className="flex justify-between items-center">
-            <h1 className="text-orange font-primary font-bold text-xl my-3 ml-5">
+            <h1 className="text-lightBlue dark:text-orange font-primary font-bold text-xl my-3 ml-5">
               More videos like this
             </h1>
             <button
@@ -130,7 +139,7 @@ export default function Video() {
               onClick={() => {
                 navigate(`/category/${videoInfos.category_id}`);
               }}
-              className="bg-orange-gradient font-semibold rounded-full h-8 px-4 py-0.5 mr-5"
+              className="text-white bg-orange-gradient font-semibold rounded-full h-8 px-4 py-0.5 mr-5"
             >
               See all
             </button>

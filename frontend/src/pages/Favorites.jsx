@@ -2,13 +2,14 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCurrentUserContext } from "../contexts/CurrentUserContext";
 import FavoritesCarousel from "../components/FavoritesCarousel";
-import expressAPI from "../services/expressAPI";
+import interceptor from "../hooks/useInstanceWithInterceptor";
 import deleteIcon from "../assets/images/delete.svg";
 
 export default function Favorites() {
   const [playlists, setPlaylists] = useState(null);
   const { user } = useCurrentUserContext();
   const navigate = useNavigate();
+  const expressAPI = interceptor();
 
   const fetchUserPlaylists = () => {
     expressAPI
@@ -32,7 +33,7 @@ export default function Favorites() {
   };
 
   return (
-    <div className="bg-dark flex flex-col items-center py-5">
+    <div className="bg-almostWhite dark:bg-dark flex flex-col items-center py-5">
       <h1 className="text-orange lg:text-3xl font-semibold mb-5">
         My Playlists
       </h1>
@@ -56,7 +57,7 @@ export default function Favorites() {
                 <div className="flex gap-2">
                   <button
                     type="button"
-                    className="bg-orange-gradient text-sm lg:text-md font-semibold rounded-2xl w-auto px-2 lg:px-4"
+                    className="text-white bg-orange-gradient text-sm lg:text-md font-semibold rounded-2xl w-auto px-2 lg:px-4"
                     onClick={() => navigate(`/playlists/${playlist.id}`)}
                   >
                     Show
@@ -66,7 +67,7 @@ export default function Favorites() {
                     className="flex items-center gap-2 bg-blue-gradient font-semibold rounded-full px-2 py-0.5"
                     onClick={() => handleDelete(playlist.id)}
                   >
-                    <p className="text-sm lg:text-md">Delete</p>
+                    <p className="text-sm text-white lg:text-md">Delete</p>
                     <img src={deleteIcon} alt="Delete" />
                   </button>
                 </div>
