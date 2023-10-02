@@ -142,7 +142,7 @@ const usersToCSV = async (req, res) => {
     let [users] = await models.users.findAll();
 
     users = users.map((user) => {
-      const { hashedPassword, ...infos } = user;
+      const { hashedPassword, profileimage, ...infos } = user;
       return infos;
     });
 
