@@ -4,7 +4,7 @@ import HoverVideoPlayer from "react-hover-video-player";
 import { BiLeftArrowAlt } from "react-icons/bi";
 import PropTypes from "prop-types";
 
-import expressAPI from "../services/expressAPI";
+import useInstanceWithInterceptor from "../hooks/useInstanceWithInterceptor";
 
 export default function UploadVideo({
   setFormActive,
@@ -21,6 +21,8 @@ export default function UploadVideo({
 
   const [videoFile, setVideoFile] = useState([]);
   const [File, setFile] = useState([]);
+
+  const expressAPI = useInstanceWithInterceptor();
 
   const onSubmit = (data) => {
     const duration = `${data.hours}:${data.minutes}:${data.seconds}`;

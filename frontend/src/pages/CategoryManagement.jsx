@@ -7,7 +7,6 @@ import CategoryManagementVideoList from "../components/CategoryManagementVideoLi
 import CustomModal from "../components/CustomModal";
 
 export default function CategoryManagement() {
-  const expressAPI = useInstanceWithInterceptor();
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState({
     name: null,
@@ -17,6 +16,8 @@ export default function CategoryManagement() {
   const [isNewCategoryModalOpen, setIsNewCategoryModalOpen] = useState(false);
   const [selectedCategoryVideoIds, setSelectedCategoryVideoIds] = useState([]);
   const [modal, setModal] = useState(false);
+
+  const expressAPI = useInstanceWithInterceptor();
 
   useEffect(() => {
     expressAPI
