@@ -107,21 +107,21 @@ export default function CategoryManagement() {
   };
 
   return (
-    <div>
-      <div className="flex flex-col px-2 pt-10 bg-almostWhite dark:bg-dark lg:flex-row lg:flex-wrap">
+    <div className="pb-16 lg:pb-8 bg-almostWhite dark:bg-dark">
+      <div className="flex flex-col items-center px-2 pt-10 bg-almostWhite dark:bg-dark lg:flex-row lg:flex-wrap lg:items-st">
         <h3 className="font-bold text-xl text-orange self-center pb-4 my-3 lg:text-center lg:w-full">
           Categories management
         </h3>
         <button
           type="button"
-          className="w-44 h-10 m-2 text-white font-bold rounded-3xl lg:absolute lg:top-0 lg:left-0 font-primary bg-[linear-gradient(90deg,_#FF8200_0%,_#FF2415_100%)]"
+          className="w-44 h-10 m-2 text-white font-bold rounded-3xl lg:absolute lg:top-5 lg:left-5 font-primary bg-[linear-gradient(90deg,_#FF8200_0%,_#FF2415_100%)]"
           onClick={openNewCategoryModal}
         >
           Create new category
         </button>
       </div>
 
-      <div className="flex flex-col min-h-screen bg-almostWhite dark:bg-dark lg:flex-row lg:min-h-[1700px]">
+      <div className="flex flex-col items-center bg-almostWhite dark:bg-dark lg:flex-row lg:items-start lg:justify-around">
         <CategoryManagementList
           categories={categories}
           selectedCategory={selectedCategory}
@@ -138,14 +138,12 @@ export default function CategoryManagement() {
         />
       </div>
 
-      <div className="min-h-screen justify-center lg:justify-start bg-almostWhite dark:bg-dark ">
-        <div className="bg-dark">
-          <CategoryManagementCreate
-            isOpen={isNewCategoryModalOpen}
-            onClose={closeNewCategoryModal}
-            onCategoryCreate={handleCategoryCreate}
-          />
-        </div>
+      <div className="bg-dark">
+        <CategoryManagementCreate
+          isOpen={isNewCategoryModalOpen}
+          onClose={closeNewCategoryModal}
+          onCategoryCreate={handleCategoryCreate}
+        />
       </div>
     </div>
   );

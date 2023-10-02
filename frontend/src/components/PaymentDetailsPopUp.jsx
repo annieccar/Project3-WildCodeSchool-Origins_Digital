@@ -8,9 +8,9 @@ export default function PaymentDetailsPopUp({ setPaymentDetailsModal, text }) {
   return (
     <div>
       <button type="button" onClick={closePopUp}>
-        <div className="fixed z-10 top-0 bottom-0 left-0 right-0 backdrop-blur-md" />
+        <div className="fixed z-10 top-0 bottom-0 left-0 right-0 backdrop-blur-sm" />
       </button>
-      <div className="bg-dark border-solid border-2 border-orange w-64 px-5 py-3 rounded-md flex flex-col gap-2 items-center absolute z-50 bottom-1/2 right-1/2 translate-x-1/2 translate-y-1/2 ">
+      <div className="dark:bg-dark bg-lightBlue border-solid border-2 border-orange w-64 px-5 py-3 rounded-md flex flex-col gap-2 items-center absolute z-50 bottom-1/2 right-1/2 translate-x-1/2 translate-y-1/2 ">
         <p className="text-orange text-center font-primary font-bold text-lg my-2">
           Your payment details have been successfully {text}.
         </p>

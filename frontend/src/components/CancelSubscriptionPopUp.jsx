@@ -16,7 +16,7 @@ export default function CancelSubscriptionPopUp({
   return (
     <div>
       <button type="button" onClick={keepSubscription}>
-        <div className="fixed z-10 top-0 bottom-0 left-0 right-0 backdrop-blur-md" />
+        <div className="fixed z-10 top-0 bottom-0 left-0 right-0 backdrop-blur-sm" />
       </button>
       <div className="bg-lightBlue dark:bg-dark border-solid border-2 border-orange w-[330px] px-5 py-3 rounded-md flex flex-col gap-2 items-center fixed z-50 bottom-1/2 right-1/2 translate-x-1/2 translate-y-1/2 ">
         <p className="text-almostWhite dark:text-white text-center font-primary font-bold text-md my-2">

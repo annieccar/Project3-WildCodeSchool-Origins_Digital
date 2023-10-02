@@ -151,44 +151,53 @@ export default function CarouselManagement() {
 
   return (
     <div className={` ${isBackgroundBlurred && "blur-sm"}`}>
-      <div className={`flex flex-col px-2 pt-1 bg-almostWhite dark:bg-dark `}>
-        {carouselManagementDisplay === 0 && (
-          <h2 className="font-bold text-xl text-orange self-center pb-4 my-3">
-            Carousel management
-          </h2>
-        )}
-        <div className="flex flex-wrap">
-          {!isDesktop && carouselManagementDisplay !== 0 ? (
+      <div className="pb-16 lg:bp-0 bg-almostWhite dark:bg-dark">
+        <div className="flex flex-col items-center px-2 py-1 bg-almostWhite dark:bg-dark">
+          {carouselManagementDisplay === 0 && (
+            <h2 className="font-bold text-xl text-orange self-center pb-4 my-3">
+              Carousel management
+            </h2>
+          )}
+          <div className="flex mt-3">
+            {!isDesktop && carouselManagementDisplay !== 0 ? (
+              <button
+                type="button"
+                onClick={handleBackToSelectionClick}
+                className="flex items-center w-44 h-10 m-2 rounded-3xl font-primary leading-none border-2 border-orange  dark:bg-dark "
+              >
+                <div className="flex">
+                  <img
+                    src={arrowLeft}
+                    alt="left arrow"
+                    className="dark:text-white text-orange"
+                  />
+                  <p className="text-orange">Back to carousel selection</p>
+                </div>
+              </button>
+            ) : (
+              ""
+            )}
             <button
               type="button"
-              onClick={handleBackToSelectionClick}
-              className="flex items-center w-44 h-10 m-2 rounded-3xl font-primary leading-none border-2 border-orange  bg-dark "
+              onClick={handleNewCarouselClick}
+              className={`w-44 h-10 m-2 font-bold rounded-3xl lg:absolute lg:top-3 lg:left-5 text-white font-primary bg-[linear-gradient(90deg,_#FF8200_0%,_#FF2415_100%)] ${
+                carouselManagementDisplay === 1 && "invisible"
+              }`}
             >
-              <div className="flex bg-almostWhite dark:bg-dark">
-                <img
-                  src={arrowLeft}
-                  alt="left arrow"
-                  className="stroke-white"
-                />
-                <p className="text-orange">Back to carousel selection</p>
-              </div>
+              Create new carousel
             </button>
-          ) : (
-            ""
-          )}
-          <button
-            type="button"
-            onClick={handleNewCarouselClick}
-            className={`w-44 h-10 m-2 font-bold rounded-3xl lg:absolute lg:top-5 lg:left-5 text-white font-primary bg-[linear-gradient(90deg,_#FF8200_0%,_#FF2415_100%)] ${
-              carouselManagementDisplay === 1 && "invisible"
-            }`}
-          >
-            Create new carousel
-          </button>
+          </div>
         </div>
-      </div>
-      <div className="flex min-h-screen md:h-[1700px] lg:h-[1200px] justify-center lg:justify-start bg-almostWhite dark:bg-dark ">
-        <div>
+        <div
+          className={`flex ${
+            (isDesktop && carouselManagementDisplay === 2) ||
+            (isDesktop && carouselManagementDisplay === 1)
+              ? "justify-around"
+              : "justify-start"
+          } ${
+            !isDesktop && "justify-center"
+          } px-5  bg-almostWhite dark:bg-dark `}
+        >
           {isDesktop || carouselManagementDisplay === 0 ? (
             <CarouselManagementList
               carouselList={carouselList}
@@ -201,48 +210,51 @@ export default function CarouselManagement() {
           ) : (
             ""
           )}
-        </div>
-        <div className="bg-almostWhite dark:bg-dark">
-          {carouselManagementDisplay === 1 && (
-            <CarouselManagementCreate
-              videosList={videosList}
-              currentCarousel={currentCarousel}
-              setCurrentCarousel={setCurrentCarousel}
-              carouselList={carouselList}
-              setCarouselList={setCarouselList}
-              categoriesList={categoriesList}
-              handlePopUpOpen={handlePopUpOpen}
-              setCarouselPopUpMessage={setCarouselPopUpMessage}
-              setCarouselManagementDisplay={setCarouselManagementDisplay}
-            />
-          )}
-          {carouselManagementDisplay === 2 && (
-            <CarouselManagementAssign
-              videosList={videosList}
-              currentCarousel={currentCarousel}
-              setCurrentCarousel={setCurrentCarousel}
-              categoriesList={categoriesList}
-              handlePopUpOpen={handlePopUpOpen}
-              setCarouselPopUpMessage={setCarouselPopUpMessage}
-              hasVideoAssignmentChanged={hasVideoAssignmentChanged}
-            />
-          )}
-          {carouselManagementDisplay === 0 && isDesktop ? (
-            <h3 className="ml-8 mt-6 text-xl text-lightBlue dark:text-white">
-              Please select "Create new carousel" or select an existing carousel
-              in the list.
-            </h3>
-          ) : (
-            ""
-          )}
+
+          <div className="bg-almostWhite dark:bg-dark">
+            {carouselManagementDisplay === 1 && (
+              <CarouselManagementCreate
+                videosList={videosList}
+                currentCarousel={currentCarousel}
+                setCurrentCarousel={setCurrentCarousel}
+                carouselList={carouselList}
+                setCarouselList={setCarouselList}
+                categoriesList={categoriesList}
+                handlePopUpOpen={handlePopUpOpen}
+                setCarouselPopUpMessage={setCarouselPopUpMessage}
+                setCarouselManagementDisplay={setCarouselManagementDisplay}
+              />
+            )}
+            {carouselManagementDisplay === 2 && (
+              <CarouselManagementAssign
+                videosList={videosList}
+                currentCarousel={currentCarousel}
+                setCurrentCarousel={setCurrentCarousel}
+                categoriesList={categoriesList}
+                handlePopUpOpen={handlePopUpOpen}
+                setCarouselPopUpMessage={setCarouselPopUpMessage}
+                hasVideoAssignmentChanged={hasVideoAssignmentChanged}
+              />
+            )}
+            {carouselManagementDisplay === 0 && isDesktop ? (
+              <h3 className="ml-8 mt-6 text-xl text-lightBlue dark:text-white">
+                Please select "Create new carousel" or select an existing
+                carousel in the list.
+              </h3>
+            ) : (
+              ""
+            )}
+          </div>
         </div>
       </div>
 
-      <CarouselManagementPopUp
-        isOpen={carouselPopUpOpen}
-        onClose={handleCloseModal}
-        message={carouselPopUpMessage}
-      />
+      {carouselPopUpOpen && (
+        <CarouselManagementPopUp
+          isOpen={carouselPopUpOpen}
+          onClose={handleCloseModal}
+          message={carouselPopUpMessage}
+        />
+      )}
     </div>
   );
 }

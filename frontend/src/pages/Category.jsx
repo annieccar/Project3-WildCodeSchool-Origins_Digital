@@ -88,12 +88,17 @@ export default function Category() {
             )
             .sort(() => orderBy === "" && 0)
             .sort((a, b) => orderBy === "name" && a.name.localeCompare(b.name))
-            .sort((a, b) => orderBy === "duration" && a.duration - b.duration)
+            .sort(
+              (a, b) =>
+                orderBy === "duration" &&
+                parseInt(a.duration.split(":")[2], 10) -
+                  parseInt(b.duration.split(":")[2], 10)
+            )
             .map((elem) => (
               <div key={elem.name} className="flex flex-col items-center">
                 <button
                   type="button"
-                  className="relative hover:scale-[110%] duration-300 ease-in-out"
+                  className="relative "
                   onClick={() => handleClick(elem)}
                 >
                   <HoverVideoPlayer
@@ -118,7 +123,7 @@ export default function Category() {
                     loadingStateTimeout={1000}
                     controls
                     controlsList="nodownload nofullscreen"
-                    className="w-40 lg:w-80 mx-3.5 my-1 lg:mx-10 lg:mt-6 rounded-md"
+                    className="w-40 hover:scale-[110%] duration-300 ease-in-out lg:w-80 mx-3.5 my-1 lg:mx-10 lg:mt-6 rounded-md"
                   />
                 </button>
                 <p className="mb-3 font-primary text-lightBlue dark:text-orange text-md lg:text-xl font-bold">

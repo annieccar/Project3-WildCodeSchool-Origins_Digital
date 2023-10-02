@@ -37,7 +37,7 @@ export default function Favorites() {
       <h1 className="text-orange lg:text-3xl font-semibold mb-5">
         My Playlists
       </h1>
-      <div className="flex flex-col mb-10 w-11/12 lg:w-[50rem]">
+      <div className="flex flex-col mb-10 w-11/12 items-center">
         {playlists &&
           playlists.map((playlist) => (
             <div key={playlist.id}>
@@ -54,7 +54,7 @@ export default function Favorites() {
                     playlist.count
                   } ${playlist.count > 1 ? "videos" : "video"})`}</p>
                 </button>
-                <div className="flex gap-2">
+                <div className="flex mr-5 gap-2">
                   <button
                     type="button"
                     className="text-white bg-orange-gradient text-sm lg:text-md font-semibold rounded-2xl w-auto px-2 lg:px-4"

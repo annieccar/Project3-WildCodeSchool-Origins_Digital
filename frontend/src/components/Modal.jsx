@@ -48,18 +48,18 @@ export default function Modal({
 
   return (
     <dialog
-      className="bg-lightBlue dark:bg-dark text-almostWhite dark:text-white space-x-2 h-[50%] w-[95%] sm:w-[500px] p-6 sm:p-10 md:p-12 border-4 border-orange rounded-3xl font-primary"
+      className="bg-lightBlue dark:bg-dark text-almostWhite dark:text-white space-x-2 flex flex-col justify-around border-4 p-4 border-orange rounded-3xl font-primary"
       ref={modalRef}
       onKeyDown={handleKeyDown}
       role="presentation"
     >
-      <div className="h-full flex flex-col justify-between items-center">
+      <div className="flex flex-col justify-between items-center">
         {children}
         {hasCloseBtn && (
           <button
             type="button"
             onClick={handleCloseModal}
-            className="h-10 w-36 rounded-3xl text-orange font-semibold border-2 border-orange focus:outline-none"
+            className="h-10 w-36 mt-5 rounded-3xl text-orange font-semibold border-2 border-orange focus:outline-none"
           >
             Close
           </button>
