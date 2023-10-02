@@ -64,13 +64,25 @@ function Router() {
           <Route path="/playlists/:id" element={<Playlist />} />
           <Route path="/videos/:id" element={<Video />} />
         </Route>
-        <Route path="/admin/category" element={<CategoryManagement />} />
-        <Route path="/admin/video" element={<VideoManagement />} />
-        <Route path="/admin/carousel" element={<CarouselManagement />} />
-        <Route path="/admin/users" element={<UserManagement />} />
-        <Route path="/admin/users/:id" element={<UserProfileManagement />} />
-        <Route path="/admin/users/create" element={<CreateUserManagement />} />
-        <Route path="*" element={<NotFound />} />
+        <Route
+          element={
+            <ProtectedRoute
+              isAllowed={user?.usertype_id === ADMIN_USER_TYPE}
+              redirectionPath="/"
+            />
+          }
+        >
+          <Route path="/admin/category" element={<CategoryManagement />} />
+          <Route path="/admin/video" element={<VideoManagement />} />
+          <Route path="/admin/carousel" element={<CarouselManagement />} />
+          <Route path="/admin/users" element={<UserManagement />} />
+          <Route path="/admin/users/:id" element={<UserProfileManagement />} />
+          <Route
+            path="/admin/users/create"
+            element={<CreateUserManagement />}
+          />
+          <Route path="*" element={<NotFound />} />
+        </Route>
       </Routes>
     </div>
   );
