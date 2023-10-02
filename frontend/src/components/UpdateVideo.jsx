@@ -4,8 +4,8 @@ import HoverVideoPlayer from "react-hover-video-player";
 import { BiLeftArrowAlt } from "react-icons/bi";
 import PropTypes from "prop-types";
 
-import expressAPI from "../services/expressAPI";
 import editPencil from "../assets/images/edit.svg";
+import useInstanceWithInterceptor from "../hooks/useInstanceWithInterceptor";
 
 export default function UpdateVideo({
   selectedVideo,
@@ -23,6 +23,8 @@ export default function UpdateVideo({
 
   const [editCategory, setEditCategory] = useState(false);
   const [editUser, setEditUser] = useState(false);
+
+  const expressAPI = useInstanceWithInterceptor();
 
   useEffect(() => {
     setName(selectedVideo.name);

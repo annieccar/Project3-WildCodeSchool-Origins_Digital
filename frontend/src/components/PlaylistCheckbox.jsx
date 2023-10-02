@@ -1,11 +1,13 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
-import expressAPI from "../services/expressAPI";
+import useInstanceWithInterceptor from "../hooks/useInstanceWithInterceptor";
 
 export default function PlaylistCheckbox({ playlist, videoInfos }) {
   const [checked, setChecked] = useState(
     playlist.videos.some((video) => video.name === videoInfos.name)
   );
+
+  const expressAPI = useInstanceWithInterceptor();
 
   const handleCheckbox = () => {
     if (!checked) {
