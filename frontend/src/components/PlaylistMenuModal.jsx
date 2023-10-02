@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import expressAPI from "../services/expressAPI";
+import useInstanceWithInterceptor from "../hooks/useInstanceWithInterceptor";
 
 export default function PlaylistMenuModal({
   video,
@@ -7,6 +7,8 @@ export default function PlaylistMenuModal({
   playlist,
   fetchPlaylistVideos,
 }) {
+  const expressAPI = useInstanceWithInterceptor();
+
   const handleDelete = async () => {
     await expressAPI.delete("/api/playlists/video", {
       data: {
