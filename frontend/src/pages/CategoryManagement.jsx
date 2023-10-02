@@ -85,25 +85,24 @@ export default function CategoryManagement() {
         id: videoId,
         categoryId: selectedCategory.id,
       }));
-      videosToUpdate.forEach((video) =>
-        expressAPI
-          .put(`/api/videos/category`, video)
-          .then(() => {
-            setSelectedCategoryVideoIds([]);
-            expressAPI
-              .get(`/api/videos`)
-              .then((response) => {
-                setSelectedCategoryVideos(response.data);
-              })
-              .catch((err) => console.error(err));
-          })
-          .catch((err) => {
-            console.error(
-              "Erreur lors de l'enregistrement des modifications :",
-              err
-            );
-          })
+      const promisedVideos = videosToUpdate.map((video) =>
+        expressAPI.put(`/api/videos/category`, video).catch((err) => {
+          console.error(
+            "Erreur lors de l'enregistrement des modifications :",
+            err
+          );
+        })
       );
+
+      Promise.all(promisedVideos).then(() => {
+        setSelectedCategoryVideoIds([]);
+        expressAPI
+          .get(`/api/videos`)
+          .then((response) => {
+            setSelectedCategoryVideos(response.data);
+          })
+          .catch((err) => console.error(err));
+      });
     }
   };
 

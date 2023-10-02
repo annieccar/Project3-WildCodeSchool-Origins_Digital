@@ -22,7 +22,7 @@ export default function SharePopUp({ videoInfos, close }) {
         className="fixed inset-0"
         onClick={close}
       />
-      <div className="min-w-[20rem] min-h-[12rem] bg-lightBlue dark:bg-dark border-2 border-orange px-5 py-3 font-primary rounded-lg flex flex-col gap-2 items-center justify-center absolute z-30 top-1/3 left-1/2 -translate-x-1/2">
+      <div className="min-w-[20rem] min-h-[12rem] bg-lightBlue dark:bg-dark border-2 border-orange px-5 py-3 font-primary rounded-lg flex flex-col gap-2 items-center justify-center fixed z-30 top-1/3 left-1/2 -translate-x-1/2">
         <p className="text-orange font-bold text-xl">{videoInfos.name}</p>
         <p className="text-white font-bold text-lg">Share this video :</p>
         <div className="flex gap-2">

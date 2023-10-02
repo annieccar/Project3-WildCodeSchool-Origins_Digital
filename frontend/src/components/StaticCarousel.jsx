@@ -57,9 +57,11 @@ export default function StaticCarousel({ videosArray }) {
     <div className="flex flex-col items-start w-100 lg:w-1000px">
       {videos.length > 0 && (
         <div className="flex ">
-          <button type="button" onClick={previousImage}>
-            <BsFillArrowLeftCircleFill />
-          </button>
+          {videos.length >= carousselLength ? (
+            <button type="button" onClick={previousImage}>
+              <BsFillArrowLeftCircleFill />
+            </button>
+          ) : null}
 
           <div className="flex w-80 h-32 lg:w-[980px] overflow-x-hidden overflow-y-hidden relative">
             <div
@@ -103,9 +105,11 @@ export default function StaticCarousel({ videosArray }) {
             </div>
           </div>
 
-          <button type="button" onClick={() => nextImage(carousselLength)}>
-            <BsFillArrowRightCircleFill />
-          </button>
+          {videos.length > carousselLength ? (
+            <button type="button" onClick={() => nextImage(carousselLength)}>
+              <BsFillArrowRightCircleFill />
+            </button>
+          ) : null}
         </div>
       )}
     </div>

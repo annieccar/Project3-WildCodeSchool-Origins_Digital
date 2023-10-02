@@ -102,7 +102,7 @@ export default function AddFavoritesPopUp({ videoInfos, close }) {
                 <div className="flex justify-center">
                   <button
                     type="button"
-                    className="w-32 bg-orange-gradient rounded-full py-1 px-3 mt-2"
+                    className="w-32 bg-orange-gradient font-semibold rounded-full py-1 px-3 mt-2"
                     onKeyDown={handleKeyDown}
                     onClick={handlePlaylistCreation}
                   >
