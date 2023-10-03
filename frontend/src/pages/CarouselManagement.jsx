@@ -199,19 +199,28 @@ export default function CarouselManagement() {
           } px-5  bg-almostWhite dark:bg-dark `}
         >
           {isDesktop || carouselManagementDisplay === 0 ? (
-            <CarouselManagementList
-              carouselList={carouselList}
-              currentCarousel={currentCarousel}
-              handlePopUpOpen={handlePopUpOpen}
-              setCarouselPopUpMessage={setCarouselPopUpMessage}
-              fetchNewCarousel={fetchNewCarousel}
-              hasVideoAssignmentChanged={hasVideoAssignmentChanged}
-            />
+            <div
+              className={`${
+                (isDesktop && carouselManagementDisplay === 2) ||
+                (isDesktop && carouselManagementDisplay === 1)
+                  ? "mt-[4.3rem]"
+                  : ""
+              }`}
+            >
+              <CarouselManagementList
+                carouselList={carouselList}
+                currentCarousel={currentCarousel}
+                handlePopUpOpen={handlePopUpOpen}
+                setCarouselPopUpMessage={setCarouselPopUpMessage}
+                fetchNewCarousel={fetchNewCarousel}
+                hasVideoAssignmentChanged={hasVideoAssignmentChanged}
+              />
+            </div>
           ) : (
             ""
           )}
 
-          <div className="bg-almostWhite dark:bg-dark">
+          <div className="flex flex-col justify-center lg:mx-auto bg-almostWhite dark:bg-dark">
             {carouselManagementDisplay === 1 && (
               <CarouselManagementCreate
                 videosList={videosList}
@@ -237,7 +246,7 @@ export default function CarouselManagement() {
               />
             )}
             {carouselManagementDisplay === 0 && isDesktop ? (
-              <h3 className="ml-8 mt-6 text-xl text-lightBlue dark:text-white">
+              <h3 className="ml-8 mt-6 text-2xl text-lightBlue dark:text-white">
                 Please select "Create new carousel" or select an existing
                 carousel in the list.
               </h3>
