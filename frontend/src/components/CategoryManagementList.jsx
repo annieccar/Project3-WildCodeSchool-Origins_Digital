@@ -35,13 +35,13 @@ export default function CategoryManagementList({
 CategoryManagementList.propTypes = {
   categories: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      name: PropTypes.string.isRequired,
+      id: PropTypes.number,
+      name: PropTypes.string,
     })
   ).isRequired,
   selectedCategory: PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    name: PropTypes.string.isRequired,
+    id: PropTypes.number,
+    name: PropTypes.string,
   }).isRequired,
   handleCategoryClick: PropTypes.func.isRequired,
 };

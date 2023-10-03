@@ -1,4 +1,4 @@
-import { createContext, useContext, useMemo, useState } from "react";
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import PropTypes from "prop-types";
 
 const ThemeContext = createContext();
@@ -11,13 +11,16 @@ export function ThemeContextProvider({ children }) {
   const toggleTheme = () => {
     setDarkMode(!darkMode);
     localStorage.setItem("darkMode", !darkMode);
+  };
 
+  useEffect(() => {
     if (darkMode) {
       document.documentElement.classList.add("dark");
     } else {
       document.documentElement.classList.remove("dark");
     }
-  };
+  }, [darkMode]);
+
   const memoizedTheme = useMemo(() => {
     return { darkMode, toggleTheme };
   }, [darkMode]);

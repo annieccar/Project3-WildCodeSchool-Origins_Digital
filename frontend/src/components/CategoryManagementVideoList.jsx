@@ -58,7 +58,7 @@ export default function CategoryManagementVideoList({
 
 CategoryManagementVideoList.propTypes = {
   selectedCategory: PropTypes.shape({
-    name: PropTypes.string.isRequired,
+    name: PropTypes.string,
   }).isRequired,
   selectedCategoryVideos: PropTypes.arrayOf(
     PropTypes.shape({

@@ -24,18 +24,26 @@ export default function CategoryManagement() {
       .get(`/api/categories`)
       .then((response) => {
         setCategories(response.data);
+        setSelectedCategory(response.data[0]);
       })
       .catch((err) => console.error(err));
   }, []);
 
   useEffect(() => {
-    expressAPI
-      .get(`/api/videos`)
-      .then((response) => {
-        setSelectedCategoryVideos(response.data);
-      })
-      .catch((err) => console.error(err));
-  }, []);
+    if (selectedCategory) {
+      expressAPI
+        .get(`/api/videos`)
+        .then((response) => {
+          setSelectedCategoryVideos(response.data);
+          setSelectedCategoryVideoIds(
+            response.data
+              .filter((video) => video.category_id === selectedCategory.id)
+              .map((video) => video.id)
+          );
+        })
+        .catch((err) => console.error(err));
+    }
+  }, [selectedCategory]);
 
   const handleCategoryClick = (e, categoryName, categoryId) => {
     e.preventDefault();
@@ -139,16 +147,14 @@ export default function CategoryManagement() {
             handleCategoryClick={handleCategoryClick}
           />
 
-          {selectedCategory.id ? (
-            <CategoryManagementVideoList
-              selectedCategory={selectedCategory}
-              selectedCategoryVideos={selectedCategoryVideos}
-              selectedCategoryVideoIds={selectedCategoryVideoIds}
-              handleCheckboxChange={handleCheckboxChange}
-              handleMoveVideos={handleMoveVideos}
-              handleDeleteCategory={handleDeleteCategory}
-            />
-          ) : null}
+          <CategoryManagementVideoList
+            selectedCategory={selectedCategory}
+            selectedCategoryVideos={selectedCategoryVideos}
+            selectedCategoryVideoIds={selectedCategoryVideoIds}
+            handleCheckboxChange={handleCheckboxChange}
+            handleMoveVideos={handleMoveVideos}
+            handleDeleteCategory={handleDeleteCategory}
+          />
         </div>
 
         <div className="bg-dark">
