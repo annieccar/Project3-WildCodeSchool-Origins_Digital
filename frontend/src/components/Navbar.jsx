@@ -199,7 +199,7 @@ export default function Navbar() {
       ) : (
         <Link to="/login">
           <button
-            className="text-white h-8 w-28 font-primary font-semibold rounded-full px-4 py-0.5 mx-4 bg-orange-gradient fixed top-3 right-1"
+            className="text-white h-8 w-28 font-primary font-semibold rounded-full px-4 py-0.5 mx-4 bg-orange-gradient fixed top-4 right-1"
             type="button"
           >
             Log in
@@ -211,7 +211,7 @@ export default function Navbar() {
           <button type="button" onClick={() => setUserMenuSelected(false)}>
             <div className="fixed top-20 bottom-12 left-0 right-0 " />
           </button>
-          <div className="bg-lightBlue dark:backdrop-blur-md text-white border-solid border-2 border-orange w-32 px-5 py-3 rounded-md flex flex-col gap-2 items-start fixed z-50 top-14 right-2 ">
+          <div className="bg-lightBlue dark:bg-opacity-0 dark:backdrop-blur-md text-white border-solid border-2 border-orange w-32 px-5 py-3 rounded-md flex flex-col gap-2 items-start fixed z-50 top-14 right-2 ">
             <button type="button" onClick={handleMyProfile}>
               <p className="hover:text-orange font-primary font-bold my-2">
                 My profile

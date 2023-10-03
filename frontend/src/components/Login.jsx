@@ -117,11 +117,13 @@ export default function Login() {
         {errors.password && <p>{errors.password.message}</p>}
       </div>
 
-      <LoginErrorPopUp
-        className="bg-orange"
-        isOpen={loginErrorPopUpOpen}
-        onClose={handleCloseModal}
-      />
+      {loginErrorPopUpOpen ? (
+        <LoginErrorPopUp
+          className="bg-orange"
+          isOpen={loginErrorPopUpOpen}
+          onClose={handleCloseModal}
+        />
+      ) : null}
     </div>
   );
 }

@@ -1,75 +1,67 @@
 {
-    "fetchCarouselFail": {
-        "title": "Database error",
-        "content":
-          "Chosen carousel informations can't be found in the database."
-    } , 
-    "newCarouselClickWarning" : {
-      "title": "Carousel has been modified",
-    "content":
-      "You have unsaved modifications on this carousel. Would you like to discard them and proceed ?",
+  "fetchCarouselFail": {
+    "title": "Database error",
+    "content": "Chosen carousel informations can't be found in the database."
+  },
+  "newCarouselClickWarning": {
+    "title": "Carousel has been modified",
+    "content": "You have unsaved modifications on this carousel. Would you like to discard them and proceed ?",
     "button": {
       "onValidation": "carouselCreation",
       "text": "Confirm"
-      }
-    },
-      "backToSelectionClickWarning" : {
-        "title": "Carousel has been modified",
-        "content":
-          "You have unsaved modifications on this carousel. Would you like to discard them and proceed ?",
-        "button": {
-          "onValidation": "backToSelection",
-          "text": "Confirm"
-        }
-      }, 
-      "deleteSuccess" : {
-          "title": "Deletion successful",
-          "content": "The carousel has been deleted from the database."
-        },
-         "carouselSelectedWarning" : {
-          "title": "Carousel has been modified",
-          "content":
-            "You have unsaved modifications on this carousel. Would you like to discard them and proceed ?",
-          "button": {
-            "onValidation": "changeCarousel",
-            "text": "Confirm"
-          }
-        },
-        "createCarouselDuplicate" : {
-          "title": "Duplicate carousel",
-          "content":
-          "A carousel with this name is already present in the database."
-        },
-        "createCarouselSuccess": {
-          "title": "Carousel created",
-          "content": "has been created in the database."
-        },
-        "createCarouselDbFail" : {
-          "title": "Database error",
-          "content":
-          "Error during database writing: the new carousel could not be saved."
-        },
-        "handleCreateCarouselNoTitle": {
-          "title": "Creation error",
-          "content": "You must choose a name for the new carousel."
-        },
-        "handleCreateCarouselTooMuchVideos" : {
-          "title": "Too much videos",
-        "content":
-          "Number of videos assigned to a carousel can't exceed 10. Please modify video assignment."
-        },
-        "handleDeletionWarning" : {
-          "title": "Deletion warning",
-      "content":
-        "You are about to delete this carousel permanently. Do you want to continue ?",
-      "button": { "onValidation": "deleteCarousel", "text": "Confirm" }
-        },
-        "saveChangesNoModif" : {
-          "title": "Modification error",
-        "content": "No modifications to be saved."
-        },
-        "saveChangesSuccess" : {
-          "title": "Carousel modified",
-          "content": "Video assignment updated."
-        }
+    }
+  },
+  "backToSelectionClickWarning": {
+    "title": "Carousel has been modified",
+    "content": "You have unsaved modifications on this carousel. Would you like to discard them and proceed ?",
+    "button": {
+      "onValidation": "backToSelection",
+      "text": "Confirm"
+    }
+  },
+  "deleteSuccess": {
+    "title": "Deletion successful",
+    "content": "The carousel has been deleted from the database."
+  },
+  "carouselSelectedWarning": {
+    "title": "Carousel has been modified",
+    "content": "You have unsaved modifications on this carousel. Would you like to discard them and proceed ?",
+    "button": {
+      "onValidation": "changeCarousel",
+      "text": "Confirm"
+    }
+  },
+  "createCarouselDuplicate": {
+    "title": "Duplicate carousel",
+    "content": "A carousel with this name is already present in the database."
+  },
+  "createCarouselSuccess": {
+    "title": "Carousel created",
+    "content": "has been created in the database."
+  },
+  "createCarouselDbFail": {
+    "title": "Database error",
+    "content": "Error during database writing: the new carousel could not be saved."
+  },
+  "handleCreateCarouselNoTitle": {
+    "title": "Creation error",
+    "content": "You must choose a name for the new carousel."
+  },
+  "handleCreateCarouselTooMuchVideos": {
+    "title": "Too much videos",
+    "content": "Number of videos assigned to a carousel can't exceed 10. Please modify video assignment."
+  },
+  "handleDeletionWarning": {
+    "title": "Deletion warning",
+    "content": "You are about to delete this carousel permanently. Do you want to continue ?",
+    "button": { "onValidation": "deleteCarousel", "text": "Confirm" }
+  },
+  "saveChangesNoModif": {
+    "title": "Modification error",
+    "content": "No modifications to be saved."
+  },
+  "saveChangesSuccess": {
+    "title": "Carousel modified",
+    "content": "Video assignment updated."
+  }
 }

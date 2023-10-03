@@ -112,7 +112,7 @@ export default function AddPaymentInfo({
         </label>
         <div className="flex w-full">
           <select
-            className="h-9 w-36 mb-2 mr-6 px-2 rounded-lg border-2 border-solid border-orange bg-almostWhite dark:bg-dark font-primary "
+            className="h-9 w-36 mb-2 mr-6 px-2 rounded-lg border-2 border-solid focus:outline-none border-orange bg-almostWhite dark:bg-dark font-primary "
             name="month"
             id="month"
           >
@@ -131,7 +131,7 @@ export default function AddPaymentInfo({
             <option value="dec">December</option>
           </select>
           <select
-            className="h-9 w-36 mb-2 px-2 rounded-lg border-2 border-solid border-orange bg-almostWhite dark:bg-dark font-primary "
+            className="h-9 w-36 mb-2 px-2 rounded-lg border-2 border-solid border-orange focus:outline-none bg-almostWhite dark:bg-dark font-primary "
             name="year"
             id="year"
           >

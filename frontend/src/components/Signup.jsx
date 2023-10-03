@@ -338,11 +338,13 @@ export default function Signup() {
           <p> {errors.passwordconfirmation.message}</p>
         )}
       </div>
-      <SignupErrorPopUp
-        isOpen={signupErrorPopUpOpen}
-        onClose={handleCloseModal}
-        message={popUpMessage}
-      />
+      {signupErrorPopUpOpen ? (
+        <SignupErrorPopUp
+          isOpen={signupErrorPopUpOpen}
+          onClose={handleCloseModal}
+          message={popUpMessage}
+        />
+      ) : null}
     </div>
     // Todo : user profile image upload
   );

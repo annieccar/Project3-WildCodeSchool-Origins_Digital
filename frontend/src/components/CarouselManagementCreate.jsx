@@ -83,11 +83,11 @@ function CarouselManagementCreate({
   };
 
   return (
-    <div className="flex w-full h-full flex-col flex-grow px-2 pb-4 bg-almostWhite dark:bg-dark">
+    <div className="flex flex-col flex-grow px-2 pb-4 mt-5 bg-almostWhite dark:bg-dark">
       <h2 className="font-bold text-xl text-orange self-center pb-4">
         Create new carousel
       </h2>
-      <div className="flex max-h-10 flex-col">
+      <div className="flex flex-col items-center">
         <div className="flex flex-wrap items-center m-2">
           <p className="px-3 py-1">New carousel name : </p>
           <input
@@ -108,9 +108,9 @@ function CarouselManagementCreate({
           setCurrentCarousel={setCurrentCarousel}
           categoriesList={categoriesList}
         />
-        <div className=" pb-24 bg-almostWhite dark:bg-dark">
+        <div className=" bg-almostWhite dark:bg-dark">
           <button
-            className="w-48 h-14 py-3 mx-20 mt-5 rounded-3xl text-white font-semibold bg-[linear-gradient(90deg,_#FF8200_0%,_#FF2415_100%)]"
+            className="w-48 h-12 py-3 mx-20 mt-5 rounded-full text-white font-semibold bg-[linear-gradient(90deg,_#FF8200_0%,_#FF2415_100%)]"
             type="button"
             onClick={handleCreateCarousel}
           >

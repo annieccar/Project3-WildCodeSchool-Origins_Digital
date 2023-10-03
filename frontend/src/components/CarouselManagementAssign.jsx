@@ -84,29 +84,31 @@ function CarouselManagementAssign({
   };
 
   return (
-    <div className="flex w-full flex-col px-2 py-4 bg-almostWhite dark:bg-dark">
-      <h3 className="font-bold text-xl text-orange self-center pb-4">{`Carousel selected: ${currentCarousel.title}`}</h3>
-      <CarouselManagementVideoList
-        videosList={videosList}
-        currentCarousel={currentCarousel}
-        setCurrentCarousel={setCurrentCarousel}
-        categoriesList={categoriesList}
-      />
-      <div className="flex my-8">
-        <button
-          className="w-48 h-12 mx-5 mb-3 rounded-3xl text-white font-semibold bg-orange-gradient"
-          type="button"
-          onClick={saveChanges}
-        >
-          {`Save changes on ${currentCarousel.title}`}
-        </button>
-        <button
-          className="w-48 h-12 mx-5 rounded-3xl text-white font-semibold bg-blue-gradient"
-          type="button"
-          onClick={() => handleCarouselDeletion(currentCarousel.carouselId)}
-        >
-          {`Delete ${currentCarousel.title}`}
-        </button>
+    <div className="flex flex-col px-2 py-4 bg-almostWhite dark:bg-dark">
+      <div className="flex flex-col items-center mt-5">
+        <h3 className="font-bold text-xl text-orange self-center pb-4">{`Carousel selected: ${currentCarousel.title}`}</h3>
+        <CarouselManagementVideoList
+          videosList={videosList}
+          currentCarousel={currentCarousel}
+          setCurrentCarousel={setCurrentCarousel}
+          categoriesList={categoriesList}
+        />
+        <div className="flex mt-8 mx-2">
+          <button
+            className="px-4 w-36 mx-2 lg:w-44 h-12 lg:mx-5 mb-3 rounded-3xl text-white font-semibold bg-orange-gradient"
+            type="button"
+            onClick={saveChanges}
+          >
+            {`Save changes on ${currentCarousel.title}`}
+          </button>
+          <button
+            className="h-12 mx-2 w-36 lg:w-44 px-4 lg:mx-5 rounded-3xl text-white font-semibold bg-blue-gradient"
+            type="button"
+            onClick={() => handleCarouselDeletion(currentCarousel.carouselId)}
+          >
+            {`Delete ${currentCarousel.title}`}
+          </button>
+        </div>
       </div>
     </div>
   );

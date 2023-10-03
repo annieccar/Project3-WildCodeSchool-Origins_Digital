@@ -63,10 +63,10 @@ function CarouselManagementVideoList({
 
   return (
     videosList.length > 0 && (
-      <div className="bg-almostWhite dark:bg-dark">
+      <div className="bg-almostWhite dark:bg-dark w-[90vw] lg:w-[70vw] self-center">
         <h3 className="mx-8 my-4 font-semibold  text-orange">Assign videos</h3>
-        <div className="flex flex-col w-full lg:w-[1200px] border-solid border-2 border-lightBlue dark:border-orange px-5 py-3 rounded-md">
-          <div className="flex self-end flex-grow max-w-[530px] m-2 rounded-md color:[#010D18] bg-[linear-gradient(90deg,#F3F3F3_0%,_#FF680A_50%,#F3F3F3_100%)] dark:bg-[linear-gradient(90deg,#181001_0%,_#FF680A_50%,#181001_100%)]">
+        <div className="flex flex-col w-7/8 border-solid border-2 border-lightBlue dark:border-orange px-5 py-3 rounded-md">
+          <div className="flex self-end max-w-[530px] m-2 rounded-md color:[#010D18] bg-[linear-gradient(90deg,#F3F3F3_0%,_#FF680A_50%,#F3F3F3_100%)] dark:bg-[linear-gradient(90deg,#181001_0%,_#FF680A_50%,#181001_100%)]">
             <div className=" bg-almostWhite dark:bg-dark m-0.5 rounded-md w-full">
               <label htmlFor="categories" className="m-2">
                 Video list filters:
