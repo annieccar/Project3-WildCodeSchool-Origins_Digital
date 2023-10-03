@@ -16,6 +16,7 @@ export default function CategoryManagement() {
   const [isNewCategoryModalOpen, setIsNewCategoryModalOpen] = useState(false);
   const [selectedCategoryVideoIds, setSelectedCategoryVideoIds] = useState([]);
   const [modal, setModal] = useState(false);
+  const [msg, setMsg] = useState("");
 
   const expressAPI = useInstanceWithInterceptor();
 
@@ -70,6 +71,8 @@ export default function CategoryManagement() {
             categories.filter((category) => category.id !== selectedCategory.id)
           );
           setSelectedCategory({ name: "", id: "" });
+          setModal(true);
+          setMsg("Your category has been successfully deleted");
         })
         .catch((err) => console.error(err));
     }
@@ -110,6 +113,7 @@ export default function CategoryManagement() {
           .then((response) => {
             setSelectedCategoryVideos(response.data);
             setModal(true);
+            setMsg("Category updated");
           })
           .catch((err) => console.error(err));
       });
@@ -160,10 +164,7 @@ export default function CategoryManagement() {
         </div>
         {modal &&
           createPortal(
-            <CustomModal
-              closeModal={() => setModal(false)}
-              msg="Category updated"
-            />,
+            <CustomModal closeModal={() => setModal(false)} msg={msg} />,
             document.body
           )}
       </div>

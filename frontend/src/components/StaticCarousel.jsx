@@ -54,9 +54,9 @@ export default function StaticCarousel({ videosArray }) {
   };
 
   return (
-    <div className="flex flex-col items-start w-100 lg:w-1000px">
+    <div className="flex flex-col items-center w-100 lg:w-1000px">
       {videos.length > 0 && (
-        <div className="flex ">
+        <div className="flex">
           {videos.length > carousselLength ? (
             <button type="button" onClick={previousImage}>
               <BsFillArrowLeftCircleFill />
