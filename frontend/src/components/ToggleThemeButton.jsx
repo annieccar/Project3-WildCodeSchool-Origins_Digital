@@ -4,7 +4,7 @@ export default function ToggleThemeButton() {
   const { darkMode, toggleTheme } = useThemeContext();
   return (
     <button type="button" onClick={toggleTheme}>
-      {darkMode ? "🌑" : "☀️"}
+      {darkMode ? "☀️" : "🌑"}
     </button>
   );
 }

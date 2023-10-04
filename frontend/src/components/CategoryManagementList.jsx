@@ -8,7 +8,7 @@ export default function CategoryManagementList({
 }) {
   return (
     <div className="m-2 bg-almostWhite dark:bg-dark">
-      <p className="mx-4 my-2 pb-2 font-semibold  text-orange">
+      <p className="mx-4 my-2 pb-2 text-center font-semibold  text-orange">
         Categories list
       </p>
       <div className="flex flex-col border-solid border-2 border-lightBlue dark:border-orange w-48 px-5 py-3 rounded-md">
@@ -35,13 +35,13 @@ export default function CategoryManagementList({
 CategoryManagementList.propTypes = {
   categories: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      name: PropTypes.string.isRequired,
+      id: PropTypes.number,
+      name: PropTypes.string,
     })
   ).isRequired,
   selectedCategory: PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    name: PropTypes.string.isRequired,
+    id: PropTypes.number,
+    name: PropTypes.string,
   }).isRequired,
   handleCategoryClick: PropTypes.func.isRequired,
 };

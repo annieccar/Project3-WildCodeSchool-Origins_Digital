@@ -6,6 +6,7 @@ import PropTypes from "prop-types";
 
 import editPencil from "../assets/images/edit.svg";
 import useInstanceWithInterceptor from "../hooks/useInstanceWithInterceptor";
+import DeleteConfirmPopUp from "./DeleteConfirmPopUp";
 
 export default function UpdateVideo({
   selectedVideo,
@@ -23,6 +24,8 @@ export default function UpdateVideo({
 
   const [editCategory, setEditCategory] = useState(false);
   const [editUser, setEditUser] = useState(false);
+
+  const [deleteConfirm, setDeleteConfirm] = useState(false);
 
   const expressAPI = useInstanceWithInterceptor();
 
@@ -339,13 +342,21 @@ export default function UpdateVideo({
             />
             <button
               type="button"
-              onClick={() => deleteVideo()}
+              onClick={() => setDeleteConfirm(true)}
               className="text-white h-10 font-primary font-semibold rounded-full w-36 px-4 py-0.5 bg-blue-gradient"
             >
               Delete Video
             </button>
           </div>
         </form>
+        {deleteConfirm && (
+          <DeleteConfirmPopUp
+            type="video"
+            name={name}
+            setDeleteConfirm={setDeleteConfirm}
+            deleteFunction={() => deleteVideo()}
+          />
+        )}
       </>
     )
   );

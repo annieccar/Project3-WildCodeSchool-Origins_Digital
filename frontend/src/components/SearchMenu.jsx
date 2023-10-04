@@ -13,6 +13,12 @@ export default function SearchMenu({ setSearchMenu }) {
     navigate(`/search/name=${keyWord}`);
   };
 
+  const handleKeyDown = (e, func) => {
+    if (e.key === "Enter") {
+      func();
+    }
+  };
+
   return (
     <>
       <button type="button" onClick={() => setSearchMenu(false)}>
@@ -25,6 +31,7 @@ export default function SearchMenu({ setSearchMenu }) {
           onChange={(e) => {
             setKeyWord(e.target.value);
           }}
+          onKeyDown={(e) => handleKeyDown(e, handleSearch)}
         />
         <button className="-translate-x-8" type="button" onClick={handleSearch}>
           <img src={magnifier} alt="search" className="w-6 h-6" />

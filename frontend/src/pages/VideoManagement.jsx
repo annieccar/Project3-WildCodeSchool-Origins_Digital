@@ -246,6 +246,7 @@ export default function VideoManagement() {
             </div>
           </div>
         </div>
+
         {modal && (
           <CustomModal msg={modalText} closeModal={() => setModal(false)} />
         )}

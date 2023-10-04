@@ -89,7 +89,7 @@ export default function UserManagement() {
             <img src={magnifier} alt="search" className="h-7" />
           </div>
         </div>
-        <div className="w-10/12 min-h-[20rem] flex flex-col gap-2 px-5 py-4 mx-auto border-2 border-orange rounded-xl overflow-y-hidden">
+        <div className="w-10/12 h-[32rem] lg:h-[40rem] flex flex-col gap-2 px-5 py-4 mx-auto border-2 border-orange rounded-xl overflow-y-auto lg:scrollbar-thumb-lightBlue lg:scrollbar-track-almostWhite dark:lg:scrollbar-thumb-gray lg:scrollbar-thin scrollbar-thumb-rounded-md scrollbar-track-rounded-md">
           {users &&
             users
               .filter(
