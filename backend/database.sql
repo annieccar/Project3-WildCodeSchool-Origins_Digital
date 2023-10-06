@@ -95,3 +95,56 @@ CREATE TABLE
         CONSTRAINT `fk_video_has_carousel_video` FOREIGN KEY (`video_id`) REFERENCES `video` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
         CONSTRAINT `fk_video_has_carousel_carousel` FOREIGN KEY (`carousel_id`) REFERENCES `carousel` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
     ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
+
+INSERT INTO
+    `usertype` (`type_name`)
+VALUES ('Free'), ('Premium'), ('Administrator');
+
+INSERT INTO
+    `user` (
+        `username`,
+        `firstname`,
+        `lastname`,
+        `birthdate`,
+        `gender`,
+        `email`,
+        `hashedpassword`,
+        `usertype_id`
+    )
+VALUES (
+        'AnnieC',
+        'Annie',
+        'C.',
+        '2000-01-01',
+        'female',
+        'annie@toto.com',
+        '$argon2id$v=19$m=65536,t=5,p=1$jI/jg+K7bqT+6dG5MyJSJQ$CJX6X75h9mvgebCxlZNlLA51M/kBf7ZzW0weaHIjVR0',
+        3
+    ), (
+        'KillianC',
+        'Killian',
+        'C.',
+        '2000-03-03',
+        'male',
+        'killian@toto.com',
+        '$argon2id$v=19$m=65536,t=5,p=1$jI/jg+K7bqT+6dG5MyJSJQ$CJX6X75h9mvgebCxlZNlLA51M/kBf7ZzW0weaHIjVR0',
+        2
+    ), (
+        'DamienM',
+        'Damien',
+        'M.',
+        '2000-02-02',
+        'male',
+        'damien@toto.com',
+        '$argon2id$v=19$m=65536,t=5,p=1$jI/jg+K7bqT+6dG5MyJSJQ$CJX6X75h9mvgebCxlZNlLA51M/kBf7ZzW0weaHIjVR0',
+        2
+    ), (
+        'ThibautP',
+        'Thibaut',
+        'P.',
+        '2000-04-04',
+        'male',
+        'thibaut@toto.com',
+        '$argon2id$v=19$m=65536,t=5,p=1$jI/jg+K7bqT+6dG5MyJSJQ$CJX6X75h9mvgebCxlZNlLA51M/kBf7ZzW0weaHIjVR0',
+        1
+    );
