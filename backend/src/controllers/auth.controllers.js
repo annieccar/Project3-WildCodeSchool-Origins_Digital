@@ -15,7 +15,7 @@ const login = async (req, res) => {
 
       res.cookie("auth_token", token, {
         httpOnly: true,
-        secure: false,
+        secure: true,
       });
       res.status(200).json(req.user);
     } else {
@@ -36,6 +36,14 @@ const signUp = async (req, res) => {
     if (result.affectedRows) {
       delete req.body.passwordconfirmation;
       delete req.body.hashedPassword;
+
+      const token = encodeJWT({ id: result.insertId, ...req.body });
+
+      res.cookie("auth_token", token, {
+        httpOnly: true,
+        secure: true,
+      });
+
       res.status(201).json({ id: result.insertId, ...req.body });
     } else {
       res.sendStatus(500);

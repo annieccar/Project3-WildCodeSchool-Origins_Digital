@@ -27,11 +27,9 @@ export default function StaticCarousel({ videosArray }) {
   useEffect(() => {
     // Initial check on component mount
     handleResize();
+  }, []);
 
-    window.addEventListener("resize", handleResize);
-
-    // Cleanup the listener on component unmount
-  }, [carousselLength]);
+  window.addEventListener("resize", handleResize);
 
   // Function to change manually to the next image
   const nextImage = () => {

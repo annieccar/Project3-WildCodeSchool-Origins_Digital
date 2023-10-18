@@ -23,7 +23,6 @@ router.post(
   hashPassword,
   authControllers.signUp
 );
-
 router.get("/logout", authControllers.logout);
 
 module.exports = router;
