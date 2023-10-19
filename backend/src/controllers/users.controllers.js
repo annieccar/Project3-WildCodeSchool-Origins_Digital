@@ -50,6 +50,7 @@ const edit = async (req, res) => {
 
     const [result] = await models.users.update(user);
     if (result.affectedRows) {
+      delete req.body.hashedPassword;
       res.status(201).json({ id: result.insertId, ...req.body });
     } else {
       res.sendStatus(500);

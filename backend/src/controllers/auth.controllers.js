@@ -58,8 +58,22 @@ const logout = (req, res) => {
   res.clearCookie("auth_token").sendStatus(200);
 };
 
+const verifyUser = async (req, res) => {
+  try {
+    if (req.user) {
+      res.status(200).send(req.user);
+    } else {
+      res.sendStatus(403);
+    }
+  } catch (err) {
+    console.error(err);
+    res.sendStatus(500);
+  }
+};
+
 module.exports = {
   login,
   signUp,
   logout,
+  verifyUser,
 };
