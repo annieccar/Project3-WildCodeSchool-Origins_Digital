@@ -1,4 +1,5 @@
 import { Routes, Route } from "react-router-dom";
+import { useEffect } from "react";
 
 import Playlist from "../pages/Playlist";
 import Home from "../pages/Home";
@@ -18,9 +19,18 @@ import CreateUserManagement from "../pages/CreateUserManagement";
 import NotFound from "../pages/NotFound";
 import { useCurrentUserContext } from "../contexts/CurrentUserContext";
 import NotPremium from "../pages/NotPremium";
+import useInstanceWithInterceptor from "../hooks/useInstanceWithInterceptor";
 
 function Router() {
-  const { user } = useCurrentUserContext();
+  const { user, setUser } = useCurrentUserContext();
+  const expressAPI = useInstanceWithInterceptor();
+
+  useEffect(() => {
+    expressAPI.get("/api/auth/verify").then((res) => {
+      setUser(res.data);
+      localStorage.setItem("user", JSON.stringify(res.data));
+    });
+  }, []);
 
   const FREE_USER_TYPE = 1;
   const PREMIUM_USER_TYPE = 2;

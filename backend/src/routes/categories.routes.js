@@ -8,10 +8,8 @@ const checkRoles = require("../middlewares/checkRoles");
 
 router.get("/", categoriesControllers.browse);
 router.get("/:id", categoriesControllers.read);
-// Get videos associated with a category
+// Get videos associatedd with a category
 router.get("/:id/videos", categoriesControllers.readVideos);
-
-router.use(verifyJWT);
 router.use(checkRoles(3));
 router.put("/:id", categoriesControllers.edit);
 router.post("/", categoriesControllers.add);

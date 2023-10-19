@@ -10,6 +10,7 @@ const checkRoles = require("../middlewares/checkRoles");
 
 router.get("/search", videosControllers.search);
 router.use(verifyJWT);
+router.use(checkRoles(2, 3));
 router.get("/", videosControllers.browse);
 router.get("/:id", videosControllers.read);
 router.use(checkRoles(3));
