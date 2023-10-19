@@ -2,6 +2,7 @@ const fs = require("node:fs");
 const path = require("node:path");
 const models = require("../models");
 const { unparse } = require("../helpers/papaparseHelper");
+const { encodeJWT } = require("../helpers/jwtHelper");
 
 const browse = async (req, res) => {
   try {
@@ -49,6 +50,7 @@ const edit = async (req, res) => {
 
     const [result] = await models.users.update(user);
     if (result.affectedRows) {
+      delete req.body.hashedPassword;
       res.status(201).json({ id: result.insertId, ...req.body });
     } else {
       res.sendStatus(500);
@@ -85,6 +87,13 @@ const editUserTypeID = async (req, res) => {
 
     const [result] = await models.users.updateUserType(user);
     if (result.affectedRows) {
+      res.clearCookie("auth_token");
+      const token = encodeJWT({ id: result.insertId, ...req.body });
+
+      res.cookie("auth_token", token, {
+        httpOnly: true,
+        secure: true,
+      });
       res.status(201).json({ id: result.insertId, ...req.body });
     } else {
       res.sendStatus(500);

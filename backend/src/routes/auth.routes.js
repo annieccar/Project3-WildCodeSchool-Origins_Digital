@@ -9,6 +9,7 @@ const authControllers = require("../controllers/auth.controllers");
 const checkUserDoesntExists = require("../middlewares/checkUserDoesntExist");
 const { hashPassword } = require("../middlewares/hashPassword");
 const createUserSchema = require("../Validators/createUser.validator");
+const { verifyUser } = require("../helpers/jwtHelper");
 
 router.post(
   "/login",
@@ -23,7 +24,8 @@ router.post(
   hashPassword,
   authControllers.signUp
 );
-
 router.get("/logout", authControllers.logout);
+
+router.get("/verify", verifyUser, authControllers.verifyUser);
 
 module.exports = router;

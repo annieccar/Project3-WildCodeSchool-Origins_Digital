@@ -21,7 +21,7 @@ const verifyJWT = (req, res, next) => {
   const token = req.cookies?.auth_token;
 
   if (!token) {
-    return res.status(403).send({
+    return res.status(401).send({
       message: "No token provided.",
     });
   }
@@ -34,4 +34,20 @@ const verifyJWT = (req, res, next) => {
   });
 };
 
-module.exports = { encodeJWT, verifyJWT };
+const verifyUser = (req, res, next) => {
+  const token = req.cookies?.auth_token;
+
+  if (token) {
+    verify(token, JWT_SECRET, (err, decoded) => {
+      if (err) {
+        return catchError(err, res);
+      }
+      req.user = decoded;
+      delete req.user.iat;
+      delete req.user.exp;
+      return next();
+    });
+  }
+};
+
+module.exports = { encodeJWT, verifyJWT, verifyUser };

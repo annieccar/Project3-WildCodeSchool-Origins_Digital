@@ -14,9 +14,11 @@ function useInstanceWithInterceptor() {
     (err) => {
       if (err.response) {
         if (
-          err.response.status === 401 &&
-          err.response.data.message ===
-            "Unauthorized: access token has expired."
+          (err.response.status === 401 &&
+            err.response.data.message ===
+              "Unauthorized: access token has expired.") ||
+          err.response.data.message === "No token provided." ||
+          (err.response.status === 403 && err.response.data)
         ) {
           axios
             .get(`${import.meta.env.VITE_BACKEND_URL}/api/auth/logout`, {
@@ -32,10 +34,6 @@ function useInstanceWithInterceptor() {
             .catch((error) => {
               console.error(error);
             });
-        }
-
-        if (err.response.status === 403 && err.response.data) {
-          return Promise.reject(err.response.data);
         }
       }
 

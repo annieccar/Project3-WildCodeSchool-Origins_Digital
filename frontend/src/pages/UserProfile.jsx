@@ -16,16 +16,29 @@ export default function UserProfile() {
   const [text, setText] = useState("updated");
 
   useEffect(() => {
+    expressAPI
+      .get(`/api/users/${user.id}`)
+      .then((res) => {
+        localStorage.setItem("user", JSON.stringify(res.data));
+        setUser({ ...res.data });
+        setUserTypeId(res.data.usertype_id);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, []);
+
+  useEffect(() => {
     const userDetails = {
+      ...user,
       usertype_id: userTypeId,
     };
-    user.usertype_id = userTypeId;
 
     expressAPI
       .put(`/api/users/${user.id}/usertype`, userDetails)
-      .then(() => {
-        localStorage.setItem("user", JSON.stringify(user));
-        setUser({ ...user });
+      .then((res) => {
+        localStorage.setItem("user", JSON.stringify(res.data));
+        setUser({ ...res.data });
       })
       .catch((err) => {
         console.error(err);

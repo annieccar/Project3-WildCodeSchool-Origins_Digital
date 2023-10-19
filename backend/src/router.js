@@ -9,11 +9,12 @@ const categoriesRoutes = require("./routes/categories.routes");
 const carouselsRoutes = require("./routes/carousels.routes");
 const authRoutes = require("./routes/auth.routes");
 const { verifyJWT } = require("./helpers/jwtHelper");
+const checkRoles = require("./middlewares/checkRoles");
 
 // project routes
 router.use("/users", verifyJWT, usersRoutes);
 router.use("/videos", videosRoutes);
-router.use("/playlists", verifyJWT, playlistsRoutes);
+router.use("/playlists", verifyJWT, checkRoles(2, 3), playlistsRoutes);
 router.use("/categories", categoriesRoutes);
 router.use("/carousels", carouselsRoutes);
 router.use("/auth", authRoutes);
