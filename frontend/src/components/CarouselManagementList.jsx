@@ -22,7 +22,7 @@ function CarouselManagementList({
   };
 
   return (
-    <div className="m-2 lg:pt-[61px] bg-almostWhite dark:bg-dark">
+    <div className="m-2 bg-almostWhite dark:bg-dark">
       <p className="mx-4 my-2 pb-2 font-semibold  text-orange">
         Carousels list
       </p>

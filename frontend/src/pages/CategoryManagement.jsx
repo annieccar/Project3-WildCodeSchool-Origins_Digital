@@ -16,6 +16,7 @@ export default function CategoryManagement() {
   const [isNewCategoryModalOpen, setIsNewCategoryModalOpen] = useState(false);
   const [selectedCategoryVideoIds, setSelectedCategoryVideoIds] = useState([]);
   const [modal, setModal] = useState(false);
+  const [msg, setMsg] = useState("");
 
   const expressAPI = useInstanceWithInterceptor();
 
@@ -77,7 +78,13 @@ export default function CategoryManagement() {
           setCategories(
             categories.filter((category) => category.id !== selectedCategory.id)
           );
-          setSelectedCategory({ name: "", id: "" });
+          if (selectedCategory.id === categories[0].id) {
+            setSelectedCategory(categories[1]);
+          } else {
+            setSelectedCategory(categories[0]);
+          }
+          setModal(true);
+          setMsg("Your category has been successfully deleted");
         })
         .catch((err) => console.error(err));
     }
@@ -112,12 +119,12 @@ export default function CategoryManagement() {
       );
 
       Promise.all(promisedVideos).then(() => {
-        setSelectedCategory(categories[0]);
         expressAPI
           .get(`/api/videos`)
           .then((response) => {
             setSelectedCategoryVideos(response.data);
             setModal(true);
+            setMsg("Category updated");
           })
           .catch((err) => console.error(err));
       });
@@ -126,7 +133,7 @@ export default function CategoryManagement() {
 
   return (
     categories && (
-      <div className="pb-16 lg:pb-8 bg-almostWhite dark:bg-dark">
+      <div className="pb-20 lg:pb-8 bg-almostWhite dark:bg-dark">
         <div className="flex flex-col items-center px-2 pt-10 bg-almostWhite dark:bg-dark lg:flex-row lg:flex-wrap lg:items-st">
           <h3 className="font-bold text-xl text-orange self-center pb-4 my-3 lg:text-center lg:w-full">
             Categories management
@@ -140,7 +147,7 @@ export default function CategoryManagement() {
           </button>
         </div>
 
-        <div className="flex flex-col items-center bg-almostWhite dark:bg-dark lg:flex-row lg:items-start lg:justify-around">
+        <div className="mx-10 flex flex-col items-center bg-almostWhite dark:bg-dark lg:flex-row lg:items-start">
           <CategoryManagementList
             categories={categories}
             selectedCategory={selectedCategory}
@@ -166,10 +173,7 @@ export default function CategoryManagement() {
         </div>
         {modal &&
           createPortal(
-            <CustomModal
-              closeModal={() => setModal(false)}
-              msg="Category updated"
-            />,
+            <CustomModal closeModal={() => setModal(false)} msg={msg} />,
             document.body
           )}
       </div>
