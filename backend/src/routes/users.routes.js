@@ -12,9 +12,7 @@ const checkUserDoesntExists = require("../middlewares/checkUserDoesntExist");
 const checkRoles = require("../middlewares/checkRoles");
 const fileUpload = require("../middlewares/multer");
 
-router.get("/", usersControllers.browse);
 router.get("/usertypes", usersControllers.browseUsertypes);
-router.get("/csv", usersControllers.usersToCSV);
 router.get("/:id", usersControllers.read);
 router.put(
   "/:id",
@@ -23,7 +21,11 @@ router.put(
   hashPassword,
   usersControllers.edit
 );
-router.put("/:id/admin", checkRoles(3), usersControllers.editByAdmin);
+
+router.use(checkRoles(3));
+router.get("/", usersControllers.browse);
+router.get("/csv", usersControllers.usersToCSV);
+router.put("/:id/admin", usersControllers.editByAdmin);
 router.put("/:id/usertype", usersControllers.editUserTypeID);
 router.post(
   "/",

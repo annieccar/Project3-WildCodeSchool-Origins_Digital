@@ -29,7 +29,6 @@ const login = async (req, res) => {
 
 const signUp = async (req, res) => {
   try {
-    console.info("hello");
     if (!req.body.usertype_id) {
       req.body.usertype_id = 1;
     }

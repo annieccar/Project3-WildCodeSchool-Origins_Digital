@@ -4,7 +4,7 @@ const checkRoles = (...roles) => {
     if (roles.some((role) => role === userRole)) {
       return next();
     }
-    return res.sendStatus(401);
+    return res.sendStatus(403);
   };
 };
 
