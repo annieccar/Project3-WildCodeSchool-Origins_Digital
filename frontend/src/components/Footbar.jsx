@@ -5,6 +5,11 @@ import { useCurrentUserContext } from "../contexts/CurrentUserContext";
 import CategoryMenu from "./CategoryMenu";
 import ToolboxPopUp from "./ToolboxPopUp";
 import SearchMenu from "./SearchMenu";
+import Home from "../assets/images/Home.svg";
+import Playlist from "../assets/images/Playlist.svg";
+import Search from "../assets/images/Search.svg";
+import Menu from "../assets/images/Menu.svg";
+import Tools from "../assets/images/Tool.svg";
 
 export default function Footbar() {
   const { user } = useCurrentUserContext();
@@ -36,34 +41,18 @@ export default function Footbar() {
       <div className="fixed bottom-0 w-full">
         <div className="bg-lightBlue dark:bg-dark text-lightBlue dark:text-white w-full h-12 flex justify-around lg:hidden">
           <Link to="/" className="h-full  p-1">
-            <img
-              className="w-full h-full"
-              src="/src/assets/images/Home.svg"
-              alt="home-logo"
-            />
+            <img className="w-full h-full" src={Home} alt="home-logo" />
           </Link>
 
           <Link to="/playlists" className="h-full p-1">
-            <img
-              className="w-full h-full"
-              src="/src/assets/images/Playlist.svg"
-              alt="playlist-logo"
-            />
+            <img className="w-full h-full" src={Playlist} alt="playlist-logo" />
           </Link>
 
           <button className="h-full p-1" type="button" onClick={handleSearch}>
-            <img
-              className="w-full h-full"
-              src="/src/assets/images/Search.svg"
-              alt="search-logo"
-            />
+            <img className="w-full h-full" src={Search} alt="search-logo" />
           </button>
           <button className="h-full p-1" type="button" onClick={handleCategory}>
-            <img
-              className="w-full h-full"
-              src="/src/assets/images/Menu.svg"
-              alt="menu-logo"
-            />
+            <img className="w-full h-full" src={Menu} alt="menu-logo" />
           </button>
           {user?.usertype_id === 3 && (
             <button
@@ -71,11 +60,7 @@ export default function Footbar() {
               type="button"
               onClick={handleToolboxClick}
             >
-              <img
-                className="w-full h-full"
-                src="/src/assets/images/Tool.svg"
-                alt="menu-tool"
-              />
+              <img className="w-full h-full" src={Tools} alt="menu-tool" />
             </button>
           )}
         </div>
