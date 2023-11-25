@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import expressAPI from "../services/expressAPI";
+import interceptor from "../hooks/useInstanceWithInterceptor";
 
 export default function CategoryManagementCreate({
   isOpen,
@@ -8,6 +8,8 @@ export default function CategoryManagementCreate({
   onCategoryCreate,
 }) {
   const [newCategoryName, setNewCategoryName] = useState("");
+
+  const expressAPI = interceptor();
 
   const handleCreateCategory = () => {
     const newCategory = {
